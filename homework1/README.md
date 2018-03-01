@@ -15,24 +15,23 @@ Besides, we'll use some more libraries in Cpp, [gtest](https://github.com/google
 `bazel` will download and put them to right path.
 Please make sure you've grasped basic usage of them before we've gone deeper.
 
-## Get started
-Complete the simple tasks below to warm up.
+## Homework
 
 ### 1. Hello World!
-1. Clone this repo with `git`.
-1. Use `bazel` to build and run `helloworld`.
-`bazel run //homework1/helloworld:main`
+Clone this repo with `git` by `git clone git@github.com:ponyai/PublicCourse.git`. Then use `bazel`
+ to build and run `helloworld` (e.g. `bazel run -c opt //homework1/helloworld:main`)
 You can see some build information on screen and then the "Hello World!".
-Please add some code yourself to learn about how the build-system works.
+Task: add some code yourself to learn about how the build-system works.
 
 ### 2. Run Unittest
 There is a demo about how to define class and test your code in `/homework1/unittest/`.
-Run `bazel test //homework1/unittest:car_test` and you'll see all test cases have passed.
-After that please complete the code in car_test.cc.
+Run `bazel test -c opt //homework1/unittest:car_test` and you'll see all test cases have passed.
+Task: complete the code in car_test.cc.
 
 ### 3. Protobuf
 `Protobuf` is a very popular extensible mechanism for serializing structured data. It is
 language-neutral and platform-neutral, you can generate Cpp code from `proto` files. We'll use
 `protobuf` to store simple data structure for sensors message, please be familiar with it. There
 is a demo about `protobuf` in /homework1/protobuf, please read about it.
-
+Task: compute the length of one polyline (message `Polyline` in `/homework/protobuf/proto/geometry.proto`)
+and test the correctness via unittests.
