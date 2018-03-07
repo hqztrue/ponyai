@@ -3,7 +3,6 @@
 #include "homework2/pointcloud.h"
 
 PointCloud ReadPointCloudFromTxtFile(const std::string& file_name) {
-  LOG(INFO) << "file_name: " << file_name;
   FILE* file = CHECK_NOTNULL(std::fopen(file_name.c_str(), "r"));
   PointCloud pointcloud;
   Eigen::Vector3d translation = Eigen::Vector3d::Zero();

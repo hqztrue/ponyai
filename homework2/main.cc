@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#include <glog/logging.h>
-
 #include "homework2/pointcloud.h"
 
 int main() {
