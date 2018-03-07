@@ -34,4 +34,12 @@ http_archive(
     sha256 = "8e0236242106e680b4f9f576cc44b8cd711e948b20a9fc07769b0a20ceab9cc4",
 )
 
+# eigen
+new_http_archive(
+    name = "eigen",
+    urls = ["http://bitbucket.org/eigen/eigen/get/3.3.4.tar.gz"],
+    build_file = "utils/bazel/eigen.BUILD",
+    strip_prefix = "eigen-eigen-5a0156e40feb",
+    sha256 = "4286e8f1fabbd74f7ec6ef8ef31c9dbc6102b9248a8f8327b04f5b68da5b05e1",
+)
 
