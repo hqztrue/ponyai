@@ -12,8 +12,8 @@ struct PointCloud {
   std::vector<Eigen::Vector3d> points;
 
   // Rotation and translation to transform LiDAR points to world coordinate system.
-  Eigen::Matrix3d rotation;
-  Eigen::Vector3d translation;
+  Eigen::Matrix3d rotation = Eigen::Matrix3d::Identity();
+  Eigen::Vector3d translation = Eigen::Vector3d::Zero();
 };
 
 PointCloud ReadPointCloudFromTextFile(const std::string& file_name);
