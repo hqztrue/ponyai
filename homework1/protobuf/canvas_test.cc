@@ -19,4 +19,20 @@ TEST(Canvas, Serialization) {
   EXPECT_NEAR(3.0, other_canvas.GetPoint(0).z(), 1e-6);
 }
 
+TEST(Canvas, Polyline) {
+  Canvas canvas;
+  canvas.AddPoint_(0.0, 0.0, 0.0);
+  canvas.AddPoint_(1.0, 0.0, 0.0);
+  canvas.AddPoint_(1.0, 1.0, 0.0);
+  canvas.AddPoint_(1.0, 1.0, 1.0);
+  
+  
+  const std::string serialization = canvas.SerializeToString_();
+
+  Canvas other_canvas;
+  other_canvas.ParseFromString_(serialization);
+  //ASSERT_EQ(1, other_canvas.point_size());
+  EXPECT_NEAR(3.0, other_canvas.length(), 1e-6);
+}
 }  // namespace homework1
+

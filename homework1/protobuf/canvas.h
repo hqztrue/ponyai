@@ -17,14 +17,21 @@ class Canvas {
 
   void AddPoint(double x, double y, double z);
   void AddPoint(const homework1::geometry::Point3D& p);
+  void AddPoint_(double x, double y, double z);
+  void AddPoint_(const homework1::geometry::Point3D& p);
+  double length()const;
   const homework1::geometry::Point3D& GetPoint(int index) const;
 
   void ParseFromString(const std::string& serialzation);
   const std::string SerializeToString() const;
+  void ParseFromString_(const std::string& serialzation);
+  const std::string SerializeToString_() const;
 
  private:
   homework1::geometry::Polygon polygon_;
+  homework1::geometry::Polyline polyline_;
 };
 
 }  // namespace homework1
+
 
