@@ -1,2 +1,2 @@
-
+Most lidar points have a small height, which means they distributes on the ground plane. The number of points decreases when height increases. The number of points decreases when range increases, which means the point cloud is denser when the points are near the lidar, which is guaranteed by the property of lidar. 
 

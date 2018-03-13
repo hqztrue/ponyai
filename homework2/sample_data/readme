@@ -1,0 +1,7 @@
+Folder structure:
+--VelodyneDevice32c (Lidar name)
+	--XX.txt
+--GigECameraDeviceTelephoto (Left camera name)
+	--XX.jpg
+--GigECameraDeviceWideAngle (Right camera name)
+	--XX.jpg

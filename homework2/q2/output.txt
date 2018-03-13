@@ -1,0 +1,13 @@
+n=49177
+#Tries=10050
+best23355 i=0
+best33171 i=1
+best34202 i=30
+best34242 i=198
+best34385 i=379
+#Tries'=1000
+trans -0.00100 -0.01447 -1.00000
+RANSAC plane parameters [A, B, C, X0, Y0, Z0]
+[-0.000995344, -0.0144717, -1, 1.57443, -0.472548, -1.51372]
+Percentage of points which were used for final estimate: 0.699209
+
