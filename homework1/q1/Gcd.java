@@ -1,4 +1,4 @@
-package test;
+package q1;
 
 import java.io.*;
 import java.util.*;

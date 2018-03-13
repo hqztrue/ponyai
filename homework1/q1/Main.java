@@ -1,6 +1,6 @@
 //gcd
-package test;
-import test.Gcd;
+package q1;
+import q1.Gcd;
 
 import java.io.*;
 import java.util.*;
