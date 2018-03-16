@@ -4,6 +4,9 @@
 
 #include "Eigen/Core"
 #include "Eigen/Geometry"
+#include<iostream>
+#include<cmath>
+using namespace std;
 
 namespace homework3 {
 
