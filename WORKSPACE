@@ -43,3 +43,10 @@ new_http_archive(
     sha256 = "4286e8f1fabbd74f7ec6ef8ef31c9dbc6102b9248a8f8327b04f5b68da5b05e1",
 )
 
+# opencv
+new_local_repository(
+    name = "opencv",
+    build_file = "utils/bazel/opencv.BUILD",
+    path = "/usr",
+)
+

@@ -12,7 +12,7 @@ Generally speaking, the Pointcloud is a collection of 3D points. Each point lies
 
 Try to visualize the Pointcloud first (You can use any visualization method that you are familiar) and get familiar with the 3D world perceived by Lidar, since you will work on the Pointcloud a lot during this course. Our first task is using a histogram to find out the distribution over point's **range** and **height**. Here the range is defined as the length of each point's 3d vector (origin is (0,0,0)) and height is simply its z value. Try to plot those histograms and get deeper insight about how those lidar points distribute.
 
-**What to submit:** Your C++ code with two histogram figures and write down a short description about what you find from those histograms.
+**What to submit:** Your code (you can use any language for generating the histogram) with two histogram figures and write down a short description about what you find from those histograms.
 
 ### 2. Separate the ground points from Pointcloud(**Open-ended task**)
 Now you are familiar with our Pointcloud data and let's start to work on some more advanced tasks! In order to determine the real obstacles in Pointcloud, we first need to know which points belong to the ground and which are not. In autonomous driving domain, the ground can be considered as the area that our vehicle can drive without considering the traffic regulation. For example,
