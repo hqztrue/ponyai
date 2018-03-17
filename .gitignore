@@ -1,12 +1,5 @@
-bazel-PublicCourse
-bazel-bin
-bazel-genfiles
-bazel-out
-bazel-testlogs
-bazel-ponyai
 bazel-*
 .idea/
 .vscode/
 cmake-build-debug
 CMakeLists.txt
-

@@ -1,0 +1,147 @@
+# Adapted from the CROSSTOOL shipped with bazel.
+
+major_version: "local"
+minor_version: ""
+default_target_cpu: "same_as_host"
+
+default_toolchain {
+  cpu: "k8"
+  toolchain_identifier: "local_linux"
+}
+
+toolchain {
+  abi_version: "local"
+  abi_libc_version: "local"
+  builtin_sysroot: ""
+  compiler: "compiler"
+  host_system_name: "local"
+  needsPic: false
+  supports_gold_linker: false
+  supports_incremental_linker: false
+  supports_fission: false
+  supports_interface_shared_objects: false
+  supports_normalizing_ar: false
+  supports_start_end_lib: false
+  target_libc: "local"
+  target_cpu: "local"
+  target_system_name: "local"
+  toolchain_identifier: "local_linux"
+
+  tool_path { name: "ar" path: "/usr/bin/ar" }
+  tool_path { name: "compat-ld" path: "/usr/bin/ld" }
+  tool_path { name: "cpp" path: "/usr/bin/clang-3.8" }
+  tool_path { name: "dwp" path: "/usr/bin/dwp" }
+  tool_path { name: "gcc" path: "/usr/bin/clang-3.8" }
+  cxx_flag: "-std=c++14"
+  linker_flag: "-lstdc++"
+  linker_flag: "-lm"
+  linker_flag: "-B/usr/bin/"
+
+  cxx_builtin_include_directory: "/usr/lib/llvm-3.8/lib/clang/3.8.0/include"
+  cxx_builtin_include_directory: "/usr/lib/clang/3.8.0/include"
+  cxx_builtin_include_directory: "/usr/include"
+  tool_path { name: "gcov" path: "/usr/bin/gcov" }
+
+  # C(++) compiles invoke the compiler (as that is the one knowing where
+  # to find libraries), but we provide LD so other rules can invoke the linker.
+  tool_path { name: "ld" path: "/usr/bin/ld" }
+
+  tool_path { name: "nm" path: "/usr/bin/nm" }
+  tool_path { name: "objcopy" path: "/usr/bin/objcopy" }
+  objcopy_embed_flag: "-I"
+  objcopy_embed_flag: "binary"
+  tool_path { name: "objdump" path: "/usr/bin/objdump" }
+  tool_path { name: "strip" path: "/usr/bin/strip" }
+
+  # Anticipated future default.
+  unfiltered_cxx_flag: "-no-canonical-prefixes"
+
+  # Make C++ compilation deterministic. Use linkstamping instead of these
+  # compiler symbols.
+  unfiltered_cxx_flag: "-Wno-builtin-macro-redefined"
+  unfiltered_cxx_flag: "-D__DATE__=\"redacted\""
+  unfiltered_cxx_flag: "-D__TIMESTAMP__=\"redacted\""
+  unfiltered_cxx_flag: "-D__TIME__=\"redacted\""
+
+  # Warnings.
+  compiler_flag: "-Wall"
+  # compiler_flag: "-Werror"
+
+  compiler_flag: "-Wmissing-field-initializers"
+  compiler_flag: "-Wswitch"
+  compiler_flag: "-Wthread-safety"
+  compiler_flag: "-Wunused-parameter"
+  compiler_flag: "-Wno-sign-compare"
+  compiler_flag: "-Wno-bitfield-constant-conversion"
+  compiler_flag: "-Wno-parentheses"
+  compiler_flag: "-Wno-deprecated-declarations"
+  compiler_flag: "-Wno-deprecated-register"
+  compiler_flag: "-Wno-unused-local-typedef"
+
+  # Security hardening on by default.
+  # Conservative choice; -D_FORTIFY_SOURCE=2 may be unsafe in some cases.
+  # We need to undef it before redefining it as some distributions now have
+  # it enabled by default.
+  compiler_flag: "-U_FORTIFY_SOURCE"
+  compiler_flag: "-D_FORTIFY_SOURCE=1"
+  compiler_flag: "-fstack-protector"
+  linker_flag: "-Wl,-z,relro,-z,now"
+
+  # Required by tcmalloc.
+  compiler_flag: "-fno-builtin-malloc"
+  compiler_flag: "-fno-builtin-calloc"
+  compiler_flag: "-fno-builtin-realloc"
+  compiler_flag: "-fno-builtin-free"
+  linker_flag: "-fno-builtin-malloc"
+  linker_flag: "-fno-builtin-calloc"
+  linker_flag: "-fno-builtin-realloc"
+  linker_flag: "-fno-builtin-free"
+
+  # Add -fPIC.
+  compiler_flag: "-fPIC"
+
+  # Enable coloring even if there's no attached terminal. Bazel removes the
+  # escape sequences if --nocolor is specified. This isn't supported by gcc
+  # on Ubuntu 14.04.
+  # compiler_flag: "-fcolor-diagnostics"
+
+  # Keep stack frames for debugging, even in opt mode.
+  compiler_flag: "-fno-omit-frame-pointer"
+
+  # Anticipated future default.
+  linker_flag: "-no-canonical-prefixes"
+
+  compilation_mode_flags {
+    mode: DBG
+    # Enable debug symbols.
+    compiler_flag: "-g"
+  }
+  compilation_mode_flags {
+    mode: OPT
+
+    # No debug symbols.
+    # Maybe we should enable https://gcc.gnu.org/wiki/DebugFission for opt or
+    # even generally? However, that can't happen here, as it requires special
+    # handling in Bazel.
+    compiler_flag: "-g0"
+
+    # Conservative choice for -O
+    # -O3 can increase binary size and even slow down the resulting binaries.
+    # Profile first and / or use FDO if you need better performance than this.
+    compiler_flag: "-O2"
+
+    # Disable assertions
+    compiler_flag: "-DNDEBUG"
+
+    # Removal of unused code and data at link time (can this increase binary size in some cases?).
+    compiler_flag: "-ffunction-sections"
+    compiler_flag: "-fdata-sections"
+    linker_flag: "-Wl,--gc-sections"
+
+    # Tune for Intel Haswell CPUs and all newer CPUs
+    compiler_flag: "-mtune=haswell"
+    compiler_flag: "-march=haswell"
+  }
+
+  linking_mode_flags { mode: MOSTLY_STATIC }
+}
