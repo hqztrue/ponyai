@@ -21,7 +21,7 @@ namespace display {
 PainterWidgetBase::PainterWidgetBase(Options options, QWidget* parent)
     : QOpenGLWidget(parent), options_(options) {
   painter_widget_controller_ =
-      std::make_unique<PncPainterWidgetController>(options_.screen_coord_system);
+      std::make_unique<PainterWidgetController>(options_.screen_coord_system);
   CHECK_NOTNULL(painter_widget_controller_.get());
   setMouseTracking(options.set_mouse_tracking);
   setAutoFillBackground(options.set_auto_fill_background);

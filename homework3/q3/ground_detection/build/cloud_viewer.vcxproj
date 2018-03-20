@@ -1,0 +1,527 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{70644ED7-F3A0-39C0-8156-53EFFC9A334B}</ProjectGUID>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>cloud_viewer</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="E:\megvii\Opencv2.4.7_Release_new.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="E:\megvii\Opencv2.4.7_Debug_new.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Toolbox\PCL 1.7.2\PCLEg\build\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cloud_viewer.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cloud_viewer</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cloud_viewer</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.exe</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Toolbox\PCL 1.7.2\PCLEg\build\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cloud_viewer.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cloud_viewer</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cloud_viewer</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.exe</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\Toolbox\PCL 1.7.2\PCLEg\build\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">cloud_viewer.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">cloud_viewer</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">cloud_viewer</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.exe</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">true</GenerateManifest>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\Toolbox\PCL 1.7.2\PCLEg\build\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">cloud_viewer.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">cloud_viewer</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">cloud_viewer</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.exe</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</GenerateManifest>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <LibraryPath>C:\Program Files\PCL 1.7.2\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>D:\Opencv2.4.7_64Bit\lib;C:\Program Files\PCL 1.7.2\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <LibraryPath>C:\Program Files\PCL 1.7.2\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LibraryPath>D:\Opencv2.4.7_64Bit\lib;C:\Program Files\PCL 1.7.2\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X64 /debug %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;pcl_visualization.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_debug.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s-gd.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_debug.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic_d.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_debug.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic_d.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCharts-gd.lib;opencv_core.lib;opencv_imgproc.lib;opencv_highgui.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_debug.lib;opencv_core.lib;opencv_imgproc.lib;opencv_highgui.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkViews-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkInfovis-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkWidgets-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkHybrid-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkVolumeRendering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkRendering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkGraphics-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkImaging-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkIO-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkFiltering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCommon-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtksys-gd.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>/usr/lib/x86_64-linux-gnu;/usr/lib/x86_64-linux-gnu/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Toolbox/PCL 1.7.2/PCLEg/build/Debug/cloud_viewer.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Toolbox/PCL 1.7.2/PCLEg/build/Debug/cloud_viewer.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X64 /debug %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opencv_core247d.lib;opencv_highgui247d.lib;opencv_imgproc247d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;pcl_visualization_debug.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-gd-1_55.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_debug.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s-gd.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_debug.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic_d.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_debug.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_debug.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCharts-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkViews-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkInfovis-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkWidgets-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkHybrid-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkVolumeRendering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkRendering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkGraphics-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkImaging-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkIO-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkFiltering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCommon-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtksys-gd.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>/usr/lib/x86_64-linux-gnu;/usr/lib/x86_64-linux-gnu/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Toolbox/PCL 1.7.2/PCLEg/build/Debug/cloud_viewer.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Toolbox/PCL 1.7.2/PCLEg/build/Debug/cloud_viewer.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X64 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;pcl_visualization.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCharts.lib;opencv_core.lib;opencv_imgproc.lib;opencv_highgui.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_release.lib;opencv_core.lib;opencv_imgproc.lib;opencv_highgui.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkViews.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkInfovis.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkWidgets.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkHybrid.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkVolumeRendering.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkRendering.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkGraphics.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkImaging.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkIO.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkFiltering.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCommon.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtksys.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>/usr/lib/x86_64-linux-gnu;/usr/lib/x86_64-linux-gnu/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Toolbox/PCL 1.7.2/PCLEg/build/Release/cloud_viewer.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Toolbox/PCL 1.7.2/PCLEg/build/Release/cloud_viewer.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X64 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opencv_core247.lib;opencv_highgui247.lib;opencv_imgproc247.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;pcl_visualization_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCharts.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkViews.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkInfovis.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkWidgets.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkHybrid.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkVolumeRendering.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkRendering.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkGraphics.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkImaging.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkIO.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkFiltering.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCommon.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtksys.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>/usr/lib/x86_64-linux-gnu;/usr/lib/x86_64-linux-gnu/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Toolbox/PCL 1.7.2/PCLEg/build/Release/cloud_viewer.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Toolbox/PCL 1.7.2/PCLEg/build/Release/cloud_viewer.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X64 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;pcl_visualization.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCharts-gd.lib;opencv_core.lib;opencv_imgproc.lib;opencv_highgui.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_release.lib;opencv_core.lib;opencv_imgproc.lib;opencv_highgui.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkViews-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkInfovis-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkWidgets-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkHybrid-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkVolumeRendering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkRendering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkGraphics-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkImaging-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkIO-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkFiltering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCommon-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtksys-gd.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>/usr/lib/x86_64-linux-gnu;/usr/lib/x86_64-linux-gnu/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Toolbox/PCL 1.7.2/PCLEg/build/MinSizeRel/cloud_viewer.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Toolbox/PCL 1.7.2/PCLEg/build/MinSizeRel/cloud_viewer.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X64 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;pcl_visualization_debug.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCharts-gd.lib;opencv_core.lib;opencv_imgproc.lib;opencv_highgui.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_release.lib;opencv_core.lib;opencv_imgproc.lib;opencv_highgui.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkViews-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkInfovis-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkWidgets-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkHybrid-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkVolumeRendering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkRendering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkGraphics-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkImaging-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkIO-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkFiltering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCommon-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtksys-gd.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>/usr/lib/x86_64-linux-gnu;/usr/lib/x86_64-linux-gnu/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Toolbox/PCL 1.7.2/PCLEg/build/MinSizeRel/cloud_viewer.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Toolbox/PCL 1.7.2/PCLEg/build/MinSizeRel/cloud_viewer.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X64 /debug %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;pcl_visualization.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCharts-gd.lib;opencv_core.lib;opencv_imgproc.lib;opencv_highgui.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_release.lib;opencv_core.lib;opencv_imgproc.lib;opencv_highgui.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkViews-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkInfovis-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkWidgets-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkHybrid-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkVolumeRendering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkRendering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkGraphics-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkImaging-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkIO-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkFiltering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCommon-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtksys-gd.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>/usr/lib/x86_64-linux-gnu;/usr/lib/x86_64-linux-gnu/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Toolbox/PCL 1.7.2/PCLEg/build/RelWithDebInfo/cloud_viewer.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Toolbox/PCL 1.7.2/PCLEg/build/RelWithDebInfo/cloud_viewer.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DISABLE_OPENNI;DISABLE_PCAP;DISABLE_PNG;EIGEN_USE_NEW_STDVECTOR;EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET;BOOST_ALL_NO_LIB;FLANN_STATIC;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Program Files\PCL 1.7.2\3rdParty\VTK\include\vtk-5.10;C:\Program Files\PCL 1.7.2\include\pcl-1.7;C:\Program Files\PCL 1.7.2\3rdParty\Eigen\eigen3;C:\Program Files\PCL 1.7.2\3rdParty\Boost\include\boost-1_55;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\include;C:\Program Files\PCL 1.7.2\3rdParty\QHull\include;\usr\include\boost;\usr\include\pcl-1.7;\usr\include\eigen3;\usr\include\opencv2;\usr\include\opencv;\usr\include\vtk-6.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X64 /debug %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;pcl_visualization_debug.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_release.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_system-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_filesystem-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_thread-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_date_time-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_iostreams-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_mpi-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_serialization-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\Boost\lib\libboost_chrono-vc120-mt-1_55.lib;C:\Program Files\PCL 1.7.2\3rdParty\QHull\lib\qhullstatic.lib;C:\Program Files\PCL 1.7.2\3rdParty\FLANN\lib\flann_cpp_s.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCharts-gd.lib;opencv_core.lib;opencv_imgproc.lib;opencv_highgui.lib;C:\Program Files\PCL 1.7.2\lib\pcl_common_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_octree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_io_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_kdtree_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_search_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_sample_consensus_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_filters_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_features_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_ml_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_segmentation_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_visualization_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_surface_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_registration_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_keypoints_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_tracking_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_recognition_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_stereo_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_outofcore_release.lib;C:\Program Files\PCL 1.7.2\lib\pcl_people_release.lib;opencv_core.lib;opencv_imgproc.lib;opencv_highgui.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkViews-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkInfovis-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkWidgets-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkHybrid-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkVolumeRendering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkRendering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkGraphics-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkImaging-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkIO-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkFiltering-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtkCommon-gd.lib;C:\Program Files\PCL 1.7.2\3rdParty\VTK\lib\vtk-5.10\vtksys-gd.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>/usr/lib/x86_64-linux-gnu;/usr/lib/x86_64-linux-gnu/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Toolbox/PCL 1.7.2/PCLEg/build/RelWithDebInfo/cloud_viewer.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Toolbox/PCL 1.7.2/PCLEg/build/RelWithDebInfo/cloud_viewer.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\cloud_viewer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

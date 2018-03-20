@@ -14,10 +14,10 @@
 namespace utils {
 namespace display {
 
-class PncPainterWidgetController {
+class PainterWidgetController {
  public:
-  explicit PncPainterWidgetController(ScreenCoordSystem screen_coord_sys);
-  virtual ~PncPainterWidgetController() = default;
+  explicit PainterWidgetController(ScreenCoordSystem screen_coord_sys);
+  virtual ~PainterWidgetController() = default;
   // Event Interfaces.
   virtual void KeyPressEvent(QKeyEvent* event);
   virtual void KeyReleaseEvent(QKeyEvent* event);

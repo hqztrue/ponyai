@@ -9,7 +9,7 @@ namespace {
 constexpr const char kCameraDistance[] = "display/camera_distance";
 }  // namespace
 
-PncPainterWidgetController::PncPainterWidgetController(ScreenCoordSystem screen_coord_sys)
+PainterWidgetController::PainterWidgetController(ScreenCoordSystem screen_coord_sys)
     : camera_(std::make_unique<CameraController>(screen_coord_sys)),
       mouse_(std::make_unique<MouseController>()),
       view_(std::make_unique<ViewController>(camera_.get())) {
@@ -20,10 +20,10 @@ PncPainterWidgetController::PncPainterWidgetController(ScreenCoordSystem screen_
   }
 }
 
-void PncPainterWidgetController::KeyPressEvent(QKeyEvent* /*event*/) {}
-void PncPainterWidgetController::KeyReleaseEvent(QKeyEvent* /*event*/) {}
+void PainterWidgetController::KeyPressEvent(QKeyEvent* /*event*/) {}
+void PainterWidgetController::KeyReleaseEvent(QKeyEvent* /*event*/) {}
 
-void PncPainterWidgetController::WheelEvent(QWheelEvent* event) {
+void PainterWidgetController::WheelEvent(QWheelEvent* event) {
   if (event->delta() > 0) {
     camera_->ZoomIn();
   } else {
@@ -33,7 +33,7 @@ void PncPainterWidgetController::WheelEvent(QWheelEvent* event) {
   qsettings.setValue(kCameraDistance, camera_->distance());
 }
 
-void PncPainterWidgetController::MousePressEvent(QMouseEvent* event) {
+void PainterWidgetController::MousePressEvent(QMouseEvent* event) {
   camera_->MarkAsReference();
   mouse_->UpdateMouseLocation(event->pos().x(), event->pos().y());
 
@@ -44,12 +44,12 @@ void PncPainterWidgetController::MousePressEvent(QMouseEvent* event) {
   }
 }
 
-void PncPainterWidgetController::MouseDoubleClickEvent(QMouseEvent* event) {
+void PainterWidgetController::MouseDoubleClickEvent(QMouseEvent* event) {
   camera_->MarkAsReference();
   mouse_->UpdateMouseLocation(event->pos().x(), event->pos().y());
 }
 
-void PncPainterWidgetController::MouseMoveEvent(QMouseEvent* event) {
+void PainterWidgetController::MouseMoveEvent(QMouseEvent* event) {
   QPoint pos = event->pos();
   double dx = pos.x() - mouse_->mouse_location().pos_x;
   double dy = pos.y() - mouse_->mouse_location().pos_y;
@@ -62,7 +62,7 @@ void PncPainterWidgetController::MouseMoveEvent(QMouseEvent* event) {
   camera_->MarkAsReference();
 }
 
-void PncPainterWidgetController::MouseReleaseEvent(QMouseEvent* /*event*/) {
+void PainterWidgetController::MouseReleaseEvent(QMouseEvent* /*event*/) {
   mouse_->UpdateStatus(MouseStatus::kNone);
 }
 

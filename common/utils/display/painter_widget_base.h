@@ -40,10 +40,9 @@ class PainterWidgetBase : public QOpenGLWidget {
   virtual void SetupCamera();
   virtual OpenglPainter* gl_painter() = 0;
 
-  // std::unique_ptr <PncOpenglPainter> gl_painter_;
   std::unique_ptr<FontRenderer> font_renderer_;
   std::unique_ptr<LayerManager> layer_manager_;
-  std::unique_ptr<PncPainterWidgetController> painter_widget_controller_;
+  std::unique_ptr<PainterWidgetController> painter_widget_controller_;
 
  private:
   // Qt event handlers.
