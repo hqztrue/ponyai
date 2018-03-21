@@ -31,12 +31,12 @@ TEST(Rotation, RollPitchYawTest) {
 
 TEST(Rotation, AngleAxisTest) {
   Eigen::Matrix3d rotation;
-  rotation << 0.99505412, -0.03004994, 0.01981681,
-              0.02985011, 0.995204, 0.01028309,
-              -0.02011656, -0.00968359, 0.99545379;
+  rotation << 0.99934681, -0.03017958, 0.0199023,
+              0.02997888, 0.99949734, 0.01032745,
+              -0.02020334, -0.00972537, 0.99974821;
   auto angle_axis = ToAngleAxis(rotation);
   EXPECT_NEAR(1.0, angle_axis.axis().norm(), 3e-2);
-  EXPECT_NEAR(0.1, std::abs(angle_axis.angle()), 3e-2);
+  EXPECT_NEAR(0.037, std::abs(angle_axis.angle()), 3e-2);
   EXPECT_NEAR(-2 * angle_axis.angle() * angle_axis.axis().x(),
               angle_axis.angle() * angle_axis.axis().y(), 3e-2);
   EXPECT_NEAR(-3 * angle_axis.angle() * angle_axis.axis().x(),
@@ -46,4 +46,5 @@ TEST(Rotation, AngleAxisTest) {
 
 }  // namespace
 }  // namespace homework3
+
 
