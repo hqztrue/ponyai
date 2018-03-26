@@ -50,3 +50,34 @@ proto_library(
     name = "status_proto",
     srcs = ["status.proto"],
 )
+
+cc_proto_library(
+    name = "cc_object_labeling_3d_proto",
+    deps = [
+        ":object_labeling_3d_proto",
+    ],
+)
+
+proto_library(
+    name = "object_labeling_3d_proto",
+    srcs = ["object_labeling_3d.proto"],
+    deps = [
+        ":geometry_proto",
+        ":perception_proto",
+    ],
+)
+
+cc_proto_library(
+    name = "cc_perception_proto",
+    deps = [
+        ":perception_proto",
+    ],
+)
+
+proto_library(
+    name = "perception_proto",
+    srcs = ["perception.proto"],
+    deps = [
+        ":geometry_proto",
+    ],
+)
