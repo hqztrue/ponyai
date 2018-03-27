@@ -11,9 +11,11 @@ Now, you guys have been familiar with pointcloud data and have learnt about cali
 ### 1. Get familiar with transformation representation.
 When we want to rotate something in 3D space, we have many representations for the rotation. For example, roll-pitch-yaw is intuitive and used in airplanes; angle-axis is intuitive and clean, and rotation matrix is easy to use in computation. Among these three, rotation matrix is typically not easy for people to imagine. However, if you convert it to another format, you would be clear what it means.
 
-Your task is to implement the conversion from rotation matrix to roll-pitch-yaw and angle-axis representations. For roll-pitch-yaw representation, the rotation intrinsic is roll->pitch->yaw. That is, the rotation sequence is **R(yaw) * R(pitch) * R(roll)**.
+Your task is to implement the conversion from rotation matrix to roll-pitch-yaw and angle-axis representations. For roll-pitch-yaw representation, the rotation intrinsic is roll->pitch->yaw. That is, the rotation sequence is **R(yaw) * R(pitch) * R(roll)**. There may be multiple solutions for the input. You can add a reasonable constraint to the result to get the test passed. For example, you can require `roll >= 0`.
 
-**What to submit:** Your C++ implementation of rotation/rotation_test.cc to pass the unit tests non-trivially. Note, you should implement the conversion by yourself instead of using any existing APIs. 
+**What to submit:** Your C++ implementation of rotation/rotation_test.cc to pass the unit tests non-trivially. Note, you should implement the conversion by yourself instead of using any existing APIs.
+
+** Note that the test has been updated. Please update to the latest version. Thanks to @hqztrue and @Chenyao2333 for pointing out the mistakes. **
 
 ### 2. Chessboard distortion
 
@@ -34,10 +36,10 @@ Detecting ground typically requires multiple frames to be accurate.
 Your task is to detect the ground based on multiple adjacent pointcloud frames.
 This could be done by the following steps.
 - convert the pointcloud of multiple continuous frames to world coordinate system and you will get an accumulated pointcloud with a lot more points compared to one single pointcloud.
-- Try the following method to improve your ground detection method: 
-  1. Project the accumulated pointcloud to an image with each pixel represents a 0.5m by 0.5m square on XY plane in world coordinate.(You can use cv::Mat to represent an image.) For example, an image with size 200 by 200 and resolution 0.5m can represents the area 100m by 100m on XY plane in world coordinate; 
-  2. Use the lowest Z value in the world coordinate system as the value for each pixel; 
-  3. Given a reasonable threshold, the points which are below the lowest Z value plus this predefined threshold are considered as ground points. 
-- outputs the ground image by using OpenCV or other proper tools. 
+- Try the following method to improve your ground detection method:
+  1. Project the accumulated pointcloud to an image with each pixel represents a 0.5m by 0.5m square on XY plane in world coordinate.(You can use cv::Mat to represent an image.) For example, an image with size 200 by 200 and resolution 0.5m can represents the area 100m by 100m on XY plane in world coordinate;
+  2. Use the lowest Z value in the world coordinate system as the value for each pixel;
+  3. Given a reasonable threshold, the points which are below the lowest Z value plus this predefined threshold are considered as ground points.
+- outputs the ground image by using OpenCV or other proper tools.
 
 **What to submit:** Your C++ code to find the ground points and your ground image.

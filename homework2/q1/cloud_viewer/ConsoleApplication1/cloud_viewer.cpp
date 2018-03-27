@@ -86,7 +86,8 @@ int main()
 		xmax = max(xmax, p.x);
 		ymax = max(ymax, p.y);
 		p.b = b; p.g = g; p.r = r;
-		//if (p.r == 0)cloud->points.push_back(p);
+		//if (p.r == 0)
+		cloud->points.push_back(p);
 		//printf("%.5f %d\n", p.x, (int)p.r);
 	}
 	/*for (int i = 1; i <= 10000; ++i){
