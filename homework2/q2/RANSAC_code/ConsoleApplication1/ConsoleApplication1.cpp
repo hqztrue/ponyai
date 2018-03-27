@@ -35,7 +35,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 
-	FILE *fin = fopen("D:\\1.txt", "r");
+	FILE *fin = fopen("D:\\0.txt", "r");
 	int n = 0, n1 = 0;
 	//int r = 255, g = 0, b = 0;
 	while (1){
@@ -67,7 +67,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	printf("n=%d\n", n);
 
-	PlaneParamEstimator lpEstimator(1);  //lpEstimator(0.1);
+	PlaneParamEstimator lpEstimator(0.25);  //lpEstimator(0.1);
 	int numForEstimate = 3;
 
 	//double usedData = Ransac<point3D, double>::compute(planeParameters, &lpEstimator, pointData, numForEstimate);

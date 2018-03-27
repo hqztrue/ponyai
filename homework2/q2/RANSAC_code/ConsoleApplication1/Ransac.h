@@ -83,7 +83,7 @@ private:
 template<class T, class S>
 double Ransac<T, S>::compute(vector<S> &parameters, ParameterEstimator<T, S> *paramEstimator, vector<T> &data, short *&bestVotes, int numForEstimate, double desiredProbabilityForNoOutliers, double maximalOutlierPercentage)
 {
-	int numDataObjects = data.size();
+	int numDataObjects = (int)data.size();
 	if (numDataObjects < numForEstimate || maximalOutlierPercentage >= 1.0)return 0;
 
 	vector<T *> exactEstimateData;
@@ -175,7 +175,7 @@ double Ransac<T, S>::compute(vector<S> &parameters, ParameterEstimator<T, S> *pa
 				maximalOutlierPercentage = outlierPercentage;
 				denominator = log(1 - pow(1 - maximalOutlierPercentage, numForEstimate));
 				numTries = (int)(numerator / denominator + 0.5);
-				numTries = 1000;  //1000
+				numTries = 10000;  //1000
 			}
 		}
 		else
