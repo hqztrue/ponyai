@@ -81,3 +81,62 @@ proto_library(
         ":geometry_proto",
     ],
 )
+
+
+cc_proto_library(
+    name = "cc_map_proto",
+    deps = [
+        ":map_proto",
+    ],
+)
+
+proto_library(
+    name = "map_proto",
+    srcs = ["map.proto"],
+    deps = [
+        ":map_lane_proto",
+    ],
+)
+
+cc_proto_library(
+    name = "cc_map_id_proto",
+    deps = [
+        "map_id_proto",
+    ],
+)
+
+proto_library(
+    name = "map_id_proto",
+    srcs = ["map_id.proto"],
+)
+
+cc_proto_library(
+    name = "cc_map_lane_proto",
+    deps = [
+        ":map_lane_proto",
+    ],
+)
+
+proto_library(
+    name = "map_lane_proto",
+    srcs = ["map_lane.proto"],
+    deps = [
+        ":map_id_proto",
+        ":geometry_proto",
+    ],
+)
+
+cc_proto_library(
+    name = "cc_route_proto",
+    deps = [
+        ":route_proto",
+    ],
+)
+
+proto_library(
+    name = "route_proto",
+    srcs = ["route.proto"],
+    deps = [
+        ":geometry_proto",
+    ],
+)

@@ -19,7 +19,7 @@ Your task is to implement the conversion from rotation matrix to roll-pitch-yaw 
 
 ### 2. Chessboard distortion
 
-Chessboard is commonly used in camera calibration. Before calibration, the photo on the chessboard has some distortions like shown in the [chessboard/chessboard.png](https://github.com/ponyai/PublicCourseInternalReview/blob/master/homework3/chessboard/chessboard.png). Getting the intrinsic parameters is complex. However, if you have the intrinsic parameters, you could get a distorted image easily.
+Chessboard is commonly used in camera calibration. Before calibration, the photo on the chessboard has some distortions like shown in the [chessboard/chessboard.png](https://github.com/ponyai/PublicCourse/blob/master/homework3/chessboard/chessboard.png). Getting the intrinsic parameters is complex. However, if you have the intrinsic parameters, you could get a distorted image easily.
 
 Your task is as follows:
 - Load chessboard/chessboard_undistorted.png.
@@ -29,7 +29,7 @@ Your task is as follows:
 **What to submit:** Your C++ code to generate chessboard and distorted image, and both images.
 
 ### 3. Ground detection (**Open-ended task**)
-In homework2, we provided some frames of [pointcloud](https://github.com/ponyai/PublicCourseInternalReview/blob/master/homework2/sample_data.tar.gz) and [a picture for ground points](https://github.com/ponyai/PublicCourseInternalReview/blob/master/homework2/ground_only.png).
+In homework2, we provided some frames of [pointcloud](https://github.com/ponyai/PublicCourse/blob/master/homework2/sample_data.tar.gz) and [a picture for ground points](https://github.com/ponyai/PublicCourse/blob/master/homework2/ground_only.png).
 Actually, It is hard to generate ground from single frame 32c Lidar data.
 Detecting ground typically requires multiple frames to be accurate.
 
