@@ -4,7 +4,7 @@ Now, you guys have been familiar with pointcloud data and have learnt about cali
 
 ## New dependency: opencv
 
-[opencv](https://opencv.org/) is a package for image processing. It provides useful computation utilities and display functions. An example is provided under the chessboard folder. It will be used in problem 2 & 3 in this homework. **Note: you will need to install OpenCV yourself following [this tutorial](https://docs.opencv.org/trunk/d7/d9f/tutorial_linux_install.html).**
+[opencv](https://opencv.org/) is a package for image processing. It provides useful computation utilities and display functions. An example is provided under the chessboard folder. It will be used in problem 2 & 3 in this homework. **Note: you will need to install OpenCV yourself following [this tutorial](https://docs.opencv.org/trunk/d7/d9f/tutorial_linux_install.html) or simply `sudo apt-get install libopencv-dev python-opencv`.** The second method may be easier for using the BUILD file directly.
 
 ## Homework
 
