@@ -77,8 +77,8 @@ std::vector<PixelInfo> ProjectPointCloudToImage(
    
   for (int i=0;i<pointcloud.points.size();++i){
 	  Eigen::Vector3d p = pointcloud.points[i];
-	  Eigen::Matrix3d m = pointcloud.rotation;
-	  Eigen::Vector3d t = pointcloud.translation;
+	  Eigen::Matrix3d r = extrinsic.rotation();
+	  Eigen::Vector3d t = extrinsic.translation();
 	  Eigen::Vector3d p1 = Eigen::Vector3d(r(0,0)*p(0)+r(0,1)*p(1)+r(0,2)*p(2)+t(0),r(1,0)*p(0)+r(1,1)*p(1)+r(1,2)*p(2)+t(1),r(2,0)*p(0)+r(2,1)*p(1)+r(2,2)*p(2)+t(2));
 	  ImageUV uv = Project3dPointToImage(p1, intrinsic);
 	  if (uv.u<0||uv.u>=image_width||uv.v<0||uv.v>=image_height)continue;
