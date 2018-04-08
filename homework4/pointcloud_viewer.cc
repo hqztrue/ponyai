@@ -53,6 +53,7 @@ void PointCloudViewer::keyPressEvent(QKeyEvent* event) {
 
       // Load object label if there is a corresponding one.
       labels_.clear();
+	  obstacles_.clear();
       if (data_label_map_.count(pointcloud_file)) {
         interface::object_labeling::ObjectLabels object_labels;
         CHECK(file::ReadFileToProto(data_label_map_[pointcloud_file], &object_labels));
@@ -66,6 +67,23 @@ void PointCloudViewer::keyPressEvent(QKeyEvent* event) {
             label.polygon.emplace_back(point.x(), point.y());
           }
           label.ceiling = label.floor + object.height();
+		  
+		  obstacles_.emplace_back();
+		  interface::perception::PerceptionObstacle& obstacle = obstacles_.back();
+		  obstacle.set_id(object.id());
+		  obstacle.set_heading(object.heading());
+		  obstacle.set_height(object.height());
+		  for (const auto& point : object.polygon().point()) {
+			interface::geometry::Point3D *ppoint = obstacle.add_polygon_point();
+			ppoint->set_x(point.x());ppoint->set_y(point.y());ppoint->set_z(point.z());
+          }
+		  obstacle.set_type(object.type());
+		  
+		  for (const auto& point : points_){
+			if (!within(point, object))continue;
+			interface::geometry::Point3D *ppoint = obstacle.add_object_points();
+			ppoint->set_x(point[0]);ppoint->set_y(point[1]);ppoint->set_z(point[2]);
+		  }
         }
       }
 
@@ -117,3 +135,15 @@ void PointCloudViewer::DrawPointCloudLabel(const PointCloudLabel& label) {
       utils::ConstArrayView<math::Vec2d>(label.polygon.data(), label.polygon.size()),
       label.ceiling, label.floor, default_prism_style_);
 }
+
+bool within(const math::Vec3<double> &point, const interface::object_labeling::ObjectLabel &object){
+	const double PI = 4*atan(1);
+	//if (fabs(point[2]-0)>height)return 0;
+	double distl = (point[0]-object.center_x())*cos(object.heading())+(point[1]-object.center_y())*sin(object.heading());
+	if (fabs(distl)>object.length()/2)return 0;
+	double distw = (point[0]-object.center_x())*cos(object.heading()+PI/2)+(point[1]-object.center_y())*sin(object.heading()+PI/2);
+	if (fabs(distw)>object.width()/2)return 0;
+	return 1;
+}
+
+

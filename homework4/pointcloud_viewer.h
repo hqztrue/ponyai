@@ -57,6 +57,7 @@ class PointCloudViewer : public utils::display::PainterWidgetBase {
   int file_index_ = -1;
   std::vector<math::Vec3d> points_;
   std::vector<PointCloudLabel> labels_;
+  std::vector<interface::perception::PerceptionObstacle> obstacles_;
 
   std::unique_ptr<utils::display::OpenglPainter> gl_painter_;
   utils::display::OpenglPainter::SurfaceStyle default_prism_style_;
@@ -64,4 +65,8 @@ class PointCloudViewer : public utils::display::PainterWidgetBase {
 
   DISALLOW_COPY_MOVE_AND_ASSIGN(PointCloudViewer);
 };
+
+bool within(const math::Vec3<double> &point, const interface::object_labeling::ObjectLabel &object);
+
+
 
