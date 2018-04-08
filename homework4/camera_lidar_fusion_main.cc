@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
 
   const Eigen::VectorXd intrinsic = ReadCameraIntrinsic(intrinsic_file);
   const Eigen::Affine3d extrinsic = ReadRigidBodyTransform(extrinsic_file);
-  int frame_index = 0;
+  int frame_index = 63;  //0
   cv::namedWindow("fusion demo", cv::WINDOW_NORMAL);
   while (true) {
     const std::string image_path = file::path::Join(
@@ -64,6 +64,7 @@ int main(int argc, char* argv[]) {
     DrawPointCloudOnCameraImage(pc, intrinsic, extrinsic, &image);
     cv::putText(image, image_path, cv::Point(10, 30),
                 cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 0));
+	cv::imwrite("fusion_output.png", image);exit(0);
     cv::imshow("fusion demo", image);
     cv::waitKey(0);
     ++frame_index;
