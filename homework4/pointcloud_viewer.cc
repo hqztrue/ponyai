@@ -25,6 +25,8 @@ PointCloudViewer::PointCloudViewer(Options options, QWidget* parent, const std::
 
   default_point_style_.point_size = 1.0;
   default_point_style_.point_color = utils::display::Color::Green();
+  in_point_style_.point_size = 10.0;
+  in_point_style_.point_color = utils::display::Color::Blue();
 
   startTimer(100);
 }
@@ -45,6 +47,7 @@ void PointCloudViewer::keyPressEvent(QKeyEvent* event) {
       CHECK(!pointcloud_.points.empty());
       LOG(INFO) << "Load pointcloud: " << pointcloud_file;
       points_.clear();
+      points_in.clear();
       points_.reserve(pointcloud_.points.size());
       for (const auto& point : pointcloud_.points) {
         Eigen::Vector3d point_in_world = pointcloud_.rotation * point + pointcloud_.translation;
@@ -80,9 +83,12 @@ void PointCloudViewer::keyPressEvent(QKeyEvent* event) {
 		  obstacle.set_type(object.type());
 		  
 		  for (const auto& point : points_){
+        //printf("test\n");
 			if (!within(point, object))continue;
+      printf("in\n");
 			interface::geometry::Point3D *ppoint = obstacle.add_object_points();
 			ppoint->set_x(point[0]);ppoint->set_y(point[1]);ppoint->set_z(point[2]);
+      points_in.push_back(point);
 		  }
         }
       }
@@ -97,8 +103,10 @@ void PointCloudViewer::keyPressEvent(QKeyEvent* event) {
 }
 
 void PointCloudViewer::Paint3D() {
+  //gl_painter()->DrawPoints<math::Vec3d>(
+      //utils::ConstArrayView<math::Vec3d>(points_.data(), points_.size()), default_point_style_);
   gl_painter()->DrawPoints<math::Vec3d>(
-      utils::ConstArrayView<math::Vec3d>(points_.data(), points_.size()), default_point_style_);
+      utils::ConstArrayView<math::Vec3d>(points_in.data(), points_in.size()), in_point_style_);
   if (!labels_.empty()) {
     for (const auto& label : labels_) {
       DrawPointCloudLabel(label);
@@ -138,7 +146,12 @@ void PointCloudViewer::DrawPointCloudLabel(const PointCloudLabel& label) {
 
 bool within(const math::Vec3<double> &point, const interface::object_labeling::ObjectLabel &object){
 	const double PI = 4*atan(1);
-	//if (fabs(point[2]-0)>height)return 0;
+  double floor = std::numeric_limits<double>::infinity();
+  for (const auto& p : object.polygon().point()) {
+    floor = std::min(floor, p.z());
+  }
+  //ceiling = label.floor + object.height();
+	if (point[2]<floor || point[2]>floor+object.height())return 0;
 	double distl = (point[0]-object.center_x())*cos(object.heading())+(point[1]-object.center_y())*sin(object.heading());
 	if (fabs(distl)>object.length()/2)return 0;
 	double distw = (point[0]-object.center_x())*cos(object.heading()+PI/2)+(point[1]-object.center_y())*sin(object.heading()+PI/2);
