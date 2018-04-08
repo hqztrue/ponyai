@@ -81,7 +81,7 @@ std::vector<PixelInfo> ProjectPointCloudToImage(
 	  Eigen::Matrix3d r = extrinsic.rotation();
 	  Eigen::Vector3d t = extrinsic.translation();
 	  Eigen::Vector3d p1 = Eigen::Vector3d(r(0,0)*p(0)+r(0,1)*p(1)+r(0,2)*p(2)+t(0),r(1,0)*p(0)+r(1,1)*p(1)+r(1,2)*p(2)+t(1),r(2,0)*p(0)+r(2,1)*p(1)+r(2,2)*p(2)+t(2));
-	  if (p1.z<0 || fabs(p1.x/p1.z)>tan(PI*40/180))continue;
+	  if (p1(2)<0 || fabs(p1(0)/p1(2))>tan(PI*40/180))continue;
 	  ImageUV uv = Project3dPointToImage(p1, intrinsic);
 	  if (uv.u<0||uv.u>=image_width||uv.v<0||uv.v>=image_height)continue;
 	  PixelInfo info(uv, p1);
