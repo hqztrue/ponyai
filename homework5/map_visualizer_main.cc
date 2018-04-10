@@ -198,13 +198,13 @@ int main(int argc, char* argv[]) {
   google::InitGoogleLogging(argv[0]);
   
   //find_pred_succ(); puts("pred_succ"); return 0;
-  for (int i=1;i<=1;++i){
+  /*for (int i=1;i<=5;++i){
 	  char path_src[305], path_dst[305];
 	  sprintf(path_src, "/home/hqz/ponyai/homework5/data/routes/route_request_%d.txt", i);
 	  sprintf(path_dst, "/home/hqz/ponyai/homework5/data/routes/route_result_%d.txt", i);
 	  find_route(path_src, path_dst);
   }
-  puts("find_route"); return 0;
+  puts("find_route"); return 0;*/
   
   QApplication app(argc, argv);
   QCoreApplication::setOrganizationName("pony.ai");
