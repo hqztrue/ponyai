@@ -6,6 +6,9 @@
 #include "homework5/display/main_window.h"
 #include "homework5/map/map_lib.h"
 #include "homework5/geometry.h"
+//#include<string>
+//using namespace std;
+
 
 DEFINE_string(route_file_path, "", "Path of displayed route");
 
@@ -36,7 +39,8 @@ void find_pred_succ(){
 }
 
 int location(const interface::map::Lane &lane, const interface::geometry::Point2D &pt){  //project a point to a lane's central_line, by finding nearest neighbor
-	int n = lane.central_line().point_size(), id = 0, dmin = 1e10;
+	int n = lane.central_line().point_size(), id = 0;
+        double dmin = 1e10;
 	geometry::point p(pt.x(), pt.y());
 	for (int i=0;i<n;++i){
 		interface::geometry::Point3D p1 = lane.central_line().point(i);
@@ -63,7 +67,8 @@ void add_route_point(interface::route::Route &route, const interface::map::Lane 
 	if (end==-1)end = lane.central_line().point_size();
 	for (int i=sta;i<end;++i){
 		interface::geometry::Point2D *p = route.add_route_point();
-		*p = lane.central_line().point(i);
+		p->set_x(lane.central_line().point(i).x());
+                p->set_y(lane.central_line().point(i).y());
 	}
 }
 
@@ -120,12 +125,12 @@ void find_route(char path_src[], char path_dst[]){
 				int id2 = location(map.lane(end[j]), route.end_point());
 				if (id1<=id2){
 					add_route_point(route, map.lane(start[i]), id1, id2+1);
-					goto end;
+					CHECK(file::WriteProtoToTextFile(route, path_dst)); return;
 				}
 			}
 	
 	//name->lane id
-	map<string, int> M;
+	std::map<string, int> M;
 	for (int i=0;i<n;++i)
 		M[map.lane(i).id().id()] = i;
 	
@@ -172,7 +177,7 @@ void find_route(char path_src[], char path_dst[]){
 				//points in the last lane
 				int id = location(map.lane(x), route.end_point());
 				add_route_point(route, map.lane(x), 0, id+1);
-				goto end;
+				CHECK(file::WriteProtoToTextFile(route, path_dst)); return;
 			}
 		
 		int m=map.lane(x).successor_size();
@@ -184,7 +189,7 @@ void find_route(char path_src[], char path_dst[]){
 		while (!Q.empty()&&cnt[Q.top().p->x])Q.pop();
 	}
 	//print
-	end:CHECK(file::WriteProtoToTextFile(route, path_dst));
+	CHECK(file::WriteProtoToTextFile(route, path_dst)); return;
 }
 
 
