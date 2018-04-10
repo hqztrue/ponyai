@@ -5,6 +5,7 @@
 #include "gflags/gflags.h"
 #include "homework5/display/main_window.h"
 #include "homework5/map/map_lib.h"
+#include "homework5/geometry.h"
 
 DEFINE_string(route_file_path, "", "Path of displayed route");
 
@@ -34,12 +35,43 @@ void find_pred_succ(){
 	CHECK(file::WriteProtoToTextFile(map, "/home/hqz/ponyai/homework5/processed_map_proto.txt"));
 }
 
+void find_route(char path_src[], char path_dst[]){
+	homework5::map::MapLib map_lib;
+	interface::map::Map map = map_lib.map_proto();
+	int n = map.lane_size();
+	interface::route::Route route;
+	CHECK(file::ReadFileToProto(path_src, &route));
+	vector<int> start;
+	for (int i=0;i<n;++i){
+		geometry::polygon poly;
+		for (int j=0;j<map.lane(i).left_bound().boundary().point_size();++j){
+			interface::geometry:Point3D p = map.lane(i).left_bound().boundary().point(j);
+			poly.add(geometry::point(p.x(),p.y()));
+		}
+		for (int j=map.lane(i).right_bound().boundary().point_size()-1;j>=0;--j){
+			interface::geometry:Point3D p = map.lane(i).right_bound().boundary().point(j);
+			poly.add(geometry::point(p.x(),p.y()));
+		}
+		if (poly.inside(geometry::point(route.start_point().x(),route.start_point().y())))start.push_back(i);
+	}
+	
+	
+	CHECK(file::WriteProtoToTextFile(route, path_dst));
+}
+
+
 int main(int argc, char* argv[]) {
   google::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
   
-  find_pred_succ(); puts("pred_succ"); return 0;
-
+  //find_pred_succ(); puts("pred_succ"); return 0;
+  for (int i=1;i<=5;++i){
+	  char path_src[305], path_dst[305];
+	  sprintf(path_src, "homework5/data/routes/route_request_%d.txt", i);
+	  sprintf(path_dst, "homework5/data/routes/route_result_%d.txt", i);
+	  find_route(path_src, path_dst);
+  }
+  puts("find_route"); return 0;
   
   QApplication app(argc, argv);
   QCoreApplication::setOrganizationName("pony.ai");

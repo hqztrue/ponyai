@@ -7,6 +7,7 @@ cc_binary(
         "//common/utils/file",
         "//homework5/display:main_window",
         "//homework5/map:map_lib",
+		"//homework5/geometry"
         "@gflags//:gflags",
         "@glog",
     ],
