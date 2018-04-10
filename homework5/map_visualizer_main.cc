@@ -45,14 +45,17 @@ void find_route(char path_src[], char path_dst[]){
 	for (int i=0;i<n;++i){
 		geometry::polygon poly;
 		for (int j=0;j<map.lane(i).left_bound().boundary().point_size();++j){
-			interface::geometry:Point3D p = map.lane(i).left_bound().boundary().point(j);
+			interface::geometry::Point3D p = map.lane(i).left_bound().boundary().point(j);
 			poly.add(geometry::point(p.x(),p.y()));
 		}
 		for (int j=map.lane(i).right_bound().boundary().point_size()-1;j>=0;--j){
-			interface::geometry:Point3D p = map.lane(i).right_bound().boundary().point(j);
+			interface::geometry::Point3D p = map.lane(i).right_bound().boundary().point(j);
 			poly.add(geometry::point(p.x(),p.y()));
 		}
-		if (poly.inside(geometry::point(route.start_point().x(),route.start_point().y())))start.push_back(i);
+		if (poly.inside(geometry::point(route.start_point().x(),route.start_point().y()))){
+                    start.push_back(i);
+                    printf("start %d\n",i);
+                }
 	}
 	
 	
@@ -65,10 +68,10 @@ int main(int argc, char* argv[]) {
   google::InitGoogleLogging(argv[0]);
   
   //find_pred_succ(); puts("pred_succ"); return 0;
-  for (int i=1;i<=5;++i){
+  for (int i=1;i<=1;++i){
 	  char path_src[305], path_dst[305];
-	  sprintf(path_src, "homework5/data/routes/route_request_%d.txt", i);
-	  sprintf(path_dst, "homework5/data/routes/route_result_%d.txt", i);
+	  sprintf(path_src, "/home/hqz/ponyai/homework5/data/routes/route_request_%d.txt", i);
+	  sprintf(path_dst, "/home/hqz/ponyai/homework5/data/routes/route_result_%d.txt", i);
 	  find_route(path_src, path_dst);
   }
   puts("find_route"); return 0;

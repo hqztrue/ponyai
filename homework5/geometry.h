@@ -147,7 +147,7 @@ inline double cross(double x1,double y1,double x2,double y2){return x1*y2-x2*y1;
 inline double dot(double x1,double y1,double x2,double y2){return x1*x2+y1*y2;}
 double (*cha)(double,double,double,double)=cross;
 struct point{
-	static const double eps=1e-10;
+	static const double eps;
 	double x,y;
 	point(double _x=0,double _y=0):x(_x),y(_y){}
 	point operator +(const point &p)const{return point(x+p.x,y+p.y);}
@@ -192,6 +192,7 @@ struct point{
 	friend ostream& operator <<(ostream &out,const point &p){return out<<"("<<p.x<<","<<p.y<<")";}
 	void print()const{printf("(%.5lf,%.5lf)\n",x,y);}
 };
+const double point::eps = 1e-6;
 struct line{
 	point x,y;
 	line(){}
