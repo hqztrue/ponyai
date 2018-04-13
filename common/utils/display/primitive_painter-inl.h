@@ -4,6 +4,7 @@
 
 namespace utils {
 namespace display {
+
 template <typename T>
 void PrimitivePainter::DrawPoints(const utils::ConstArrayView<T>& points,
                                   const PointStyle& style) const {
@@ -23,47 +24,13 @@ void PrimitivePainter::DrawPoints(const utils::ConstArrayView<T>& points,
   constexpr GLenum float_type =
       std::is_same<typename math::Dimension<T>::ElemType, float>::value ? GL_FLOAT : GL_DOUBLE;
   gl.EnableClientState(GL_VERTEX_ARRAY);
-
   {
     gl::BindingGuard guard(&buffer);
     gl.VertexPointer(3, float_type, 0, nullptr);
   }
   gl.DrawArrays(GL_POINTS, 0, points.size() * math::Dimension<T>::kValue / 3);
-
   gl.DisableClientState(GL_VERTEX_ARRAY);
   gl.PopAttrib();
-}
-
-template <typename T>
-void PrimitivePainter::DrawPoints(const ConstArrayView<T>& points, const ConstArrayView<T>& colors,
-                                  float pt_size) const {
-  CHECK(std::is_floating_point<T>::value);
-  const auto& gl = context_->functions();
-  gl.PointSize(pt_size);
-
-  constexpr GLenum gl_flt_type = std::is_same<T, float>::value ? GL_FLOAT : GL_DOUBLE;
-  gl::VertexBuffer vertex_buffer(context_);
-  CHECK(vertex_buffer.SetData(points));
-  gl::VertexBuffer color_buffer(context_);
-  CHECK(color_buffer.SetData(colors));
-
-  gl.EnableClientState(GL_VERTEX_ARRAY);
-  gl.EnableClientState(GL_COLOR_ARRAY);
-
-  {
-    gl::BindingGuard guard(&vertex_buffer);
-    gl.VertexPointer(3, gl_flt_type, 0, nullptr);
-  }
-  {
-    gl::BindingGuard guard(&color_buffer);
-    gl.ColorPointer(3, gl_flt_type, 0, nullptr);
-  }
-  gl.DrawArrays(GL_POINTS, 0, points.size() / 3);
-
-  gl.PointSize(1.0);
-
-  gl.DisableClientState(GL_VERTEX_ARRAY);
-  gl.DisableClientState(GL_COLOR_ARRAY);
 }
 
 template <typename PointT>
@@ -83,20 +50,35 @@ void PrimitivePainter::DrawLines(const utils::ConstArrayView<PointT>& points, GL
     gl.LineStipple(1, 0x00FF);
     gl.Enable(GL_LINE_STIPPLE);
   }
-  gl.Color4d(style.line_color.red, style.line_color.green, style.line_color.blue, 1.0);
 
   gl::VertexBuffer vertex_buffer(context_);
   CHECK(vertex_buffer.SetData(points));
 
-  gl.EnableClientState(GL_VERTEX_ARRAY);
+  std::vector<glm::vec3> colors(points.size());
+  for (int i = 0; i < points.size(); ++i) {
+    colors[i].r = style.line_color.red;
+    colors[i].g = style.line_color.green;
+    colors[i].b = style.line_color.blue;
+  }
 
+  gl::VertexBuffer color_buffer(context_);
+  CHECK(color_buffer.SetData(utils::ConstArrayView<glm::vec3>(colors.data(), colors.size())));
+
+  gl.EnableClientState(GL_VERTEX_ARRAY);
+  gl.EnableClientState(GL_COLOR_ARRAY);
   {
     gl::BindingGuard guard(&vertex_buffer);
     gl.VertexPointer(dim, float_type, 0, nullptr);
   }
+  {
+    gl::BindingGuard guard(&color_buffer);
+    gl.ColorPointer(3, GL_FLOAT, 0, nullptr);
+  }
+  gl.Color3d(style.line_color.red, style.line_color.green, style.line_color.blue);
   gl.DrawArrays(mode, 0, points.size());
 
   gl.DisableClientState(GL_VERTEX_ARRAY);
+  gl.DisableClientState(GL_COLOR_ARRAY);
   gl.PopAttrib();
 }
 
@@ -110,119 +92,6 @@ void PrimitivePainter::DrawStippleLines(const utils::ConstArrayView<PointT>& poi
   gl.LineStipple(style.stipple_factor, style.stipple_pattern);
   DrawLines<PointT>(points, mode, style.line_style);
   gl.PopAttrib();
-}
-
-template <typename PointT>
-void PrimitivePainter::DrawTrianglesWithColor(GLenum triangle_type,
-                                              const utils::ConstArrayView<PointT>& points,
-                                              const Color color) const {
-  CHECK(triangle_type == GL_TRIANGLE_STRIP || triangle_type == GL_TRIANGLE_FAN ||
-        triangle_type == GL_TRIANGLES);
-  const auto& gl = context_->functions();
-  const auto dim = GetDimension<PointT>();
-  const auto float_type = ToGLFloatType<PointT>();
-
-  std::vector<Color> colors(points.size(), color);
-
-  gl::VertexBuffer vertex_buffer(context_);
-  CHECK(vertex_buffer.SetData(points));
-  gl::VertexBuffer color_buffer(context_);
-  CHECK(color_buffer.SetData(utils::ConstArrayView<Color>(colors.data(), colors.size())));
-
-  gl.EnableClientState(GL_VERTEX_ARRAY);
-  gl.EnableClientState(GL_COLOR_ARRAY);
-
-  {
-    gl::BindingGuard guard(&vertex_buffer);
-    gl.VertexPointer(dim, float_type, 0, nullptr);
-  }
-  {
-    gl::BindingGuard guard(&color_buffer);
-    gl.ColorPointer(4, GL_FLOAT, 0, nullptr);
-  }
-  gl.DrawArrays(triangle_type, 0, points.size());
-
-  gl.DisableClientState(GL_VERTEX_ARRAY);
-  gl.DisableClientState(GL_COLOR_ARRAY);
-}
-
-template <typename PointT>
-void PrimitivePainter::DrawTrianglesWithColor(GLenum triangle_type,
-                                              const utils::ConstArrayView<PointT>& points,
-                                              const utils::ConstArrayView<Color>& colors) const {
-  static_assert(math::Dimension<PointT>::kValue == 2 || math::Dimension<PointT>::kValue == 3,
-                "Points should be draw in 2 or 3 dim vector.");
-  static_assert(std::is_floating_point<typename math::Dimension<PointT>::ElemType>::value,
-                "Points coord should be double/float.");
-  const auto& gl = context_->functions();
-  const auto dim = GetDimension<PointT>();
-  const auto float_type = ToGLFloatType<PointT>();
-
-  CHECK(triangle_type == GL_TRIANGLE_STRIP || triangle_type == GL_TRIANGLE_FAN ||
-        triangle_type == GL_TRIANGLES);
-  CHECK_EQ(points.size(), colors.size());
-
-  gl::VertexBuffer vertex_buffer(context_);
-  CHECK(vertex_buffer.SetData(points));
-  gl::VertexBuffer color_buffer(context_);
-  CHECK(color_buffer.SetData(colors));
-
-  gl.EnableClientState(GL_VERTEX_ARRAY);
-  gl.EnableClientState(GL_COLOR_ARRAY);
-
-  {
-    gl::BindingGuard guard(&vertex_buffer);
-    gl.VertexPointer(dim, float_type, 0, nullptr);
-  }
-  {
-    gl::BindingGuard guard(&color_buffer);
-    gl.ColorPointer(4, GL_FLOAT, 0, nullptr);
-  }
-  gl.DrawArrays(triangle_type, 0, points.size());
-
-  gl.DisableClientState(GL_VERTEX_ARRAY);
-  gl.DisableClientState(GL_COLOR_ARRAY);
-}
-
-template <typename PointT>
-void PrimitivePainter::DrawQuadsWithColor(const utils::ConstArrayView<PointT>& points,
-                                          Color color) const {
-  std::vector<Color> colors(points.size(), color);
-  DrawQuadsWithColor(points, utils::ConstArrayView<Color>(colors.data(), colors.size()));
-}
-
-template <typename PointT>
-void PrimitivePainter::DrawQuadsWithColor(const utils::ConstArrayView<PointT>& points,
-                                          const utils::ConstArrayView<Color>& colors) const {
-  const auto& gl = context_->functions();
-  const auto dim = math::Dimension<PointT>::kValue;
-  const auto float_type = ToGLFloatType<PointT>();
-
-  CHECK_EQ(points.size(), colors.size());
-  CHECK_EQ(points.size() % 4, 0u);
-
-  gl::VertexBuffer vertex_buffer(context_);
-  CHECK(vertex_buffer.SetData(points));
-  gl::VertexBuffer color_buffer(context_);
-  CHECK(color_buffer.SetData(colors));
-
-  gl.EnableClientState(GL_VERTEX_ARRAY);
-  gl.EnableClientState(GL_COLOR_ARRAY);
-
-  {
-    gl::BindingGuard guard(&vertex_buffer);
-    gl.VertexPointer(dim, float_type, 0, nullptr);
-  }
-  {
-    gl::BindingGuard guard(&color_buffer);
-    gl.ColorPointer(4, GL_FLOAT, 0, nullptr);
-  }
-  for (int64_t i = 0; i < points.size(); i += 4) {
-    gl.DrawArrays(GL_TRIANGLE_FAN, i, 4);
-  }
-
-  gl.DisableClientState(GL_VERTEX_ARRAY);
-  gl.DisableClientState(GL_COLOR_ARRAY);
 }
 
 template <typename PointT>

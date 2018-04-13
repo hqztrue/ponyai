@@ -28,7 +28,6 @@ image::ImageBuffer<uint8_t, 4> RGBImage2RGBA(const image::Image<uint8_t, 3>& raw
 
 Texture::Texture(const Context* context) : Object(context) {
   f().GenTextures(1, &texture_id_);
-  this->context()->CheckError();
   CHECK_NE(texture_id_, 0);
 }
 
@@ -44,7 +43,6 @@ void Texture::CreateFromData(int width, int height, Texture::Format format, cons
 
   if (format == Texture::Format::kUint8RGBA) {
     f().TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-    context()->CheckError();
   } else {
     LOG(FATAL) << "unsupport Texture Format: " << format;
   }
@@ -74,7 +72,6 @@ void Texture::GenerateMipmap() {
   CHECK_NE(texture_id_, 0);
   f().BindTexture(GL_TEXTURE_2D, texture_id_);
   f().GenerateMipmap(GL_TEXTURE_2D);
-  context()->CheckError();
   f().TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
   f().TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   f().BindTexture(GL_TEXTURE_2D, 0);

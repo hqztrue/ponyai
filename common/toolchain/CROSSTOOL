@@ -87,16 +87,6 @@ toolchain {
   compiler_flag: "-fstack-protector"
   linker_flag: "-Wl,-z,relro,-z,now"
 
-  # Required by tcmalloc.
-  compiler_flag: "-fno-builtin-malloc"
-  compiler_flag: "-fno-builtin-calloc"
-  compiler_flag: "-fno-builtin-realloc"
-  compiler_flag: "-fno-builtin-free"
-  linker_flag: "-fno-builtin-malloc"
-  linker_flag: "-fno-builtin-calloc"
-  linker_flag: "-fno-builtin-realloc"
-  linker_flag: "-fno-builtin-free"
-
   # Add -fPIC.
   compiler_flag: "-fPIC"
 
@@ -137,10 +127,6 @@ toolchain {
     compiler_flag: "-ffunction-sections"
     compiler_flag: "-fdata-sections"
     linker_flag: "-Wl,--gc-sections"
-
-    # Tune for Intel Haswell CPUs and all newer CPUs
-    compiler_flag: "-mtune=haswell"
-    compiler_flag: "-march=haswell"
   }
 
   linking_mode_flags { mode: MOSTLY_STATIC }

@@ -22,7 +22,7 @@ You could press the left or right mouse button to adjust the observing angle to 
 
 In the lane's protobuf definition, there are two fields `predecessor` and `successor` defined. However, they are missing in the protobuf text file that provided to you. In this task, you are going to find predecessors and successors for all lanes. 
 
-If lane `A` is a `successor` of another lane `B`, it means a vehicle could drive from lane `A` to lane `B` without passing another lane. And lane `B` is also considered as a predecessor of lane `A`. Note that one lane may have multiple successors or predecessors. For example, lane `L1`'s successors are `L25`, `L26`, and its predecessor is `L58`. Also note that lanes may also have overlaps with each other, but they may not have predecessor/successor relationships, such as `L25` and `L26`. 
+If lane `B` is a `successor` of another lane `A`, it means a vehicle could drive from lane `A` to lane `B` without passing another lane. And lane `A` is also considered as a predecessor of lane `B`. Note that one lane may have multiple successors or predecessors. For example, lane `L1`'s successors are `L25`, `L26`, and its predecessor is `L58`. Also note that lanes may have overlaps with each other, but they may not have predecessor/successor relationships, such as `L25` and `L26`. 
 
 **What to submit:** 
 1. A map's protobuf text file named `processed_map_proto.txt` in which `predecessor` and `successor` fields have been filled. 

@@ -114,22 +114,10 @@ class PrimitivePainter {
   template <typename PointT>
   void DrawStippleLines(const utils::ConstArrayView<PointT>& points, GLenum mode,
                         const StippleLineStyle& style) const;
-  // Triangles.
-  template <typename PointT>
-  void DrawTrianglesWithColor(GLenum triangle, const utils::ConstArrayView<PointT>& points,
-                              const Color color) const;
-  template <typename PointT>
-  void DrawTrianglesWithColor(GLenum triangle, const utils::ConstArrayView<PointT>& points,
-                              const utils::ConstArrayView<Color>& colors) const;
   // Quads. (Deprecated)
   // In latter version openGL(3.x +), GL_QUADs not supported any more. So used GL_TRIANGLE_FAN
   // here to implement DrawQuadsXXXX.
   // And the recommended way is using DrawTriangle with GL_TRIANGLE_FAN as triangle params value.
-  template <typename PointT>
-  void DrawQuadsWithColor(const utils::ConstArrayView<PointT>& points, Color color) const;
-  template <typename PointT>
-  void DrawQuadsWithColor(const utils::ConstArrayView<PointT>& points,
-                          const utils::ConstArrayView<Color>& colors) const;
   template <typename PointT>
   void DrawQuadsWithTexcoord(const utils::ConstArrayView<PointT>& points,
                              const utils::ConstArrayView<math::Vec2d>& texcoordds) const;
