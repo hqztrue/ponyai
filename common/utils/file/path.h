@@ -67,3 +67,13 @@ std::string GetProjectRootPath();
 
 }  // namespace path
 }  // namespace file
+
+namespace utils {
+namespace path {
+
+std::string GetVehicleParamsPath();
+
+std::string Get3dModelsDirectory();
+
+}
+}  // namespace utils

@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+
+package interface.control;
+
+
+// Control Command
+message ControlCommand {
+    // Target angle of steering wheel. In rad, left is positive, right is negative.
+    optional double steering_angle = 1;
+    // Maximum angular rate of steering wheel, in rad/s, always non-negative.
+    // Zero means as fast as possible.
+    optional double steering_rate = 2;
+    // Acceleration/throttle pedal position ratio. Double from 0.0 to 1.0 inclusive.
+    optional double throttle_ratio = 3;
+    // Brake pedal position ratio. Double from 0.0 to 1.0 inclusive.
+    optional double brake_ratio = 4;
+}
+

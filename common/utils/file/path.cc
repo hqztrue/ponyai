@@ -179,7 +179,6 @@ namespace {
 const boost::filesystem::path kProjectRootMarkerFile(".pony_ai_root.md");
 
 boost::filesystem::path GetProjectRootPath(boost::filesystem::path path) {
-  LOG(INFO) << "GetProjectRootPath(" << path << ")";
   for (; path.has_parent_path(); path = path.parent_path()) {
     if (boost::filesystem::exists(path / kProjectRootMarkerFile)) {
       return path;
@@ -239,3 +238,18 @@ std::string GetProjectRootPath() {
 
 }  // namespace path
 }  // namespace file
+
+namespace utils {
+namespace path {
+
+std::string GetVehicleParamsPath() {
+  return file::path::Join(file::path::GetProjectRootPath(), "common", "data", "vehicle_params",
+                          "vehicle_params.txt");
+}
+
+std::string Get3dModelsDirectory() {
+  return file::path::Join(file::path::GetProjectRootPath(), "common", "data", "3d_models");
+}
+
+}
+}  // namespace utils

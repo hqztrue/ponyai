@@ -82,7 +82,6 @@ proto_library(
     ],
 )
 
-
 cc_proto_library(
     name = "cc_map_proto",
     deps = [
@@ -121,8 +120,8 @@ proto_library(
     name = "map_lane_proto",
     srcs = ["map_lane.proto"],
     deps = [
-        ":map_id_proto",
         ":geometry_proto",
+        ":map_id_proto",
     ],
 )
 
@@ -138,5 +137,90 @@ proto_library(
     srcs = ["route.proto"],
     deps = [
         ":geometry_proto",
+        ":transform_proto",
     ],
+)
+
+cc_proto_library(
+    name = "cc_control_proto",
+    deps = [
+        ":control_proto",
+    ],
+)
+
+proto_library(
+    name = "control_proto",
+    srcs = ["control.proto"],
+)
+
+cc_proto_library(
+    name = "cc_vehicle_status_proto",
+    deps = [
+        ":vehicle_status_proto",
+    ],
+)
+
+proto_library(
+    name = "vehicle_status_proto",
+    srcs = ["vehicle_status.proto"],
+    deps = [
+        "//common/proto:geometry_proto",
+        "//common/proto:transform_proto",
+    ],
+)
+
+cc_proto_library(
+    name = "cc_playback_proto",
+    deps = [
+        ":playback_proto",
+    ],
+)
+
+proto_library(
+    name = "playback_proto",
+    srcs = ["playback.proto"],
+)
+
+cc_proto_library(
+    name = "cc_agent_status_proto",
+    deps = [
+        ":agent_status_proto",
+    ],
+)
+
+proto_library(
+    name = "agent_status_proto",
+    srcs = ["agent_status.proto"],
+    deps = [
+        "//common/proto:geometry_proto",
+        "//common/proto:transform_proto",
+        "//common/proto:vehicle_status_proto",
+    ],
+)
+
+cc_proto_library(
+    name = "cc_simulation_proto",
+    deps = [
+        ":simulation_proto",
+    ],
+)
+
+proto_library(
+    name = "simulation_proto",
+    srcs = ["simulation.proto"],
+    deps = [
+        ":agent_status_proto",
+    ],
+)
+
+cc_proto_library(
+    name = "cc_vehicle_params_proto",
+    deps = [
+        ":vehicle_params_proto",
+    ],
+)
+
+proto_library(
+    name = "vehicle_params_proto",
+    srcs = ["vehicle_params.proto"],
 )

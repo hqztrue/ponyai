@@ -92,6 +92,14 @@ T InnerProd(const Vec2<T>& reference, const Vec2<T>& point_a, const Vec2<T>& poi
 
 using Vec2d = Vec2<double>;
 
+template <typename T>
+T Sqr(T x);
+
+inline double Lerp(double start, double end, double ratio);
+
+template <typename T>
+Vec2<T> Lerp(const Vec2<T>& start, const Vec2<T>& end, double ratio);
+
 // =================================== Implementation ===================================
 
 template <typename T>

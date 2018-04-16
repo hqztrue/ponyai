@@ -1,12 +1,14 @@
 syntax = "proto2";
 
 import "common/proto/geometry.proto";
+import "common/proto/transform.proto";
 
 package interface.route;
 
 message Route {
     optional interface.geometry.Point2D start_point = 1;
     optional interface.geometry.Point2D end_point = 2;
+    optional interface.geometry.Quaterniond start_orientation = 4;
     // Sampled points in the route from start_point to end_point.
     // The distance between two adjacent should be less than 4m.
     // The distance between the first point in the route_point and start_point should be less than 4m.

@@ -1,0 +1,27 @@
+syntax = "proto2";
+
+package interface.agent;
+
+import "common/proto/transform.proto";
+import "common/proto/geometry.proto";
+import "common/proto/vehicle_status.proto";
+
+message SimulationStatus {
+    // Whether the vehicle agent is alive
+    optional bool is_alive = 1 [default = false];
+    // Whether the vehicle agent finishes its trip
+    optional bool is_finished = 2 [default = false];
+    // Current simulation time in seconds
+    optional double simulation_time = 4;
+}
+
+message RouteStatus {
+    // Destination of the current trip route
+    optional interface.geometry.Point3D destination = 5;
+}
+
+message AgentStatus {
+    optional VehicleStatus vehicle_status = 1;
+    optional RouteStatus route_status = 2;
+    optional SimulationStatus simulation_status = 9;
+}

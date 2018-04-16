@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+package interface.simulation;
+
+import "common/proto/agent_status.proto";
+
+message SimulationSystemData {
+    repeated VehicleAgentData vehicle_agent = 1;
+    optional double simulation_time = 3;
+}
+
+message VehicleAgentData {
+    optional string name = 1;
+    optional interface.agent.AgentStatus agent_status = 2;
+}
+

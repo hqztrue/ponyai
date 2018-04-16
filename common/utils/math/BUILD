@@ -44,4 +44,3 @@ cc_library(
         "@glm",
     ],
 )
-
