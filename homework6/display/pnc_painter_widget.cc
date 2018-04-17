@@ -32,6 +32,9 @@ PncPainterWidget::PncPainterWidget(Options options, QWidget* parent)
   painter_widget_controller_ =
       std::make_unique<PncPainterWidgetController>(options.screen_coord_system);
   user_interface_data_.camera_controller = painter_widget_controller_->MutableCamera();
+  painter_widget_controller_->MutableCamera()->ResetOrientation();
+  painter_widget_controller_->MutableCamera()->UpdateCenter(60.0, 60.0, 0.0);
+  painter_widget_controller_->MutableCamera()->UpdateDistance(222.0);
 }
 
 void PncPainterWidget::Initialize() {

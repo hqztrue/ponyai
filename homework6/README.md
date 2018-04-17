@@ -93,7 +93,7 @@ When the table is ready, you could plan your vehicle's motion based on the table
 
 Your vehicle should be able to run in the straight lane now. It's time to drive it in a corner. 
 
-**Your task**: you need to add lateral planning and control logic to make your vehicle able to run in a corner with uniform velocity `5m/s`. Your vehicle should finish the routes specified in `simulation_config_2.txt` and `simulation_config_3.txt`. 
+**Your task**: Add lateral planning and control algorithms to make your vehicle able to finish a route that contains turns with uniform velocity `5m/s`. Your vehicle should finish the routes specified in `simulation_config_2.txt` and `simulation_config_3.txt`. You could reuse your code for homework5 to generate the path from the start point to the end point. 
 
 One choice of algorithms might be using bicycle model to plan the motion, and using PID to correct the difference between actual motion and planned motion. You are free to choose other algorithms than bicycle model and PID. You could find some of algorithms in the lecture slides. 
 
@@ -106,4 +106,4 @@ One choice of algorithms might be using bicycle model to plan the motion, and us
 
 ## Implementation Convention
 
-In the final project, the vehicle agent implemented by you will be running in a same environment together with other agents. To avoid potential symbol conflict, we need to make following convention. All of your code should be placed in a namespace named by a unique id, such as github id. All of gflags names should be started with `{unique_id}_`. For example, if one's id is `xuan_pony`, all of his code should be placed in the namespace `xuan_pony`. And all of the gflags he defined should be started with `xuan_pony_`. 
+In the final project, the vehicle agent implemented by you will be running in a same environment together with other agents. To avoid potential symbol conflict, we need to make following convention. All of your code should be placed in a namespace named by a unique id, such as github id. All of gflags names should be started with `{unique_id}_`. All of the source code files should be placed at directory `homework6/agents/{unique_id}`.  For example, if one's id is `xuan_pony`, all of his code should be placed in the namespace `xuan_pony`. And all of the gflags he defined should be started with `xuan_pony_`. All of the source code files should be placed at the directory `homework6/agents/xuan_pony/`. 

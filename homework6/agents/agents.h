@@ -4,5 +4,4 @@
 
 namespace simulation {
 
-void RegisterAllAgents();
 }

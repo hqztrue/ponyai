@@ -4,10 +4,6 @@
 
 #include "homework6/agents/sample/sample_agent.h"
 
-namespace simulation {
+// Register sample vehicle agent to a factory with its type name "sample_agent"
+static simulation::Registrar<::sample::SampleVehicleAgent> registrar("sample_agent");
 
-void RegisterAllAgents() {
-  // Register sample vehicle agent to a factory with its type name "sample_agent"
-  static simulation::Registrar<::sample::SampleVehicleAgent> registrar("sample_agent");
-}
-}

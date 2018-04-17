@@ -21,7 +21,6 @@ class SimulationEngineBase {
   void Initialize() {
     CHECK(agent_status_map_set_);
     agent_status_map_set_ = false;
-    RegisterAllAgents();
     InitializeInternal();
   }
 
