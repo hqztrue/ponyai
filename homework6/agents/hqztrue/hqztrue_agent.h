@@ -9,7 +9,7 @@
 #include "common/proto/vehicle_status.pb.h"
 #include "common/utils/math/math_utils.h"
 #include "homework6/simulation/vehicle_agent_factory.h"
-#include "homework5/route/find_route.h"
+#include "homework5/find_route.h"
 
 namespace hqztrue {
 
@@ -22,9 +22,14 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	acceleration = true;
 	control = delta_control = 0.1;
 	
-	agent_status.vehicle_status().position();
-	agent_status.route_status().destination();
-	find_route();
+	interface.geometry.Point2D p;
+	p.set_x(agent_status.vehicle_status().position().x());
+	p.set_y(agent_status.vehicle_status().position().y());
+	route.set_start_point(p);
+	p.set_x(agent_status.route_status().destination().x());
+	p.set_y(agent_status.route_status().destination().y());
+	route.set_end_point(p);
+	find_route(route);
   }
 
   //generate table
@@ -94,6 +99,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
   bool first_run, acceleration;
   interface::agent::AgentStatus prev_status;
   double prev_control, control, delta_control;
+  interface::route::Route route;
 };
 
 }
