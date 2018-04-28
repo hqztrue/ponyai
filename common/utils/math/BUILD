@@ -4,11 +4,13 @@ cc_library(
     name = "math",
     srcs = [
         "math_utils.cc",
+        "box2d.cc",
         "vec2d.cc",
         "vec3d.cc",
     ],
     hdrs = [
         "math_utils.h",
+        "box2d.h",
         "ray.h",
         "vec.h",
         "vec2d.h",

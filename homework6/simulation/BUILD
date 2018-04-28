@@ -54,15 +54,6 @@ cc_library(
 )
 
 cc_library(
-    name = "utils",
-    srcs = ["utils.cc"],
-    hdrs = ["utils.h"],
-    deps = [
-        "//common/proto:cc_agent_status_proto",
-    ],
-)
-
-cc_library(
     name = "system_base",
     srcs = ["system_base.cc"],
     hdrs = ["system_base.h"],

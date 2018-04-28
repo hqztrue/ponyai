@@ -21,3 +21,12 @@ sudo apt install qtdeclarative5-dev clang-3.8 nasm
 **Clang** is the compiler we use to build the libraries. We require you to install `clang-3.8` to avoid any potential issues caused by compiler version. 
 
 **nasm** is a required library for an introduced third-party library. 
+
+
+# Visualization Issue Troubleshooting
+
+Our visualization tool is based on OpenGL 3D rendering. We recommend using Ubuntu16.04 native system to get the best visualization effect, since 3D acceleration inside virtual machines is just experimental features. If you must use virtual machine for some reasons, we recommend [VirtualBox](https://www.virtualbox.org/wiki/Downloads), which is free and cross-platform.  
+
+If you are using VMWare and 3D rendering is not correct, please try command `export SVGA_VGPU10=0` to set an environment variable, and re-run the binary again to check if it solves your issue. 
+
+

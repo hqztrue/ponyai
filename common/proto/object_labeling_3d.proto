@@ -18,6 +18,7 @@ message ObjectLabel {
   // Object center in the world frame.
   optional double center_x = 4;
   optional double center_y = 5;
+  optional double center_z = 6;
 
   // Object length/width/height
   optional double length = 7;

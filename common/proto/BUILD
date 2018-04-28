@@ -74,9 +74,26 @@ cc_proto_library(
     ],
 )
 
+cc_proto_library(
+    name = "cc_perception_evaluation_proto",
+    deps = [
+        ":perception_evaluation_proto",
+    ],
+)
+
 proto_library(
     name = "perception_proto",
     srcs = ["perception.proto"],
+    deps = [
+        ":geometry_proto",
+        ":map_id_proto",
+        ":map_traffic_light_proto",
+    ],
+)
+
+proto_library(
+    name = "perception_evaluation_proto",
+    srcs = ["perception_evaluation.proto"],
     deps = [
         ":geometry_proto",
     ],
@@ -94,6 +111,7 @@ proto_library(
     srcs = ["map.proto"],
     deps = [
         ":map_lane_proto",
+        ":map_traffic_light_proto",
     ],
 )
 
@@ -119,6 +137,22 @@ cc_proto_library(
 proto_library(
     name = "map_lane_proto",
     srcs = ["map_lane.proto"],
+    deps = [
+        ":geometry_proto",
+        ":map_id_proto",
+    ],
+)
+
+cc_proto_library(
+    name = "cc_map_traffic_light_proto",
+    deps = [
+        ":map_traffic_light_proto",
+    ],
+)
+
+proto_library(
+    name = "map_traffic_light_proto",
+    srcs = ["map_traffic_light.proto"],
     deps = [
         ":geometry_proto",
         ":map_id_proto",
@@ -164,8 +198,8 @@ proto_library(
     name = "vehicle_status_proto",
     srcs = ["vehicle_status.proto"],
     deps = [
-        "//common/proto:geometry_proto",
-        "//common/proto:transform_proto",
+        ":geometry_proto",
+        ":transform_proto",
     ],
 )
 
@@ -192,24 +226,13 @@ proto_library(
     name = "agent_status_proto",
     srcs = ["agent_status.proto"],
     deps = [
-        "//common/proto:geometry_proto",
-        "//common/proto:transform_proto",
-        "//common/proto:vehicle_status_proto",
-    ],
-)
-
-cc_proto_library(
-    name = "cc_simulation_proto",
-    deps = [
-        ":simulation_proto",
-    ],
-)
-
-proto_library(
-    name = "simulation_proto",
-    srcs = ["simulation.proto"],
-    deps = [
-        ":agent_status_proto",
+        ":control_proto",
+        ":geometry_proto",
+        ":map_id_proto",
+        ":map_traffic_light_proto",
+        ":perception_proto",
+        ":transform_proto",
+        ":vehicle_status_proto",
     ],
 )
 
@@ -223,4 +246,96 @@ cc_proto_library(
 proto_library(
     name = "vehicle_params_proto",
     srcs = ["vehicle_params.proto"],
+)
+
+cc_proto_library(
+    name = "cc_simulation_proto",
+    deps = [
+        ":simulation_proto",
+    ],
+)
+
+proto_library(
+    name = "simulation_proto",
+    srcs = ["simulation.proto"],
+    deps = [
+        ":agent_metric_proto",
+        ":agent_status_proto",
+        ":display_proto",
+        ":perception_proto",
+    ],
+)
+
+cc_proto_library(
+    name = "cc_agent_metric_proto",
+    deps = [
+        ":agent_metric_proto",
+    ],
+)
+
+proto_library(
+    name = "agent_metric_proto",
+    srcs = ["agent_metric.proto"],
+)
+
+cc_proto_library(
+    name = "cc_agent_debug_data_proto",
+    deps = [
+        ":agent_debug_data_proto",
+    ],
+)
+
+proto_library(
+    name = "agent_debug_data_proto",
+    srcs = ["agent_debug_data.proto"],
+    deps = [
+        ":display_proto",
+    ],
+)
+
+cc_proto_library(
+    name = "cc_simulation_config_proto",
+    deps = [
+        ":simulation_config_proto",
+    ],
+)
+
+proto_library(
+    name = "simulation_config_proto",
+    srcs = ["simulation_config.proto"],
+)
+
+cc_proto_library(
+    name = "cc_agent_comms_proto",
+    deps = [
+        ":agent_comms_proto",
+    ],
+)
+
+proto_library(
+    name = "agent_comms_proto",
+    srcs = ["agent_comms.proto"],
+    deps = [
+        ":agent_status_proto",
+        ":control_proto",
+        ":display_proto",
+        ":vehicle_status_proto",
+    ],
+)
+
+cc_proto_library(
+    name = "cc_agent_response_proto",
+    deps = [
+        ":agent_response_proto",
+    ],
+)
+
+proto_library(
+    name = "agent_response_proto",
+    srcs = ["agent_response.proto"],
+    deps = [
+        ":agent_debug_data_proto",
+        ":control_proto",
+        ":display_proto",
+    ],
 )

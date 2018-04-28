@@ -11,6 +11,7 @@
 
 
 DEFINE_string(route_file_path, "", "Path of displayed route");
+DEFINE_string(map_dir, "", "Directory path of map file");
 
 bool point_equal(const interface::geometry::Point3D &p1, const interface::geometry::Point3D &p2){
 	const double eps = 1e-3;

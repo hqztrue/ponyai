@@ -11,9 +11,16 @@
 constexpr const char kLowResIntensityMapFilename[] = "map_2d.png";
 constexpr const char kIntensityMapConfigFilename[] = "map_image_config.txt";
 
+DECLARE_string(map_dir);
+
 namespace {
 std::string MapMetaInfoDir() {
-  return file::path::Join(file::path::GetProjectRootPath(), "homework5", "map", "grid2");
+  if (FLAGS_map_dir.empty()) {
+    return file::path::Join(file::path::GetProjectRootPath(), "homework5", "map", "grid2");
+  }  else {
+    return FLAGS_map_dir;
+  }
+
 }
 }
 

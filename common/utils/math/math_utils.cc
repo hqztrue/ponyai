@@ -11,17 +11,6 @@
 namespace math {
 namespace {
 
-// Returns x0 + k * x1
-std::vector<double> LinearTransform(const std::vector<double>& x0, double k,
-                                    const std::vector<double>& x1) {
-  CHECK_EQ(x0.size(), x1.size());
-  std::vector<double> r(x0.size());
-  for (int i = 0; i < x0.size(); i++) {
-    r[i] = x0[i] + k * x1[i];
-  }
-  return r;
-}
-
 template <typename T>
 T PercentileIndex(T num_data_points, double fractional_percentage) {
   CHECK(fractional_percentage >= 0.0 && fractional_percentage <= 1.0);

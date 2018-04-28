@@ -3,6 +3,8 @@ syntax = "proto2";
 package interface.perception;
 
 import "common/proto/geometry.proto";
+import "common/proto/map_traffic_light.proto";
+import "common/proto/map_id.proto";
 
 enum ObjectType {
   UNKNOWN_TYPE = 0;
@@ -46,4 +48,16 @@ message PerceptionObstacles {
 
   // Processed Velodyne data time.
   optional double timestamp = 3;
+}
+
+
+message SingleTrafficLightStatus {
+  // Traffic light ID
+  optional interface.map.Id id = 1;
+  // Traffic light color
+  optional interface.map.Bulb.Color color = 2;
+}
+
+message PerceptionTrafficLightStatus {
+  repeated SingleTrafficLightStatus single_traffic_light_status = 1;
 }

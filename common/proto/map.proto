@@ -1,11 +1,13 @@
 syntax = "proto2";
 
 import "common/proto/map_lane.proto";
+import "common/proto/map_traffic_light.proto";
 
 package interface.map;
 
 message Map {
     repeated Lane lane = 2;
+    repeated TrafficLight traffic_light = 3;
 }
 
 // map image information.

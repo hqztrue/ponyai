@@ -26,7 +26,7 @@ class PainterWidgetBase : public QOpenGLWidget {
   };
 
   PainterWidgetBase(Options options, QWidget* parent);
-  ~PainterWidgetBase() override;
+  virtual ~PainterWidgetBase() ;
 
   virtual FontRenderer* font_renderer() { return font_renderer_.get(); }
 

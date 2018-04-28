@@ -147,21 +147,6 @@ class PerspectiveViewCamera : public Camera {
   double fov_y_deg_ = 50.0;
   // screen_width / screen_height.
   double aspect_ratio_ = 1.0;
-
-  FRIEND_TEST(PerspectiveViewCameraTest, AxisDirectionYAxisUpwards);
-  FRIEND_TEST(PerspectiveViewCameraTest, AxisDirectionYAxisDownwards);
-  FRIEND_TEST(PerspectiveViewCameraTest, PositionOnZNearPlaneYAxisUpwards);
-  FRIEND_TEST(PerspectiveViewCameraTest, PositionOnZNearPlaneYAxisDownwards);
-  FRIEND_TEST(PerspectiveViewCameraTest, PickPointOnHorizontalPlaneYAxisUpwards);
-  FRIEND_TEST(PerspectiveViewCameraTest, PickPointOnHorizontalPlaneYAxisDownwards);
-  FRIEND_TEST(PerspectiveViewCameraTest, PickPointOnHorizontalPlaneLookDownObliquely);
-  FRIEND_TEST(PerspectiveViewCameraTest, PickPointOnXYPlaneYAxisDownwards);
-  FRIEND_TEST(PerspectiveViewCameraTest, PickPointOnXYPlaneYAxisUpwards);
-  FRIEND_TEST(PerspectiveViewCameraTest, PickPointOnXYPlaneYAxisDownwards);
-  FRIEND_TEST(PerspectiveViewCameraTest, WorldDirectionToScreenYAxisDownwards);
-  FRIEND_TEST(PerspectiveViewCameraTest, WorldDirectionToScreenYAxisUpwards);
-  FRIEND_TEST(PerspectiveViewCameraTest, ZNearPlaneSize);
-  FRIEND_TEST(PerspectiveViewCameraTest, SightLine);
 };
 
 // OpenGL camera model of gluLookAt() and glOrtho():
@@ -187,20 +172,6 @@ class OrthographicViewCamera : public Camera {
   double widget_width_ = 1920.0;
   double widget_height_ = 1080.0;
   double scale_ = 0.1;
-
-  FRIEND_TEST(OrthographicViewCameraTest, AxisDirectionYAxisUpwards);
-  FRIEND_TEST(OrthographicViewCameraTest, AxisDirectionYAxisDownwards);
-  FRIEND_TEST(OrthographicViewCameraTest, PositionOnZNearPlaneYAxisUpwards);
-  FRIEND_TEST(OrthographicViewCameraTest, PositionOnZNearPlaneYAxisDownwards);
-  FRIEND_TEST(OrthographicViewCameraTest, PickPointOnHorizontalPlaneYAxisUpwards);
-  FRIEND_TEST(OrthographicViewCameraTest, PickPointOnHorizontalPlaneYAxisDownwards);
-  FRIEND_TEST(OrthographicViewCameraTest, PickPointOnHorizontalPlaneLookDownObliquely);
-  FRIEND_TEST(OrthographicViewCameraTest, PickPointOnXYPlaneYAxisDownwards);
-  FRIEND_TEST(OrthographicViewCameraTest, PickPointOnXYPlaneYAxisUpwards);
-  FRIEND_TEST(OrthographicViewCameraTest, PickPointOnXYPlaneYAxisDownwards);
-  FRIEND_TEST(OrthographicViewCameraTest, WorldDirectionToScreenYAxisDownwards);
-  FRIEND_TEST(OrthographicViewCameraTest, WorldDirectionToScreenYAxisUpwards);
-  FRIEND_TEST(OrthographicViewCameraTest, SightLine);
 };
 
 class TopOrthographicViewCamera : public OrthographicViewCamera {

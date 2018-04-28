@@ -3,4 +3,4 @@ bazel-*
 .vscode/
 cmake-build-debug
 CMakeLists.txt
-*.pcd
+.clang-format
