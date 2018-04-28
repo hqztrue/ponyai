@@ -6,6 +6,7 @@ cc_library(
     deps = [
         "//homework6/simulation:vehicle_agent",
         "//homework6/simulation:vehicle_agent_factory",
+		"//homework5/route:find_route",
         "//common/proto:cc_agent_status_proto",
         "//common/proto:cc_control_proto",
         "//common/proto:cc_simulation_proto",
