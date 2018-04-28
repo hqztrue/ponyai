@@ -39,7 +39,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		command.set_brake_ratio(control);
 		prev_control = -control;
 		if (len(agent_status.vehicle_status().velocity())<=0.1){
-			control += control_delta;
+			control += delta_control;
 			acceleration = true;
 		}
 	}
@@ -47,7 +47,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	
 	if (!first_run){
 		FILE *f = fopen("/home/hqz/ponyai/homework6/table.txt", "a");
-		fprintf(f, "%.6lf %.6lf %.6lf\n",prev_status.vehicle_status().velocity(), prev_control, agent_status.vehicle_status().acceleration_vcs());
+		fprintf(f, "%.6lf %.6lf %.6lf\n",len(prev_status.vehicle_status().velocity()), prev_control, len(agent_status.vehicle_status().acceleration_vcs()));
 		fclose(f);
 	}
 	first_run = false;
