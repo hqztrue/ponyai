@@ -17,17 +17,53 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
   explicit FrogVehicleAgent(const std::string& name) : VehicleAgent(name) {}
 
   virtual void Initialize(const interface::agent::AgentStatus&) {
-    
+    first_run = true;
+	acceleration = true;
+	control = delta_control = 0.1;
   }
 
+  //generate table
   virtual interface::control::ControlCommand RunOneIteration(
       const interface::agent::AgentStatus& agent_status) {
+    const double max_velocity = 10, eps = 1e-5;
     interface::control::ControlCommand command;
-    
+    double dist = len(agent_status.vehicle_status().position(), agent_status.route_status().destination());
+	
+	if (control > 1.0+eps)exit(0);
+	if (acceleration){
+		command.set_throttle_ratio(control);
+		prev_control = control;
+		if (CalcVelocity(agent_status.vehicle_status().velocity())>=max_velocity)acceleration = false;
+	}
+	else {
+		command.set_brake_ratio(control);
+		prev_control = -control;
+		if (CalcVelocity(agent_status.vehicle_status().velocity())<=0.1){
+			control += delta;
+			acceleration = true;
+		}
+	}
+	
+	
+	if (!first_run){
+		FILE *f = fopen("/home/hqz/ponyai/homework6/table.txt", "a");
+		fprintf(f, "%.6lf %.6lf %.6lf\n",prev_status.velocity(), prev_control, agent_status.vehicle_status().acceleration_vcs());
+		fclose(f);
+	}
+	first_run = false;
+	prev_status = agent_status;
+    return command;
+  }
+  
+  /*virtual interface::control::ControlCommand RunOneIteration(
+      const interface::agent::AgentStatus& agent_status) {
+    interface::control::ControlCommand command;
+    double dist = len(agent_status.vehicle_status().position(), agent_status.route_status().destination());
+	
 	
 	
     return command;
-  }
+  }*/
 
  private:
   double CalcDistance(const interface::geometry::Vector3d& position,
@@ -41,7 +77,9 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
   double len(const interface::geometry::Vector3d& v) {  //x, y
     return std::sqrt(math::Sqr(v.x()) + math::Sqr(v.y()));
   }
-
+  bool first_run, acceleration;
+  interface::agent::AgentStatus prev_status;
+  double prev_control, control, delta_control;
 };
 
 }
