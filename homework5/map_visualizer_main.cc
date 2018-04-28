@@ -5,7 +5,7 @@
 #include "gflags/gflags.h"
 #include "homework5/display/main_window.h"
 #include "homework5/map/map_lib.h"
-#include "homework5/find_route.h"
+#include "homework5/route/find_route.h"
 
 DEFINE_string(route_file_path, "", "Path of displayed route");
 DEFINE_string(map_dir, "", "Directory path of map file");
