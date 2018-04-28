@@ -25,7 +25,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	interface::geometry::Point2D p;
 	//route.start_point().set_x(agent_status.vehicle_status().position().x());
 	//route.start_point().set_y(agent_status.vehicle_status().position().y());
-	route.set_start_point(p);
+	route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
 	p.set_x(agent_status.route_status().destination().x());
 	p.set_y(agent_status.route_status().destination().y());
 	//route.set_end_point(p);
