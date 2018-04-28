@@ -1,15 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
 cc_library(
-	name = "geometry",
-	hdrs = ["geometry.h"],
-	deps = [
-		"@gflags",
-        "@glog",
-    ],
-)
-
-cc_library(
     name = "find_route",
 	srcs = ["find_route.cc"],
     hdrs = ["find_route.h"],
@@ -18,7 +9,7 @@ cc_library(
         "//common/utils/file",
 		"//homework5/display:main_window",
         "//homework5/map:map_lib",
-		"//homework5/route:geometry",
+		"//homework5/geometry:geometry",
         "@gflags",
         "@glog",
     ],
