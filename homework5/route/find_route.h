@@ -3,6 +3,7 @@
 #include "glog/logging.h"
 #include "common/utils/file/file.h"
 #include "gflags/gflags.h"
+#include "homework5/display/main_window.h"
 #include "homework5/map/map_lib.h"
 #include "homework5/route/geometry.h"
 //#include<string>
