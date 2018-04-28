@@ -1,0 +1,15 @@
+table generation:
+|velocity|, |acceleration_vcs|
+//|angular_velocity_vcs|
+
+
+
+
+
+algorithm:
+
+
+
+
+
+
