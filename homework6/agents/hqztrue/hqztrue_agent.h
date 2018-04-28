@@ -9,6 +9,7 @@
 #include "common/proto/vehicle_status.pb.h"
 #include "common/utils/math/math_utils.h"
 #include "homework6/simulation/vehicle_agent_factory.h"
+#include "homework5/find_route.h"
 
 namespace hqztrue {
 
@@ -16,10 +17,14 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
  public:
   explicit FrogVehicleAgent(const std::string& name) : VehicleAgent(name) {}
 
-  virtual void Initialize(const interface::agent::AgentStatus&) {
+  virtual void Initialize(const interface::agent::AgentStatus& agent_status) {
     first_run = true;
 	acceleration = true;
 	control = delta_control = 0.1;
+	
+	agent_status.vehicle_status().position();
+	agent_status.route_status().destination();
+	find_route();
   }
 
   //generate table
@@ -55,15 +60,24 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
     return command;
   }
   
-  /*virtual interface::control::ControlCommand RunOneIteration(
+  virtual interface::control::ControlCommand RunOneIteration1(
       const interface::agent::AgentStatus& agent_status) {
+	const double max_velocity = 10, eps = 1e-5;
+	double velocity_threshold = 5;
     interface::control::ControlCommand command;
     double dist = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination());
 	
-	
-	
+	if (dist<0){
+		
+	}
+	else if (len(agent_status.vehicle_status().velocity())<velocity_threshold){
+		command.set_throttle_ratio(0.3);
+	}
+	else if (len(agent_status.vehicle_status().velocity())>velocity_threshold){
+		command.set_brake_ratio(0.3);
+	}
     return command;
-  }*/
+  }
 
  private:
   double CalcDistance(const interface::geometry::Vector3d& position,
