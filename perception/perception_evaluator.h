@@ -51,7 +51,7 @@ class PerceptionEvaluator {
 
   virtual ~PerceptionEvaluator() = default;
 
-  interface::perception::PerceptionEvaluationResult RunEvaluation();
+  interface::perception::PerceptionEvaluationResult RunEvaluation(const char data_root[]);
 
  private:
   using Polygon2d = std::vector<math::Vec2d>;

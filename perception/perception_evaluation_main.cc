@@ -73,7 +73,8 @@ void RunPerceptionEvaluation() {
     options.data_to_label_map = ObtainDataToLabelMapping(lidar_dir, label_dir);
     options.evaluation_range = kEvaluationRange;
     auto evaluator = std::make_unique<PerceptionEvaluator>(options);
-    const auto eval_result = evaluator->RunEvaluation();
+	const char data_root[] = "/unsullied/sharefs/hqz/shared/hw/pony_data/perception_project/";
+    const auto eval_result = evaluator->RunEvaluation(data_root);
     CHECK(file::WriteProtoToTextFile(eval_result, result_file));
     std::cout << "*********************************************************" << std::endl;
     std::cout << "Evaluation results for " << config_file << std::endl;

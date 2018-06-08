@@ -92,23 +92,40 @@ PerceptionEvaluator::PerceptionEvaluator(Options options)
     : options_(std::move(options)) {
 }
 
-PerceptionEvaluationResult PerceptionEvaluator::RunEvaluation() {
+DEFINE_string(lidar_device, "VelodyneDevice32c", "");
+DEFINE_string(camera_device, "GigECameraDeviceWideAngle", "");
+PerceptionEvaluationResult PerceptionEvaluator::RunEvaluation(const char data_root[]) {
   PerceptionEvaluationResult evaluation_result;
   evaluation_result.set_log_directory(options_.scenario_name);
   evaluation_result.set_evaluation_range(options_.evaluation_range);
   std::vector<std::string> pointcloud_files = file::path::FindFilesWithPrefixSuffix(
       options_.lidar_folder, "", FLAGS_perception_evaluation_data_file_suffix);
   std::sort(pointcloud_files.begin(), pointcloud_files.end(), file::path::Compare);
-
+  std::string video_name = "";
   for (const auto& pointcloud_file : pointcloud_files) {
     const PointCloud pointcloud = ReadPointCloudFromTextFile(pointcloud_file);
     // Load camera image if there is a corresponding one.
 	int frameID = atoi(file::path::FilenameStem(pointcloud_file).c_str());
-	int p = pointcloud_file.find("select");
-	std::string prefix = pointcloud_file.substr(0, p-1);
-	p = prefix.rfind("/");
-	std::string video_name = prefix.substr(p+1);
-	printf("split %s %s %d\n", pointcloud_file.c_str(), video_name.c_str(), frameID);
+	if (video_name==""){
+		int p = pointcloud_file.find("select");
+		std::string prefix = pointcloud_file.substr(0, p-1);
+		p = prefix.rfind("/");
+		video_name = prefix.substr(p+1);
+		
+		//init car_param
+		const std::string intrinsic_file_name =
+			strings::Format("car_param/{}_intrinsic", FLAGS_camera_device);
+		const std::string intrinsic_file = file::path::Join(data_root,
+			intrinsic_file_name);
+		CHECK(file::path::Exists(intrinsic_file)) << intrinsic_file << " doesn't exist!";
+		const std::string extrinsic_file_name =
+			  strings::Format("car_param/lidar_to_{}_extrinsic", FLAGS_camera_device);
+		const std::string extrinsic_file = file::path::Join(data_root, extrinsic_file_name);
+		CHECK(file::path::Exists(extrinsic_file)) << extrinsic_file << " doesn't exist!";
+		const Eigen::VectorXd intrinsic = ReadCameraIntrinsic(intrinsic_file);
+		const Eigen::Affine3d extrinsic = ReadRigidBodyTransform(extrinsic_file);
+	}
+	//printf("split %s %s %d\n", pointcloud_file.c_str(), video_name.c_str(), frameID);
     const std::string image_file =
         file::path::Join(options_.camera_folder,
                          strings::Format("{}.jpg", file::path::FilenameStem(pointcloud_file)));
@@ -117,7 +134,7 @@ PerceptionEvaluationResult PerceptionEvaluator::RunEvaluation() {
       image.emplace(cv::imread(image_file, CV_LOAD_IMAGE_COLOR));
     }
     // Run perception and save the results.
-    const auto perception_obstacles = perception_.RunPerception(pointcloud, image, video_name.c_str(), frameID);
+    const auto perception_obstacles = perception_.RunPerception(pointcloud, image, intrinsic, extrinsic, video_name.c_str(), frameID);
     // Run evaluation when label file exists.
     if (options_.data_to_label_map.count(pointcloud_file)) {
       LOG(INFO) << "Evaluate data file: " << pointcloud_file;
