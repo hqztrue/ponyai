@@ -65,6 +65,12 @@ struct point{
 	void print()const{printf("(%.5lf,%.5lf)\n",x,y);}
 };
 inline double cha(double x1,double y1,double x2,double y2){return x1*y2-x2*y1;}
+point max(const point &x,const point &y){
+	return point(max(x.x,y.x), max(x.y,y.y), max(x.z,y.z));
+}
+point min(const point &x,const point &y){
+	return point(min(x.x,y.x), min(x.y,y.y), min(x.z,y.z));
+}
 struct polygon{
 	std::vector<point> a;
 	typedef std::vector<point>::iterator vit;
@@ -179,13 +185,39 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
 	    obstacle->set_id("o"+std::to_string(++num_objects));
 	    obstacle->set_height(2.69);
 	    
-	    for (auto &p : pts){
+	    /*for (auto &p : pts){
           auto* polygon_point = obstacle->add_polygon_point();
           polygon_point->set_x(p.x);
           polygon_point->set_y(p.y);
           polygon_point->set_z(p.z);
-        }
+        }*/
+		const double inf = 1e100;
+		point mi(inf,inf,inf), ma(-inf,-inf,-inf);
+		for (auto &p : pts){
+			mi = min(mi, p);
+			ma = max(ma, p);
+		}
+		auto* polygon_point = obstacle->add_polygon_point();
+        polygon_point->set_x(mi.x);
+        polygon_point->set_y(mi.y);
+        polygon_point->set_z(1);
+		
+		polygon_point = obstacle->add_polygon_point();
+        polygon_point->set_x(ma.x);
+        polygon_point->set_y(mi.y);
+        polygon_point->set_z(1);
+		
+		polygon_point = obstacle->add_polygon_point();
+        polygon_point->set_x(ma.x);
+        polygon_point->set_y(ma.y);
+        polygon_point->set_z(1);
+		
+		polygon_point = obstacle->add_polygon_point();
+        polygon_point->set_x(mi.x);
+        polygon_point->set_y(ma.y);
+        polygon_point->set_z(1);
       }
+	  printf("rect %lf %lf %lf %lf\n",mi.x,ma.x,mi.y,ma.y);
   }
   
   
