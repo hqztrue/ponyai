@@ -8,6 +8,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <thread>
 
 #include "google/protobuf/io/coded_stream.h"
 #include "google/protobuf/io/zero_copy_stream_impl.h"
@@ -18,12 +19,11 @@
 namespace simulation {
 
 TcpAgentClient::TcpAgentClient(const std::string& ip_address, int port,
-                               const std::string& class_name, const std::string& agent_name)
+                               const interface::simulation::SimulationConfig& simulation_config)
     : ip_address_(ip_address), port_(port) {
   CHECK(!ip_address.empty());
   CHECK_GE(port, 0);
-  vehicle_agent_ = std::unique_ptr<VehicleAgent>(
-      VehicleAgentFactory::Instance()->Create(class_name, agent_name));
+  simulation_config_.CopyFrom(simulation_config);
 }
 
 utils::Status TcpAgentClient::Initialize() {
@@ -48,6 +48,17 @@ utils::Status TcpAgentClient::Initialize() {
 
   int connect_ret =
       ::connect(socket_fd, reinterpret_cast<sockaddr*>(&destination), sizeof(destination));
+  int retry_count = 0;
+  while (connect_ret != 0) {
+    retry_count++;
+    if (retry_count > 3) {
+      break;
+    }
+    LOG(ERROR) << "Fail to connnect, sleeping for 1000ms";
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    connect_ret =
+        ::connect(socket_fd, reinterpret_cast<sockaddr*>(&destination), sizeof(destination));
+  }
   if (connect_ret != 0) {
     return utils::Status::Error("Failed to connect to " + ip_address_ + ":" +
                                 std::to_string(port_) + ", error code: " + std::to_string(errno));
@@ -62,6 +73,18 @@ utils::Status TcpAgentClient::Start() {
     interface::comms::Request request;
     RETURN_IF_ERROR(connection_->BlockingReceiveMessage(&request));
     if (request.has_initialize_request()) {
+      agent_status_.CopyFrom(request.initialize_request().agent_status());
+      std::string agent_name = request.initialize_request().name();
+      std::string class_name;
+      for (const auto& agent_config : simulation_config_.agent_config()) {
+        if (agent_config.name() == agent_name) {
+          class_name = agent_config.type();
+          break;
+        }
+      }
+      CHECK(!class_name.empty());
+      vehicle_agent_ = std::unique_ptr<VehicleAgent>(
+          VehicleAgentFactory::Instance()->Create(class_name, agent_name));
       auto start = std::chrono::system_clock::now();
       vehicle_agent_->Initialize(agent_status_);
       auto end = std::chrono::system_clock::now();
@@ -75,6 +98,8 @@ utils::Status TcpAgentClient::Start() {
       if (!agent_status_.simulation_status().is_alive()) {
         break;
       }
+      CHECK(request.iteration_request().name() == vehicle_agent_->name());
+      vehicle_agent_->clear_debug_variables();
       interface::comms::Response response;
       auto start = std::chrono::system_clock::now();
       interface::control::ControlCommand control_command =
@@ -83,6 +108,8 @@ utils::Status TcpAgentClient::Start() {
       std::chrono::duration<double> diff = end - start;
       response.mutable_iteration_response()->set_time_cost(diff.count());
       response.mutable_iteration_response()->mutable_control_command()->CopyFrom(control_command);
+      response.mutable_iteration_response()->mutable_debug_variables()->CopyFrom(
+          vehicle_agent_->debug_variables());
       RETURN_IF_ERROR(connection_->BlockingSendMessage(response));
     }
   }

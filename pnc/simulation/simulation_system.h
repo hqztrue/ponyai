@@ -65,6 +65,7 @@ class SimulationSystem : public SystemBase {
   std::unique_ptr<SimulationWorld> simulation_world_;
   std::unique_ptr<ManualTestAgent> manual_test_agent_;
   std::unique_ptr<file::FileInterface> simulation_log_file_;
+  std::unique_ptr<file::FileInterface> simulation_index_file_;
   std::unique_ptr<SimulationEngineBase> simulation_engine_;
 
   interface::simulation::SimulationConfig simulation_config_;

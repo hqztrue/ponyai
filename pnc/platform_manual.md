@@ -6,7 +6,7 @@ SimulationSystem is the top-level class in our platform. It takes a simulation c
 
 Basic Usage:
 ```
-bazel run //pnc:simulation_main -- --multi_process_mode=false
+bazel run -c opt //pnc:simulation_main -- --multi_process_mode=false
 ```
 
 By default, it will read the config file in `pnc/data/sample.config`, and run a simulation based on that configuration. The log file will be saved to `/tmp/simulation_log.bin` and metrics will be saved to `/tmp/simulation_metrics.txt`. 
@@ -65,8 +65,10 @@ agent_metric {
 We provide a tool `replay_main` to help you easily replay a simulation. You could use it to replay a simulation task without running all agents again. Usage:
 
 ```
-bazel run //pnc:replay_main -- --simulation_log_file_path={file_path}                    
+bazel run -c opt //pnc:replay_main -- --simulation_log_file_path={file_path}                    
 ```
+
+Note that you could double-click on the slider to perform seek operation in replay. 
 
 ## Simulation Engine
 

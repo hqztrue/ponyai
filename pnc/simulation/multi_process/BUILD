@@ -43,6 +43,7 @@ cc_library(
         "//common/proto:cc_agent_comms_proto",
         "//common/proto:cc_agent_status_proto",
         "//common/proto:cc_control_proto",
+        "//common/proto:cc_simulation_config_proto",
         "//common/utils/containers:array_view",
         "//common/utils/status",
         "//pnc/simulation:vehicle_agent",

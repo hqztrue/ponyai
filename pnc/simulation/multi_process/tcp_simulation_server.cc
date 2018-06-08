@@ -87,7 +87,9 @@ utils::Status TcpSimulationServer::Start() {
 
   for (int i = 0; i < num_agents_; i++) {
     int socket_fd;
+    LOG(INFO) << "Try to accept new connection...";
     RETURN_IF_ERROR(AcceptNewConnection(&socket_fd));
+    LOG(INFO) << "New connection is accepted on fd: " << socket_fd;
     tcp_connections_.push_back(std::make_unique<TcpConnection>(socket_fd));
   }
 
@@ -124,6 +126,7 @@ utils::Status TcpSimulationServer::InitializeAgents() {
     tcp_connection_map_[name] = tcp_connection;
     interface::comms::Request request;
     request.mutable_initialize_request()->mutable_agent_status()->CopyFrom(agent_status);
+    request.mutable_initialize_request()->set_name(name);
     utils::Status request_status = SendRequest(tcp_connection, request);
     if (request_status.ok()) {
       // Taking data transmission time into consideration, the server waits a client's response for
@@ -163,6 +166,7 @@ utils::Status TcpSimulationServer::RunOneIteration() {
       pool_.Schedule([&name, &agent_status, &tcp_connection, &message_receiver, this]() {
         interface::comms::Request request;
         request.mutable_iteration_request()->mutable_agent_status()->CopyFrom(agent_status);
+        request.mutable_iteration_request()->set_name(name);
         utils::Status request_status = SendRequest(tcp_connection, request);
         if (request_status.ok()) {
           utils::Optional<interface::comms::Response> response =
@@ -174,6 +178,8 @@ utils::Status TcpSimulationServer::RunOneIteration() {
                   response.get().iteration_response().control_command());
               agent_response_map_[name].set_iteration_time_cost(
                   response.get().iteration_response().time_cost());
+              agent_response_map_[name].mutable_debug_variables()->CopyFrom(
+                  response.get().iteration_response().debug_variables());
             }
           } else {
             LOG(ERROR) << "Server does not receive agent: " << name

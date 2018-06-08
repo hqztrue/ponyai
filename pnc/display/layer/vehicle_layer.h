@@ -22,12 +22,7 @@ class VehicleLayer : public SimulationSystemLayerBase {
 
  private:
   void DrawVehicle(const utils::display::Vehicle& vehicle,
-                   const math::Vec2d& vehicle_reference_point, const Eigen::Quaterniond& yaw,
-                   const interface::vehicle::VehicleParams& vehicle_params) const;
-  void DrawVehicle(const utils::display::Vehicle& vehicle,
-                   const math::Vec2d& vehicle_reference_point, double heading,
-                   const interface::vehicle::VehicleParams& vehicle_params) const;
-  void DrawVehicle(const utils::display::Vehicle& vehicle,
+                   const std::string& name,
                    const math::Vec3d& vehicle_reference_point, const Eigen::Quaterniond& yaw,
                    const interface::vehicle::VehicleParams& vehicle_params) const;
 

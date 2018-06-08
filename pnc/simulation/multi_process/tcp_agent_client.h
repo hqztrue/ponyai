@@ -8,7 +8,6 @@
 #include <vector>
 
 #include <google/protobuf/message.h>
-#include <gtest/gtest_prod.h>
 #include <netinet/tcp.h>
 
 #include "pnc/simulation/multi_process/net_client_interface.h"
@@ -18,12 +17,13 @@
 #include "common/proto/agent_comms.pb.h"
 #include "common/proto/agent_status.pb.h"
 #include "common/proto/control.pb.h"
+#include "common/proto/simulation_config.pb.h"
 
 namespace simulation {
 class TcpAgentClient : public NetClientInterface {
  public:
-  TcpAgentClient(const std::string& ip_address, int port, const std::string& class_name,
-                 const std::string& agent_name);
+  TcpAgentClient(const std::string& ip_address, int port,
+                 const interface::simulation::SimulationConfig& simulation_config);
   ~TcpAgentClient() override = default;
 
   utils::Status Initialize() override;
@@ -44,6 +44,7 @@ class TcpAgentClient : public NetClientInterface {
   std::unique_ptr<VehicleAgent> vehicle_agent_;
 
   interface::agent::AgentStatus agent_status_;
+  interface::simulation::SimulationConfig simulation_config_;
 };
 
 }  // namespace simulation

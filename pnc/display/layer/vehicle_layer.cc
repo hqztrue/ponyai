@@ -37,9 +37,10 @@ void VehicleLayer::Draw() const {
       }
     }
     const interface::agent::VehicleStatus& vehicle_status = agent_status.vehicle_status();
-    math::Vec2d vehicle_reference_point(vehicle_status.position().x(),
-                                        vehicle_status.position().y());
-    DrawVehicle(vehicle_, vehicle_reference_point,
+    math::Vec3d vehicle_reference_point(vehicle_status.position().x(),
+                                        vehicle_status.position().y(),
+                                        GetGlLayer(utils::display::kLayerVehicle));
+    DrawVehicle(vehicle_, vehicle_agent_data.name(), vehicle_reference_point,
                 math::transform::ToEigen(vehicle_status.orientation()), vehicle_params_);
     if (agent_status.route_status().has_destination()) {
       DrawRouterRequest(agent_status.route_status().destination());
@@ -48,22 +49,7 @@ void VehicleLayer::Draw() const {
 }
 
 void VehicleLayer::DrawVehicle(const utils::display::Vehicle& vehicle,
-                               const math::Vec2d& vehicle_reference_point, double yaw,
-                               const interface::vehicle::VehicleParams& vehicle_params) const {
-  DrawVehicle(vehicle, vehicle_reference_point,
-              Eigen::Quaterniond(Eigen::AngleAxisd(yaw, Eigen::Vector3d::UnitZ())), vehicle_params);
-}
-
-void VehicleLayer::DrawVehicle(const utils::display::Vehicle& vehicle,
-                               const math::Vec2d& vehicle_reference_point,
-                               const Eigen::Quaterniond& orientation,
-                               const interface::vehicle::VehicleParams& vehicle_params) const {
-  const math::Vec3d reference_point(vehicle_reference_point.x, vehicle_reference_point.y,
-                                    GetGlLayer(utils::display::kLayerVehicle));
-  DrawVehicle(vehicle, reference_point, orientation, vehicle_params);
-}
-
-void VehicleLayer::DrawVehicle(const utils::display::Vehicle& vehicle,
+                               const std::string& name,
                                const math::Vec3d& vehicle_reference_point,
                                const Eigen::Quaterniond& orientation,
                                const interface::vehicle::VehicleParams& vehicle_params) const {
@@ -78,6 +64,11 @@ void VehicleLayer::DrawVehicle(const utils::display::Vehicle& vehicle,
   vehicle.Draw();
 
   glPopMatrix();
+
+  // Draw traffic light id
+  math::Vec3d pos(vehicle_reference_point.x, vehicle_reference_point.y,
+                  vehicle_reference_point.z + 0.5);
+  font_renderer_->DrawText3D(name, pos, Color(1.0f, 1.0f, 0.0f));
 }
 
 void VehicleLayer::DrawRouterRequest(const interface::geometry::Point3D& destination) const {

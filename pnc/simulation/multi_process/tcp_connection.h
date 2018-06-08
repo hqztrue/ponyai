@@ -8,7 +8,6 @@
 #include <vector>
 
 #include <google/protobuf/message.h>
-#include <gtest/gtest_prod.h>
 #include <netinet/tcp.h>
 
 #include "google/protobuf/io/coded_stream.h"

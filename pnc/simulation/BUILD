@@ -67,6 +67,7 @@ cc_library(
         "//common/utils/math",
         "//pnc/map:map_lib",
         "//pnc/utils:vehicle",
+        "//pnc/utils:index",
         "@com_google_protobuf//:protobuf",
         "@glog",
     ],
@@ -123,6 +124,7 @@ cc_library(
     srcs = ["traffic_light_agent.cc"],
     hdrs = ["traffic_light_agent.h"],
     deps = [
+        "//common/utils/math:math",
         "//common/proto:cc_agent_status_proto",
         "//common/proto:cc_map_id_proto",
         "//common/proto:cc_map_proto",

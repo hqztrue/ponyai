@@ -17,5 +17,6 @@ message PlaybackCommand {
         PlaybackPause playback_pause = 4;
         PlaybackNextIteration playback_next_iteration = 6;
         PlaybackTerminate playback_terminate = 7;
+        double playback_seek_to_timestamp = 8;
     }
 }

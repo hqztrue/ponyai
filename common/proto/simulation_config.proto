@@ -29,7 +29,6 @@ message RuleConfig {
     optional bool check_vehicle_out_of_lane = 3 [default = false];
     optional bool check_one_iteration_timeout = 4 [default = false];
     optional bool check_vehicles_collision = 6 [default = false];
-    optional bool check_static_vehicle = 7 [default = false];
     optional OneIterationTimeoutRule one_iteration_timeout_rule = 8;
     optional VehicleExceedSpeedLimitRule vehicle_exceed_speed_limit_rule = 10;
 

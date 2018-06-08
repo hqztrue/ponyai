@@ -57,8 +57,12 @@ void SimulationSystem::Initialize() {
   if (FLAGS_record_simulation_history) {
     CHECK_OK(file::DeleteFileIfExists(FLAGS_simulation_log_file_path));
     LOG(INFO) << "Simulation history is recorded to " << FLAGS_simulation_log_file_path;
+    LOG(INFO) << "Simulation history index is written to "
+              << FLAGS_simulation_log_file_path + ".index";
 
     simulation_log_file_ = std::make_unique<file::File>(FLAGS_simulation_log_file_path, "w");
+    simulation_index_file_ =
+        std::make_unique<file::File>(FLAGS_simulation_log_file_path + ".index", "w");
   }
 }
 
@@ -66,10 +70,18 @@ void SimulationSystem::LogSimulationHistory() {
   if (FLAGS_record_simulation_history) {
     interface::simulation::SimulationSystemData frame_data = FetchData();
     std::string content = frame_data.SerializeAsString();
+
+    double timestamp = frame_data.simulation_time();
+    const int64_t offset = simulation_log_file_->GetCurrentOffset();
+
     const uint64_t size = content.size();
     CHECK(simulation_log_file_->Write(&size, sizeof(size)) == sizeof(size));
     CHECK(simulation_log_file_->Write(content.data(), size) == size);
     CHECK(simulation_log_file_->Flush());
+
+    CHECK(simulation_index_file_->Write(&timestamp, sizeof(timestamp)) == sizeof(timestamp));
+    CHECK(simulation_index_file_->Write(&offset, sizeof(offset)) == sizeof(offset));
+    CHECK(simulation_index_file_->Flush());
   }
 }
 

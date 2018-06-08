@@ -10,16 +10,23 @@ void ReplaySystem::Initialize() {
 }
 
 void ReplaySystem::Start() {
-  auto system_time = std::chrono::steady_clock::now();
-  while (1) {
+  LOG(INFO) << "Replay system is started";
+  while (true) {
+    auto system_time = std::chrono::steady_clock::now();
     FlushPlaybackCommands();
+    if (playback_status().playback_seek_to_timestamp > 0) {
+      if (index_) {
+        int64_t offset = index_->GetOffsetByTime(playback_status().playback_seek_to_timestamp);
+        CHECK(simulation_log_file_->SeekTo(offset));
+      }
+      playback_status_.playback_seek_to_timestamp = -1.0;
+    }
     if (playback_status().playback_paused) {
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
       continue;
     }
     {
       utils::MutexLocker lock(&mutex_);
-      // simulation_frame_data_.CopyFrom(simulation_history_data_.simulation_frame(i));
       uint64_t size = 0;
       std::string content;
       if (simulation_log_file_->Read(&(size), sizeof(size)) == 0) {

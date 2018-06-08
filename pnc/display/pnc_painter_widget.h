@@ -42,7 +42,7 @@ class PncPainterWidget : public PainterWidgetBase {
     simulation_system_data_.CopyFrom(data);
   }
 
-  void SetVehiclePespective(const std::string& vehicle_name) {
+  void SetVehiclePerspective(const std::string& vehicle_name) {
     user_interface_data_.perspective_vehicle = vehicle_name;
   }
 

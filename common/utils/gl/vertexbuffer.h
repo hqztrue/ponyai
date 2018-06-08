@@ -3,7 +3,6 @@
 #pragma once
 
 #include <glog/logging.h>
-#include <gtest/gtest.h>
 
 #include "common/utils/common/defines.h"
 #include "common/utils/containers/array_view.h"
@@ -48,8 +47,6 @@ class VertexBuffer : public Object, public BindingInterface {
   bool is_bound_ = false;
   int float_dim_ = 3;
   GLenum float_type_ = GL_FLOAT;
-
-  FRIEND_TEST(VertexBufferTest, GeneralTest);
 };
 
 template <class DataType>

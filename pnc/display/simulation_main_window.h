@@ -21,8 +21,9 @@ class SimulationMainWindow : public MainWindow {
     });
     SetupMenu();
   }
+  ~SimulationMainWindow() = default;
 
-  virtual void timerEvent(QTimerEvent* /*event*/) override {
+  void timerEvent(QTimerEvent* /*event*/) override {
     data_ = simulation_system_->FetchData();
     painter_widget_->set_simulation_system_data(data_);
     painter_widget_->update();

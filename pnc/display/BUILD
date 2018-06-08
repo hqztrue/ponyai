@@ -6,6 +6,7 @@ cc_qt_library(
     name = "main_window",
     hdrs = ["main_window.h"],
     deps = [
+        ":interactive_slider_widget",
         ":pnc_painter_widget",
         ":q_variable_dock_widget",
         ":variable_view",
@@ -39,6 +40,7 @@ cc_qt_library(
         ":q_variable_dock_widget",
         ":variable_view",
         "//pnc/simulation:replay_system",
+        "//pnc/utils:index",
         "@qt//:qt_core",
         "@qt//:qt_widgets",
     ],
@@ -146,5 +148,32 @@ cc_library(
         "//common/proto:cc_transform_proto",
         "//common/utils/display:color",
         "//common/utils/math/transform",
+    ],
+)
+
+cc_qt_library(
+    name = "flat_slider_widget",
+    srcs = ["flat_slider_widget.cc"],
+    hdrs = ["flat_slider_widget.h"],
+    deps = [
+        "//common/utils/display:camera",
+        "//common/utils/display:qt_macro",
+        "@qt//:qt_core",
+        "@qt//:qt_widgets",
+    ],
+)
+
+
+cc_qt_library(
+    name = "interactive_slider_widget",
+    srcs = ["interactive_slider_widget.cc"],
+    hdrs = ["interactive_slider_widget.h"],
+    deps = [
+        "//pnc/display:flat_slider_widget",
+        "//common/utils/file",
+        "//common/utils/file:path",
+        "@glog",
+        "@qt//:qt_core",
+        "@qt//:qt_widgets",
     ],
 )

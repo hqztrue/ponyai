@@ -25,16 +25,25 @@ void MetricCollector::AddMetricFrame(const interface::agent::AgentStatus& agent_
     return;
   }
 
-  double acc = vehicle_status.acceleration_vcs().x();
-  if (std::abs(acc) > 3) {
-    big_acc_sqr_sum_ += math::Sqr(acc);
+  if (frame_count_ > 1) {
+    math::Vec2d last_velocity(last_vehicle_status_.velocity().x(),
+                              last_vehicle_status_.velocity().y());
+    math::Vec2d current_velocity(vehicle_status.velocity().x(), vehicle_status.velocity().y());
+    double acc = (current_velocity - last_velocity).Length() / kDeltaT;
+    if (std::abs(acc) > 3) {
+      big_acc_sqr_sum_ += math::Sqr(acc);
+    }
   }
-  if (frame_count_ >= 2) {
+
+  if (frame_count_ > 2) {
     math::Vec2d last_last_pos(last_last_vehicle_status_.position().x(),
                               last_last_vehicle_status_.position().y());
     math::Vec2d last_pos(last_vehicle_status_.position().x(), last_vehicle_status_.position().y());
     math::Vec2d current_pos(vehicle_status.position().x(), vehicle_status.position().y());
-    curvature_sqr_sum_ += math::CurvatureSqr(last_last_pos, last_pos, current_pos);
+    math::Vec2d current_velocity(vehicle_status.velocity().x(), vehicle_status.velocity().y());
+    if (current_velocity.Length() > 0.1) {
+      curvature_sqr_sum_ += math::CurvatureSqr(last_last_pos, last_pos, current_pos);
+    }
   }
   last_last_vehicle_status_.Swap(&last_vehicle_status_);
   last_vehicle_status_.CopyFrom(vehicle_status);

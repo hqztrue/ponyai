@@ -1,7 +1,10 @@
 // Copyright @2018 Pony AI Inc. All rights reserved.
 
-#include "pnc/simulation/traffic_light_agent.h"
+#include <iomanip>
+
 #include "glog/logging.h"
+#include "common/utils/math/common.h"
+#include "pnc/simulation/traffic_light_agent.h"
 
 namespace {
 
@@ -17,7 +20,7 @@ namespace simulation {
 
 void TrafficLightAgent::SetCurrentTime(double time) {
   current_time_ = time;
-  if (current_time_ - last_state_change_time_ > kTimeInterval[current_index_]) {
+  if (current_time_ - last_state_change_time_ > kTimeInterval[current_index_] - math::kEpsilon) {
     status_refreshed = true;
     last_state_change_time_ = current_time_;
     current_index_++;

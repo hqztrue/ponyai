@@ -11,7 +11,7 @@ void MultiProcessSimulationEngine::InitializeInternal() {
     CHECK_OK(server_->Start());
   });
   for (const interface::simulation::AgentConfig& agent_config : simulation_config_.agent_config()) {
-    multi_process_->StartWorker([&agent_config, this]() { StartClient(agent_config); });
+    multi_process_->StartWorker([&agent_config, this]() { StartClient(simulation_config_); });
   }
   server_thread_.join();
   server_->SetAgentStatusMap(agent_status_map_);

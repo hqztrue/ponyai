@@ -7,6 +7,7 @@ import "common/proto/agent_status.proto";
 import "common/proto/display.proto";
 
 message AgentInitializeRequest {
+    optional string name = 2;
     optional interface.agent.AgentStatus agent_status = 1;
 }
 
@@ -15,6 +16,7 @@ message AgentInitializeResponse {
 }
 
 message AgentIterationRequest {
+    optional string name = 2;
     optional interface.agent.AgentStatus agent_status = 1;
 }
 

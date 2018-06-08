@@ -33,6 +33,7 @@ class SimulationWorld {
     map_.CopyFrom(map);
     vehicle_params_.CopyFrom(vehicle_params);
     simulation_config_.CopyFrom(simulation_config);
+    GenerateInitialStatusCandidates();
   }
   virtual ~SimulationWorld() = default;
 
@@ -76,6 +77,8 @@ class SimulationWorld {
   }
 
  private:
+  void GenerateInitialStatusCandidates();
+
   interface::agent::VehicleStatus GenerateRandomInitialStatus();
   interface::geometry::Point3D GenerateRandomRouterRequest();
 
@@ -108,6 +111,9 @@ class SimulationWorld {
 
   std::unique_ptr<SimulationEvaluator> simulation_evaluator_;
   interface::simulation::SimulationConfig simulation_config_;
+
+  std::vector<interface::agent::VehicleStatus> initial_vehicle_status_candidates_;
+  int current_initial_vehicle_status_index_ = 0;
 };
 
 };  // namespace simulation

@@ -8,6 +8,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QVBoxLayout>
 #include "common/proto/simulation_config.pb.h"
+#include "pnc/display/interactive_slider_widget.h"
 #include "pnc/display/pnc_painter_widget.h"
 #include "pnc/display/q_variable_dock_widget.h"
 #include "pnc/display/variable_view.h"
@@ -28,19 +29,16 @@ class MainWindow : public QMainWindow {
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setMargin(0);
     layout->setSpacing(0);
+
     utils::display::PncPainterWidget::Options options;
     painter_widget_ = new utils::display::PncPainterWidget(options, container);
     layout->addWidget(painter_widget_);
     setCentralWidget(container);
-
     resize(1400, 960);
     move(100, 100);
-
     variable_dock_widget_ = new utils::display::QVariableDockWidget(this);
     addDockWidget(Qt::RightDockWidgetArea, variable_dock_widget_);
-
     startTimer(static_cast<int>(1000.0 * 0.1));
-
     show();
   }
 
@@ -105,9 +103,6 @@ class MainWindow : public QMainWindow {
     variable_view_data->emplace("debug_variables", debug_variable_view_list);
   }
 
-  utils::display::PncPainterWidget* painter_widget_ = nullptr;           // Not owned.
-  utils::display::QVariableDockWidget* variable_dock_widget_ = nullptr;  // Not owned.
-
   // TODO refactor setup menu
   void SetupMenu() {
     QAction* action = nullptr;
@@ -117,7 +112,7 @@ class MainWindow : public QMainWindow {
 
     action = menu->addAction(tr("&God"));
     connect(action, &QAction::triggered, this,
-            [this] { painter_widget_->SetVehiclePespective(""); });
+            [this] { painter_widget_->SetVehiclePerspective(""); });
 
     menu->addSeparator();
 
@@ -125,17 +120,20 @@ class MainWindow : public QMainWindow {
       const std::string& name = agent_config.name();
       action = menu->addAction(tr(name.data()));
       connect(action, &QAction::triggered, this,
-              [this, &name] { painter_widget_->SetVehiclePespective(name); });
+              [this, &name] { painter_widget_->SetVehiclePerspective(name); });
     }
     if (simulation_config_.add_keyboard_controlled_agent()) {
       std::string name = std::string(simulation::kKeyboardControlledAgentName);
       action = menu->addAction(tr(name.data()));
       connect(action, &QAction::triggered, this, [this] {
-        painter_widget_->SetVehiclePespective(
+        painter_widget_->SetVehiclePerspective(
             std::string(simulation::kKeyboardControlledAgentName));
       });
     }
   }
+
+  utils::display::PncPainterWidget* painter_widget_ = nullptr;           // Not owned.
+  utils::display::QVariableDockWidget* variable_dock_widget_ = nullptr;  // Not owned.
 
  private:
   interface::simulation::SimulationConfig simulation_config_;

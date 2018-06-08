@@ -19,6 +19,13 @@ void SystemBase::PushSimulationSpeedCommand(double x) {
   playback_command_queue_.push(cmd);
 }
 
+void SystemBase::PushSeekToTimestampCommand(double x) {
+  interface::playback::PlaybackCommand cmd;
+  cmd.set_playback_seek_to_timestamp(x);
+  utils::MutexLocker lock(&mutex_);
+  playback_command_queue_.push(cmd);
+}
+
 void SystemBase::PushPlaybackTerminateCommand() {
   interface::playback::PlaybackCommand cmd;
   cmd.mutable_playback_terminate();
@@ -54,6 +61,9 @@ void SystemBase::FlushPlaybackCommands() {
     }
     if (command.has_playback_next_iteration()) {
       playback_status_.next_iteration_count++;
+    }
+    if (command.has_playback_seek_to_timestamp()) {
+      playback_status_.playback_seek_to_timestamp = command.playback_seek_to_timestamp();
     }
   }
 }

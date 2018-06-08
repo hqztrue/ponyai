@@ -9,7 +9,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <glog/logging.h>
-#include <gtest/gtest.h>
 
 #include "common/utils/math/ray.h"
 #include "common/utils/math/vec2d.h"
@@ -117,10 +116,6 @@ class Camera {
   // coordinate system of OpenGL, otherwise it will be coordinate system of Qt. While both
   // coordinate systems have the same X direction.
   bool y_upwards_on_screen_ = true;
-
- private:
-  FRIEND_TEST(TopOrthographicViewCamera, UpdateCameraParams);
-  FRIEND_TEST(HorizontalOrthographicViewCamera, UpdateCameraParams);
 };
 
 // OpenGL camera model of gluLookAt() and gluPerspective():

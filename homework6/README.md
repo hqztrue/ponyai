@@ -89,6 +89,8 @@ At first step, you need to understand how throttle and brake ratio in the contro
 
 When the table is ready, you could plan your vehicle's motion based on the table. Then you need to implement a control algorithm to control your vehicle as planned. One choice could be using PID algorithm. 
 
+Note that generating the table above is a recommended step, but if you can finish the task perfectly without generating the table, it's fine to skip this step. 
+
 ### 3. Control your vehicle to finish a route that contains turns
 
 Your vehicle should be able to run in the straight lane now. It's time to drive it in a corner. 
@@ -99,7 +101,7 @@ One choice of algorithms might be using bicycle model to plan the motion, and us
 
 **What to submit**: 
 1. The table which lists the expected acceleration of different throttle/brake ratios and vehicle's status. You are free to choose ratio's sample rate, and any properties in vehicle status if necessary. 
-2. The document with necessary source code to explain how you generate the table. 
+2. The document with necessary source code to explain how you generate the table. **If your algorithm does not require this table, there is no need to submit the table and the document.**
 3. The source code of your vehicle agent and a brief document to explain the algorithms you implemented. 
 4. The videos recorded from the screen which contain the complete trips of how your vehicle finishes `homework6/data/routes/simulation_config_x.config`. 
 5. The line charts of the vehicle's velocity in each trip. 

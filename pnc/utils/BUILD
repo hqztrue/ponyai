@@ -25,3 +25,11 @@ cc_library(
         "@eigen",
     ],
 )
+
+cc_library(
+    name = "index",
+    hdrs = ["index.h"],
+    deps = [
+        "//common/utils/file:file",
+    ],
+)

@@ -10,3 +10,10 @@ build --crosstool_top=//common/toolchain:default
 build --force_python=PY3
 build --jobs 8 --ram_utilization_factor 50
 
+# Address Sanitizer
+build:asan --strip=never
+build:asan --copt="-fsanitize=address"
+build:asan --copt="-g"
+build:asan --copt -fno-omit-frame-pointer
+build:asan --linkopt="-fsanitize=address"
+build:asan --custom_malloc=@bazel_tools//tools/cpp:malloc

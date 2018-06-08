@@ -28,9 +28,9 @@ class MultiProcessSimulationEngine : public SimulationEngineBase {
   void RunOneIterationInternal() override;
 
  private:
-  void StartClient(const interface::simulation::AgentConfig& agent_config) {
-    std::unique_ptr<TcpAgentClient> tcp_agent_client = std::make_unique<TcpAgentClient>(
-        kLocalHost, kPort, agent_config.type(), agent_config.name());
+  void StartClient(const interface::simulation::SimulationConfig& simulation_config) {
+    std::unique_ptr<TcpAgentClient> tcp_agent_client =
+        std::make_unique<TcpAgentClient>(kLocalHost, kPort, simulation_config);
     CHECK_OK(tcp_agent_client->Initialize());
     CHECK_OK(tcp_agent_client->Start());
     CHECK_OK(tcp_agent_client->Terminate());
