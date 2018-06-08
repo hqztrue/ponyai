@@ -66,10 +66,10 @@ struct point{
 };
 inline double cha(double x1,double y1,double x2,double y2){return x1*y2-x2*y1;}
 point max(const point &x,const point &y){
-	return point(max(x.x,y.x), max(x.y,y.y), max(x.z,y.z));
+	return point(std::max(x.x,y.x), std::max(x.y,y.y), std::max(x.z,y.z));
 }
 point min(const point &x,const point &y){
-	return point(min(x.x,y.x), min(x.y,y.y), min(x.z,y.z));
+	return point(std::min(x.x,y.x), std::min(x.y,y.y), std::min(x.z,y.z));
 }
 struct polygon{
 	std::vector<point> a;
@@ -132,18 +132,18 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
   assert(pimage);
   cv::Mat image = (*pimage).clone();
   auto pixel_info = ProjectPointCloudToImage(pointcloud, intrinsic, extrinsic, 1920, 1080);
-  {
+  //{
     //draw
     DrawPointCloudOnCameraImage(pointcloud, intrinsic, extrinsic, &image);
 	//cv::putText(image, image_path, cv::Point(10, 30),
     //            cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 0));
 	char fusion_output_path[205];
-	sprintf(fusion_output_path, "/unsullied/sharefs/hqz/shared/tmp/fusion_output/%d.png", frameID);
-	cv::imwrite(fusion_output_path, image);
+	sprintf(fusion_output_path, "/unsullied/sharefs/hqz/shared/tmp/fusion_output_/%d.png", frameID);
+	//cv::imwrite(fusion_output_path, image);
     //puts("exit");exit(0);
     //cv::imshow("fusion demo", image);
     //cv::waitKey(0);
-  }
+  //}
   
   //read detection
   char det_path[205];
@@ -155,7 +155,10 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
   std::vector<detection> dets;
   while (std::fscanf(fin, "%lf%lf%lf%lf%lf %s",&d.x,&d.y,&d.w,&d.h,&d.score,label)!=EOF){
 	  d.label = label;
-	  d.print();
+	  double rx = 1920./1280, ry = 1080./736;
+          d.x*=rx; d.w*=rx;
+          d.y*=ry; d.h*=ry;
+          d.print();
 	  dets.push_back(d);
   }
   fclose(fin);
@@ -166,11 +169,14 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
         int u = pixel.uv.u, v = pixel.uv.v;
         double depth = pixel.position_in_camera_coordinate.norm();
 	    if (depth<=max_depth){
-			if (u>=d.x && u<d.x+d.w && v>=d.y && v<d.y+d.h)det_pixels.push_back(pixel);
+			if (u>=d.x && u<d.x+d.w && v>=d.y && v<d.y+d.h){
+cv::circle(image, cv::Point2d(pixel.uv.u, pixel.uv.v), 0, cv::Scalar(255, 0, 255), 2);
+  det_pixels.push_back(pixel);
+}
 		}
 	  }
 	  d.print();
-	  
+	  cv::rectangle(image, cv::Point2d(d.x,d.y), cv::Point2d(d.x+d.w,d.y+d.h),cv::Scalar(255,0,0),1,1,0);
 	  polygon poly;
 	  for (auto& pixel : det_pixels){
 			  poly.add(point(pixel.position_in_camera_coordinate.x(), pixel.position_in_camera_coordinate.y(), pixel.position_in_camera_coordinate.z()));
@@ -216,10 +222,10 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
         polygon_point->set_x(mi.x);
         polygon_point->set_y(ma.y);
         polygon_point->set_z(1);
-      }
 	  printf("rect %lf %lf %lf %lf\n",mi.x,ma.x,mi.y,ma.y);
+       }
   }
-  
+  cv::imwrite(fusion_output_path, image);
   
 
   /*if (image) {
