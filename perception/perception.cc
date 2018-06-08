@@ -155,7 +155,7 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
   fclose(fin);
   for (int i=0;i<dets.size();++i){
 	  detection d = dets[i];
-          std::vector<PixelInfo> det_pixels;
+      std::vector<PixelInfo> det_pixels;
 	  for (auto& pixel : pixel_info) {
         int u = pixel.uv.u, v = pixel.uv.v;
         double depth = pixel.position_in_camera_coordinate.norm();
@@ -164,28 +164,28 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
 		}
 	  }
 	  d.print();
-	  printf("%d\n",(int)det_pixels.size());
 	  
-          polygon poly;
-          for (auto& pixel : det_pixels){
-                  poly.add(point(pixel.position_in_camera_coordinate.x(), pixel.position_in_camera_coordinate.y(), pixel.position_in_camera_coordinate.z()));
-          }
-          std::vector<point> pts = poly.ConvexHull();
+	  polygon poly;
+	  for (auto& pixel : det_pixels){
+			  poly.add(point(pixel.position_in_camera_coordinate.x(), pixel.position_in_camera_coordinate.y(), pixel.position_in_camera_coordinate.z()));
+	  }
+	  std::vector<point> pts = poly.ConvexHull();
+      printf("#pts: %d #hull pts: %d\n",(int)det_pixels.size(), (int)pts.size());
 
-          if (pts.size()>0){
-	  auto* obstacle = perception_result.add_obstacle();
-      if (d.label=="person")obstacle->set_type(interface::perception::ObjectType::PEDESTRIAN);
-      else obstacle->set_type(interface::perception::ObjectType::CAR);
-	  obstacle->set_id("o"+std::to_string(++num_objects));
-	  obstacle->set_height(2.69);
-	  
-	  for (auto &p : pts){
-        auto* polygon_point = obstacle->add_polygon_point();
-        polygon_point->set_x(p.x);
-        polygon_point->set_y(p.y);
-        polygon_point->set_z(p.z);
+	  if (pts.size()>0){
+	    auto* obstacle = perception_result.add_obstacle();
+        if (d.label=="person")obstacle->set_type(interface::perception::ObjectType::PEDESTRIAN);
+        else obstacle->set_type(interface::perception::ObjectType::CAR);
+	    obstacle->set_id("o"+std::to_string(++num_objects));
+	    obstacle->set_height(2.69);
+	    
+	    for (auto &p : pts){
+          auto* polygon_point = obstacle->add_polygon_point();
+          polygon_point->set_x(p.x);
+          polygon_point->set_y(p.y);
+          polygon_point->set_z(p.z);
+        }
       }
-}
   }
   
   
