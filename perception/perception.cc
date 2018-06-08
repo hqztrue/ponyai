@@ -119,7 +119,7 @@ struct detection{
 };
 interface::perception::PerceptionObstacles Perception::RunPerception(
     const PointCloud& pointcloud, const utils::Optional<cv::Mat>& pimage, const Eigen::VectorXd& intrinsic, const Eigen::Affine3d& extrinsic, const char video_name[], int frameID) {
-  static num_objects = 0;
+  static int num_objects = 0;
   printf("video_name=%s, frameID=%d\n",video_name, frameID);
   interface::perception::PerceptionObstacles perception_result;
   
@@ -147,7 +147,7 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
   char label[205];
   detection d;
   std::vector<detection> dets;
-  while (fscanf("%lf%lf%lf%lf%lf %s",&d.x,&d.y,&d.w,&d.h,&d.score,label)!=EOF){
+  while (std::fscanf(fin, "%lf%lf%lf%lf%lf %s",&d.x,&d.y,&d.w,&d.h,&d.score,label)!=EOF){
 	  d.label = label;
 	  d.print();
 	  dets.push_back(d);
@@ -155,34 +155,37 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
   fclose(fin);
   for (int i=0;i<dets.size();++i){
 	  detection d = dets[i];
+          std::vector<PixelInfo> det_pixels;
 	  for (auto& pixel : pixel_info) {
         int u = pixel.uv.u, v = pixel.uv.v;
         double depth = pixel.position_in_camera_coordinate.norm();
-		std::vector<PixelInfo> det_pixels;
 	    if (depth<=max_depth){
 			if (u>=d.x && u<d.x+d.w && v>=d.y && v<d.y+d.h)det_pixels.push_back(pixel);
 		}
 	  }
 	  d.print();
-	  printf("%d\n",det_pixels.size());
+	  printf("%d\n",(int)det_pixels.size());
 	  
+          polygon poly;
+          for (auto& pixel : det_pixels){
+                  poly.add(point(pixel.position_in_camera_coordinate.x(), pixel.position_in_camera_coordinate.y(), pixel.position_in_camera_coordinate.z()));
+          }
+          std::vector<point> pts = poly.ConvexHull();
+
+          if (pts.size()>0){
 	  auto* obstacle = perception_result.add_obstacle();
-      if (det.label=="person")obstacle->set_type(interface::perception::ObjectType::PEDESTRIAN);
+      if (d.label=="person")obstacle->set_type(interface::perception::ObjectType::PEDESTRIAN);
       else obstacle->set_type(interface::perception::ObjectType::CAR);
-	  obstacle->set_id("o"+(++num_objects));
+	  obstacle->set_id("o"+std::to_string(++num_objects));
 	  obstacle->set_height(2.69);
 	  
-	  polygon poly;
-	  for (auto& pixel : det_pixels){
-		  poly.add(point(pixel.p.x, pixel.p.y, pixel.p.z));
-	  }
-	  std::vector<point> pts = poly.ConvexHull();
 	  for (auto &p : pts){
         auto* polygon_point = obstacle->add_polygon_point();
         polygon_point->set_x(p.x);
         polygon_point->set_y(p.y);
         polygon_point->set_z(p.z);
       }
+}
   }
   
   

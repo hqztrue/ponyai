@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include<stdio.h>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 #include <gflags/gflags.h>
