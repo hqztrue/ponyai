@@ -2,6 +2,20 @@
 
 #include "perception/perception.h"
 
+void DrawPointCloudOnCameraImage(const PointCloud& pointcloud,
+                                 const Eigen::VectorXd& intrinsic,
+                                 const Eigen::Affine3d& extrinsic,
+                                 cv::Mat* image) {
+  const auto pixel_info = ProjectPointCloudToImage(pointcloud, intrinsic, extrinsic, 1920, 1080);
+  for (const auto& pixel : pixel_info) {
+    const cv::Point2d point(pixel.uv.u, pixel.uv.v);
+    const double depth = pixel.position_in_camera_coordinate.norm();
+    const double hue = (math::Clamp(depth, 1.0, 150.0) - 1.0) / (150.0 - 1.0);
+    const Eigen::Vector3d rgb = utils::display::HsvToRgb(Eigen::Vector3d(hue, 1.0, 1.0)) * 255;
+    cv::circle(*image, point, 0, cv::Scalar(rgb.z(), rgb.y(), rgb.x()), 2);
+  }
+}
+
 interface::perception::PerceptionObstacles Perception::RunPerception(
     const PointCloud& pointcloud, const utils::Optional<cv::Mat>& image, const Eigen::VectorXd& intrinsic, const Eigen::Affine3d& extrinsic, const char video_name[], int frameID) {
   printf("video_name=%s, frameID=%d\n",video_name, frameID);
@@ -15,7 +29,7 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
 	//cv::putText(image, image_path, cv::Point(10, 30),
     //            cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 0));
 	char fusion_output_path[205];
-	sprintf(fusion_output_path, "/unsullied/sharefs/hqz/shared/tmp/fusion_output/%d.png", image);
+	sprintf(fusion_output_path, "/unsullied/sharefs/hqz/shared/tmp/fusion_output/%d.png", frameID);
 	cv::imwrite(fusion_output_path, frameID);
     //puts("exit");exit(0);
     cv::imshow("fusion demo", image);
