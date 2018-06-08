@@ -18,8 +18,8 @@ void DrawPointCloudOnCameraImage(const PointCloud& pointcloud,
   }
 }
 
+const double eps=1e-6;
 struct point{
-	static const double eps=1e-10;
 	double x,y,z;
 	point(double _x=0,double _y=0,double _z=0):x(_x),y(_y),z(_z){}
 	point operator +(const point &p)const{return point(x+p.x,y+p.y);}
@@ -60,14 +60,14 @@ struct point{
 	inline friend point exp(const point &x){
 		return point(exp(x.x)*cos(x.y),exp(x.x)*sin(x.y));
 	}
-	friend istream& operator >>(istream &in,point &p){return in>>p.x>>p.y;}
-	friend ostream& operator <<(ostream &out,const point &p){return out<<"("<<p.x<<","<<p.y<<")";}
+	//friend istream& operator >>(istream &in,point &p){return in>>p.x>>p.y;}
+	//friend ostream& operator <<(ostream &out,const point &p){return out<<"("<<p.x<<","<<p.y<<")";}
 	void print()const{printf("(%.5lf,%.5lf)\n",x,y);}
 };
 inline double cha(double x1,double y1,double x2,double y2){return x1*y2-x2*y1;}
 struct polygon{
-	vector<point> a;
-	typedef vector<point>::iterator vit;
+	std::vector<point> a;
+	typedef std::vector<point>::iterator vit;
 	void clear(){a.clear();}
 	/*double area(){
 		double res=0;
@@ -93,9 +93,8 @@ struct polygon{
 		return point(sx/(3*area),sy/(3*area));
 	}*/
 	void add(const point &p){a.push_back(p);}
-	vector<point> ConvexHull(){
-		double eps = 1e-6;
-		vector<point> res,A=a;int *c=new int[a.size()*2+1],top=0;
+	std::vector<point> ConvexHull(){
+		std::vector<point> res,A=a;int *c=new int[a.size()*2+1],top=0;
 		sort(A.begin(),A.end());
 		for (int i=0;i<A.size();++i){
 			while (top>1&&cha(A[i].x-A[c[top]].x,A[i].y-A[c[top]].y,A[c[top]].x-A[c[top-1]].x,A[c[top]].y-A[c[top-1]].y)>eps)--top;
@@ -112,7 +111,7 @@ struct polygon{
 
 struct detection{
 	double x,y,w,h,score;
-	string label;
+	std::string label;
 	detection(){}
 	void print(){
 		printf("det %lf %lf %lf %lf %lf %s\n",x,y,w,h,score,label.c_str());
@@ -147,7 +146,7 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
   FILE *fin = fopen(det_path, "r");
   char label[205];
   detection d;
-  vector<detection> dets;
+  std::vector<detection> dets;
   while (fscanf("%lf%lf%lf%lf%lf %s",&d.x,&d.y,&d.w,&d.h,&d.score,label)!=EOF){
 	  d.label = label;
 	  d.print();
@@ -159,7 +158,7 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
 	  for (auto& pixel : pixel_info) {
         int u = pixel.uv.u, v = pixel.uv.v;
         double depth = pixel.position_in_camera_coordinate.norm();
-		vector<PixelInfo> det_pixels;
+		std::vector<PixelInfo> det_pixels;
 	    if (depth<=max_depth){
 			if (u>=d.x && u<d.x+d.w && v>=d.y && v<d.y+d.h)det_pixels.push_back(pixel);
 		}
@@ -177,7 +176,7 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
 	  for (auto& pixel : det_pixels){
 		  poly.add(point(pixel.p.x, pixel.p.y, pixel.p.z));
 	  }
-	  vector<point> pts = poly.ConvexHull();
+	  std::vector<point> pts = poly.ConvexHull();
 	  for (auto &p : pts){
         auto* polygon_point = obstacle->add_polygon_point();
         polygon_point->set_x(p.x);
@@ -187,38 +186,6 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
   }
   
   
-  
-  // Add a mocked up obstacle.
-  {
-    auto* obstacle = perception_result.add_obstacle();
-    obstacle->set_type(interface::perception::ObjectType::CAR);
-    {
-      auto* polygon_point = obstacle->add_polygon_point();
-      polygon_point->set_x(976.05);
-      polygon_point->set_y(1079.60);
-      polygon_point->set_z(-8.13);
-    }
-    {
-      auto* polygon_point = obstacle->add_polygon_point();
-      polygon_point->set_x(974.76);
-      polygon_point->set_y(1087.13);
-      polygon_point->set_z(-8.13);
-    }
-    {
-      auto* polygon_point = obstacle->add_polygon_point();
-      polygon_point->set_x(972.22);
-      polygon_point->set_y(1086.69);
-      polygon_point->set_z(-8.13);
-    }
-    {
-      auto* polygon_point = obstacle->add_polygon_point();
-      polygon_point->set_x(973.52);
-      polygon_point->set_y(1079.16);
-      polygon_point->set_z(-8.13);
-    }
-    obstacle->set_height(2.69);
-    obstacle->set_id("c83");
-  }
 
   /*if (image) {
     // Remove me if you don't want to pause the program every time.
