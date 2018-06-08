@@ -11,10 +11,12 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
   {
 	const auto pixel_info = ProjectPointCloudToImage(pointcloud, intrinsic, extrinsic, 1920, 1080);
     //draw
-    DrawPointCloudOnCameraImage(pc, intrinsic, extrinsic, &image);
+    DrawPointCloudOnCameraImage(pointcloud, intrinsic, extrinsic, &image);
 	//cv::putText(image, image_path, cv::Point(10, 30),
     //            cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 0));
-	cv::imwrite("/unsullied/sharefs/hqz/shared/tmp/fusion_output/%d.png", image, frameID);
+	char fusion_output_path[205];
+	sprintf(fusion_output_path, "/unsullied/sharefs/hqz/shared/tmp/fusion_output/%d.png", image);
+	cv::imwrite(fusion_output_path, frameID);
     //puts("exit");exit(0);
     cv::imshow("fusion demo", image);
     cv::waitKey(0);
