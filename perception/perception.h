@@ -14,6 +14,7 @@
 #include "common/utils/common/optional.h"
 #include "homework2/pointcloud.h"
 #include "common/utils/math/math_utils.h"
+#include "homework4/camera_lidar_fusion_utils.h"
 
 class Perception {
  public:

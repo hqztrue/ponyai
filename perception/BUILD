@@ -10,6 +10,7 @@ cc_library(
         "//common/utils/common:optional",
         "//common/utils/math:math",
         "//homework2:pointcloud",
+		"//homework4:camera_lidar_fusion_utils",
         "@opencv//:core",
         "@opencv//:highgui",
     ],
