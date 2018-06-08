@@ -105,7 +105,7 @@ PerceptionEvaluationResult PerceptionEvaluator::RunEvaluation() {
     // Load camera image if there is a corresponding one.
 	int frameID = atoi(file::path::FilenameStem(pointcloud_file).c_str());
 	int p = pointcloud_file.find("select");
-	std::string prefix = pointcloud_file(0, p-1);
+	std::string prefix = pointcloud_file.substr(0, p-1);
 	p = prefix.rfind("/");
 	std::string video_name = prefix.substr(p+1);
 	printf("split %s %s %d\n", pointcloud_file.c_str(), video_name.c_str(), frameID);
