@@ -17,7 +17,8 @@ class Perception {
   Perception() = default;
 
   interface::perception::PerceptionObstacles RunPerception(const PointCloud& pointcloud,
-                                                           const utils::Optional<cv::Mat>& image);
+                                                           const utils::Optional<cv::Mat>& image,
+														   const char video_name[], int frameID);
 
   DISALLOW_COPY_MOVE_AND_ASSIGN(Perception);
 };

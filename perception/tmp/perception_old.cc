@@ -3,21 +3,8 @@
 #include "perception/perception.h"
 
 interface::perception::PerceptionObstacles Perception::RunPerception(
-    const PointCloud& pointcloud, const utils::Optional<cv::Mat>& image, const char video_name[], int frameID) {
-  printf("video_name=%s, frameID=%d\n",video_name, frameID);
+    const PointCloud& pointcloud, const utils::Optional<cv::Mat>& image) {
   interface::perception::PerceptionObstacles perception_result;
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   // Add a mocked up obstacle.
   {
     auto* obstacle = perception_result.add_obstacle();
@@ -114,13 +101,12 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
     obstacle->set_id("c88");
   }
 
-  /*if (image) {
+  if (image) {
     // Remove me if you don't want to pause the program every time.
     cv::namedWindow("camera");
     imshow("camera", *image);
     cv::waitKey(0);
-  }*/
-  
+  }
 
   LOG(INFO) << "Perception done.";
   return perception_result;

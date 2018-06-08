@@ -103,6 +103,12 @@ PerceptionEvaluationResult PerceptionEvaluator::RunEvaluation() {
   for (const auto& pointcloud_file : pointcloud_files) {
     const PointCloud pointcloud = ReadPointCloudFromTextFile(pointcloud_file);
     // Load camera image if there is a corresponding one.
+	int frameID = atoi(file::path::FilenameStem(pointcloud_file).c_str());
+	int p = pointcloud_file.find("select");
+	string prefix = pointcloud_file(0, p-1);
+	p = prefix.rfind("/");
+	string video_name = prefix.substr(p+1);
+	printf("split %s %s %d\n", pointcloud_file.c_str(), video_name.c_str(), frameID);
     const std::string image_file =
         file::path::Join(options_.camera_folder,
                          strings::Format("{}.jpg", file::path::FilenameStem(pointcloud_file)));
@@ -111,7 +117,7 @@ PerceptionEvaluationResult PerceptionEvaluator::RunEvaluation() {
       image.emplace(cv::imread(image_file, CV_LOAD_IMAGE_COLOR));
     }
     // Run perception and save the results.
-    const auto perception_obstacles = perception_.RunPerception(pointcloud, image);
+    const auto perception_obstacles = perception_.RunPerception(pointcloud, image, video_name.c_str(), frameID);
     // Run evaluation when label file exists.
     if (options_.data_to_label_map.count(pointcloud_file)) {
       LOG(INFO) << "Evaluate data file: " << pointcloud_file;
