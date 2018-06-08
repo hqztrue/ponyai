@@ -17,11 +17,12 @@ void DrawPointCloudOnCameraImage(const PointCloud& pointcloud,
 }
 
 interface::perception::PerceptionObstacles Perception::RunPerception(
-    const PointCloud& pointcloud, const utils::Optional<cv::Mat>& image, const Eigen::VectorXd& intrinsic, const Eigen::Affine3d& extrinsic, const char video_name[], int frameID) {
+    const PointCloud& pointcloud, const utils::Optional<cv::Mat>& pimage, const Eigen::VectorXd& intrinsic, const Eigen::Affine3d& extrinsic, const char video_name[], int frameID) {
   printf("video_name=%s, frameID=%d\n",video_name, frameID);
   interface::perception::PerceptionObstacles perception_result;
   
-  
+  assert(pimage);
+  cv::Mat image = (*pimage).clone();
   {
 	const auto pixel_info = ProjectPointCloudToImage(pointcloud, intrinsic, extrinsic, 1920, 1080);
     //draw
@@ -30,10 +31,10 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
     //            cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 0));
 	char fusion_output_path[205];
 	sprintf(fusion_output_path, "/unsullied/sharefs/hqz/shared/tmp/fusion_output/%d.png", frameID);
-	cv::imwrite(fusion_output_path, frameID);
+	cv::imwrite(fusion_output_path, image);
     //puts("exit");exit(0);
-    cv::imshow("fusion demo", image);
-    cv::waitKey(0);
+    //cv::imshow("fusion demo", image);
+    //cv::waitKey(0);
   }
   
   

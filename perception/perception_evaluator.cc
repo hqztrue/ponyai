@@ -102,6 +102,8 @@ PerceptionEvaluationResult PerceptionEvaluator::RunEvaluation(const char data_ro
       options_.lidar_folder, "", FLAGS_perception_evaluation_data_file_suffix);
   std::sort(pointcloud_files.begin(), pointcloud_files.end(), file::path::Compare);
   std::string video_name = "";
+  Eigen::VectorXd intrinsic;
+  Eigen::Affine3d extrinsic;
   for (const auto& pointcloud_file : pointcloud_files) {
     const PointCloud pointcloud = ReadPointCloudFromTextFile(pointcloud_file);
     // Load camera image if there is a corresponding one.
@@ -115,15 +117,15 @@ PerceptionEvaluationResult PerceptionEvaluator::RunEvaluation(const char data_ro
 		//init car_param
 		const std::string intrinsic_file_name =
 			strings::Format("car_param/{}_intrinsic", FLAGS_camera_device);
-		const std::string intrinsic_file = file::path::Join(data_root,
+		const std::string intrinsic_file = file::path::Join(file::path::Join(data_root, video_name),
 			intrinsic_file_name);
 		CHECK(file::path::Exists(intrinsic_file)) << intrinsic_file << " doesn't exist!";
 		const std::string extrinsic_file_name =
 			  strings::Format("car_param/lidar_to_{}_extrinsic", FLAGS_camera_device);
-		const std::string extrinsic_file = file::path::Join(data_root, extrinsic_file_name);
+		const std::string extrinsic_file = file::path::Join(file::path::Join(data_root, video_name), extrinsic_file_name);
 		CHECK(file::path::Exists(extrinsic_file)) << extrinsic_file << " doesn't exist!";
-		const Eigen::VectorXd intrinsic = ReadCameraIntrinsic(intrinsic_file);
-		const Eigen::Affine3d extrinsic = ReadRigidBodyTransform(extrinsic_file);
+		intrinsic = ReadCameraIntrinsic(intrinsic_file);
+		extrinsic = ReadRigidBodyTransform(extrinsic_file);
 	}
 	//printf("split %s %s %d\n", pointcloud_file.c_str(), video_name.c_str(), frameID);
     const std::string image_file =

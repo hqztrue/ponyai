@@ -16,12 +16,16 @@
 #include "common/utils/math/math_utils.h"
 #include "homework4/camera_lidar_fusion_utils.h"
 
+#include "common/utils/display/color.h"
+#include "common/utils/file/path.h"
+#include "common/utils/strings/format.h"
+
 class Perception {
  public:
   Perception() = default;
 
   interface::perception::PerceptionObstacles RunPerception(const PointCloud& pointcloud,
-                                                           const utils::Optional<cv::Mat>& image,const Eigen::VectorXd& intrinsic,
+                                                           const utils::Optional<cv::Mat>& pimage, const Eigen::VectorXd& intrinsic,
 														   const Eigen::Affine3d& extrinsic, 
 														   const char video_name[], int frameID);
 
