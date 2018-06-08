@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 #include <gflags/gflags.h>
 #include <glog/logging.h>
 #include <opencv2/core/core.hpp>
@@ -11,6 +13,7 @@
 #include "common/utils/common/defines.h"
 #include "common/utils/common/optional.h"
 #include "homework2/pointcloud.h"
+#include "common/utils/math/math_utils.h"
 
 class Perception {
  public:
