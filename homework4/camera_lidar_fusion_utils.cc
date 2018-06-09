@@ -85,6 +85,7 @@ std::vector<PixelInfo> ProjectPointCloudToImage(
 	  ImageUV uv = Project3dPointToImage(p1, intrinsic);
 	  if (uv.u<0||uv.u>=image_width||uv.v<0||uv.v>=image_height)continue;
 	  PixelInfo info(uv, p1);
+	  info.set_position(p);
 	  
 	  pixel_info.push_back(info);
   }

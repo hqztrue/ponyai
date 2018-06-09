@@ -22,10 +22,13 @@ struct PixelInfo {
   // Pixel coordinate on image.
   ImageUV uv;
   // Point 3D position in camera coordinate system.
-  Eigen::Vector3d position_in_camera_coordinate;
+  Eigen::Vector3d position_in_camera_coordinate, position;
 
   PixelInfo(const ImageUV& uv, const Eigen::Vector3d& position_in_camera_coordinate)
       : uv(uv), position_in_camera_coordinate(position_in_camera_coordinate) {}
+  void set_position(const Eigen::Vector3d &p){
+	  position = p;
+  }
 };
 
 Eigen::VectorXd ReadCameraIntrinsic(const std::string& file_name);

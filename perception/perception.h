@@ -9,6 +9,7 @@
 #include <glog/logging.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include<opencv2/opencv.hpp>
 
 #include "common/proto/perception.pb.h"
 #include "common/utils/common/defines.h"
