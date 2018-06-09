@@ -13,6 +13,7 @@ cc_library(
 		"//homework4:camera_lidar_fusion_utils",
         "@opencv//:core",
         "@opencv//:highgui",
+        "@opencv//:imgproc",
         "//common/utils/display:color",
         "//common/utils/file:path",
         "//common/utils/strings:format",

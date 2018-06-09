@@ -18,6 +18,10 @@ void DrawPointCloudOnCameraImage(const PointCloud& pointcloud,
   }
 }
 
+Eigen::Vector3d to_world_coordinate(const Eigen::Vector3d &p, const Eigen::Matrix3d &r, const Eigen::Vector3d &t){
+	return Eigen::Vector3d(r(0,0)*p(0)+r(0,1)*p(1)+r(0,2)*p(2)+t(0),r(1,0)*p(0)+r(1,1)*p(1)+r(1,2)*p(2)+t(1),r(2,0)*p(0)+r(2,1)*p(1)+r(2,2)*p(2)+t(2));
+}
+
 const double eps=1e-6;
 struct point{
 	double x,y,z;
@@ -187,20 +191,22 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
         d.print();
         cv::rectangle(image, cv::Point2d(d.x, d.y), cv::Point2d(d.x + d.w, d.y + d.h), cv::Scalar(255, 0, 0), 1, 1, 0);
         polygon poly;
-		vector<cv2::Point> points;
+		std::vector<cv::Point> points;
 		for (auto & pixel : det_pixels)
         {
-            poly.add(point(pixel.position.x(), pixel.position.y(), pixel.position.z()));
-			points,push_back(cv2::Point(pixel.position.x(), pixel.position.y()));
+            Eigen::Vector3d wp = to_world_coordinate(pixel.position, pointcloud.rotation, pointcloud.translation);
+            poly.add(point(wp.x(), wp.y(), wp.z()));
+			points.push_back(cv::Point(wp.x(), wp.y()));
+            //printf("%.5lf %.5lf %.5lf %.5lf\n",pixel.position.x(), pixel.position.y(),wp.x(), wp.y());
         }
         std::vector<point> pts = poly.ConvexHull();
         printf("#pts: %d #hull pts: %d\n", (int)det_pixels.size(), (int)pts.size());
-		cv2::RotatedRect rectPoint = cv2::minAreaRect(points); 
-		Point2f fourPoint2f[4];
-		rectPoint.points(fourPoint2f);
+		//cv::RotatedRect rectPoint = cv::minAreaRect(points); 
+		//cv::Point2f fourPoint2f[4];
+		//rectPoint.points(fourPoint2f);
 		
 		
-        if (pts.size() > 0)
+        if (pts.size() >= 4)
         {
             auto *obstacle = perception_result.add_obstacle();
             if (d.label == "person")obstacle->set_type(interface::perception::ObjectType::PEDESTRIAN);
