@@ -7,6 +7,7 @@ cc_library(
     deps = [
         "//homework6/agents/sample:sample_agent",
 		"//homework6/agents/hqztrue:hqztrue_agent",
+		"//homework6/agents/table:table_agent",
         "//homework6/simulation:vehicle_agent_factory",
     ],
     alwayslink = 1,

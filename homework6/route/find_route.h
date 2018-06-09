@@ -10,7 +10,12 @@
 //#include<string>
 //using namespace std;
 
+//const std::string pony_root = "/home/hqz/ponyai/";
+//const std::string pony_root = "/home/hqz/ponyai/";
+const std::string pony_root = "/unsullied/sharefs/hqz/shared/hw/ponyai/";
+
 void find_pred_succ();
+double len(interface::route::Route &route);
 void find_route(interface::route::Route &route);
 void find_route(char path_src[], char path_dst[]);
 

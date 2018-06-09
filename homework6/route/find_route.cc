@@ -23,7 +23,7 @@ void find_pred_succ(){
 					}
 			}
 	}
-	CHECK(file::WriteProtoToTextFile(map, "/home/hqz/ponyai/homework6/processed_map_proto.txt"));
+	CHECK(file::WriteProtoToTextFile(map, (pony_root+"homework6/processed_map_proto.txt").c_str()));
 }
 
 int location(const interface::map::Lane &lane, const interface::geometry::Point2D &pt){  //project a point to a lane's central_line, by finding nearest neighbor
@@ -60,6 +60,13 @@ void add_route_point(interface::route::Route &route, const interface::map::Lane 
 	}
 }
 
+double len(interface::route::Route &route){
+	double d = 0;
+	for (int i=0;i<route.route_point_size()-1;++i)
+		d += route.route_point(i).dist(route.route_point(i+1));
+	return d;
+}
+
 struct Node{
 	double d;
 	int x;
@@ -77,7 +84,7 @@ struct pNode{
 void find_route(interface::route::Route &route){
 	route.clear_route_point();
 	interface::map::Map map;
-	const char map_path[305] = "/home/hqz/ponyai/homework6/processed_map_proto.txt";
+	const char map_path[305] = (pony_root+"homework6/processed_map_proto.txt").c_str();
 	CHECK(file::ReadFileToProto(map_path, &map));
 	int n = map.lane_size();
 	vector<int> start, end;

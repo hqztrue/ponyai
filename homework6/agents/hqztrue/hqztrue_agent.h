@@ -67,16 +67,41 @@ void test_PID(double P, double I, double D, int L){
     }
 }
 
+struct Controller{
+	vector<double> v, c, a;
+	int n;
+	void init(){
+		v.clear();
+		c.clear();
+		a.clear();
+		FILE *fin = fopen((pony_root+"homework6/table.txt").c_str(), "r");
+		assert(fin!=NULL);
+		double v_, c_, a_;
+		while (fscanf(fin, "%lf%lf%lf",&v_,&c_,&a_)!=EOF){
+			v.push_back(v_);
+			c.push_back(c_);
+			a.push_back(a_);
+		}
+		fclose(fin);
+		n=v.size();
+	}
+	double query(double v, double c){
+		for (int i=0;i<n;++i);
+			
+		
+	}
+	double dist(double v){
+		
+	}
+};
 
 class FrogVehicleAgent : public simulation::VehicleAgent {
  public:
   explicit FrogVehicleAgent(const std::string& name) : VehicleAgent(name) {}
 
   virtual void Initialize(const interface::agent::AgentStatus& agent_status) {
-    first_run = true;
-	acceleration = true;
-	control = delta_control = 0.1;
-	
+	controller.init();
+	  
 	route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
 	route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
 	route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
@@ -87,42 +112,18 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	//route.set_end_point(p);
 	find_route(route);
   }
-
-  //generate table
+  
   virtual interface::control::ControlCommand RunOneIteration(
       const interface::agent::AgentStatus& agent_status) {
-    const double max_velocity = 10, eps = 1e-5;
-    interface::control::ControlCommand command;
-    double dist = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination());
-	
-	if (control > 1.0+eps)exit(0);
-	if (acceleration){
-		command.set_throttle_ratio(control);
-		prev_control = control;
-		if (len(agent_status.vehicle_status().velocity())>=max_velocity)acceleration = false;
+	if (agent_status.route_status().is_new_request()){
+		
 	}
-	else {
-		command.set_brake_ratio(control);
-		prev_control = -control;
-		if (len(agent_status.vehicle_status().velocity())<=0.1){
-			control += delta_control;
-			acceleration = true;
-		}
-	}
+	route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
+	route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
+	route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
+	route.mutable_end_point()->set_y(agent_status.route_status().destination().y());
+	find_route(route);
 	
-	
-	if (!first_run){
-		FILE *f = fopen("/home/hqz/ponyai/homework6/table.txt", "a");
-		fprintf(f, "%.6lf %.6lf %.6lf\n",len(prev_status.vehicle_status().velocity()), prev_control, len(agent_status.vehicle_status().acceleration_vcs()));
-		fclose(f);
-	}
-	first_run = false;
-	prev_status = agent_status;
-    return command;
-  }
-  
-  virtual interface::control::ControlCommand RunOneIteration1(
-      const interface::agent::AgentStatus& agent_status) {
 	const double max_velocity = 10, eps = 1e-5;
 	double velocity_threshold = 5;
     interface::control::ControlCommand command;
@@ -152,10 +153,8 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
   double len(const interface::geometry::Vector3d& v) {  //x, y
     return std::sqrt(math::Sqr(v.x()) + math::Sqr(v.y()));
   }
-  bool first_run, acceleration;
-  interface::agent::AgentStatus prev_status;
-  double prev_control, control, delta_control;
   interface::route::Route route;
+  Controller controller;
 };
 
 }
