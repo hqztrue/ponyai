@@ -201,13 +201,13 @@ interface::perception::PerceptionObstacles Perception::RunPerception(
         }
         std::vector<point> pts = poly.ConvexHull();
         printf("#pts: %d #hull pts: %d\n", (int)det_pixels.size(), (int)pts.size());
-		//cv::RotatedRect rectPoint = cv::minAreaRect(points); 
-		//cv::Point2f fourPoint2f[4];
-		//rectPoint.points(fourPoint2f);
 		
 		
-        if (pts.size() >= 4)
+        if (det_pixels.size() >= 4)
         {
+			//cv::RotatedRect rectPoint = cv::minAreaRect(points); 
+			//cv::Point2f fourPoint2f[4];
+			//rectPoint.points(fourPoint2f);
             auto *obstacle = perception_result.add_obstacle();
             if (d.label == "person")obstacle->set_type(interface::perception::ObjectType::PEDESTRIAN);
             else obstacle->set_type(interface::perception::ObjectType::CAR);

@@ -10,8 +10,63 @@
 #include "common/utils/math/math_utils.h"
 #include "homework6/simulation/vehicle_agent_factory.h"
 #include "homework6/route/find_route.h"
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<iostream>
+#include<time.h>
+#include<math.h>
+#include<algorithm>
+#include<vector>
 
 namespace hqztrue {
+
+struct PID{
+    double Kp, Ki, Kd, Pv, Iv, Dv, last_t, last_e, setpoint, windup_guard, output;
+    PID(double _Kp, double _Ki, double _Kd):Kp(_Kp),Ki(_Ki),Kd(_Kd){init();}
+    void init(){
+        Pv = Iv = Dv = 0;
+        last_t = 0;
+        last_e = 0;
+        setpoint = 0;
+        windup_guard = 1;
+        output = 0;
+    }
+    void update(double v, double t){
+        double e = setpoint - v;
+        Pv = e;
+        Iv += e * (t-last_t);
+        Iv = std::max(std::min(Iv, windup_guard), -windup_guard);
+        Dv = (e-last_e) / (t-last_t);
+        last_t = t;
+        last_e = e;
+        output = Kp * Pv + Ki * Iv + Kd * Dv;
+    }
+    void set_setpoint(double v){
+        setpoint = v;
+    }
+    void set_windup_guard(double v){
+        windup_guard = v;
+    }
+};
+double update(double &y, double u, double t){
+    //y+=(u-1./t);
+    y=std::sin(u)+std::cos(u);
+    //y=u*u*u;
+    //y=u*u*u+sin(u)+cos(u)+u*u+1./u+0.1*y;
+}
+void test_PID(double P, double I, double D, int L){
+    PID pid(P, I, D);
+    double u = 0, y = 0;
+    for (int i=1;i<=L;++i){
+        pid.update(y, i);
+        u = pid.output;
+        if (pid.setpoint>0)update(y, u, i);
+        printf("%.5lf %.5lf %d\n", y, u, i);
+        if (i>=10)pid.set_setpoint(1);
+    }
+}
+
 
 class FrogVehicleAgent : public simulation::VehicleAgent {
  public:
