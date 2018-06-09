@@ -141,6 +141,7 @@ typedef map<PII,bool> MPIIB;
 typedef istringstream ISS;
 typedef ostringstream OSS;
 
+template<class T> inline T sqr(const T &a){return a*a;}
 inline int sgn(double x){return fabs(x)<eps?0:(x<0?-1:1);}
 inline int sign(double x){return fabs(x)<eps?0:(x<0?-1:1);}
 inline double cross(double x1,double y1,double x2,double y2){return x1*y2-x2*y1;}

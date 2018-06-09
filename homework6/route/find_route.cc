@@ -68,11 +68,11 @@ return std::sqrt(sqr_sum);
 }
 
 double len2D(const interface::geometry::Vector3d& v) {  //x, y
-    return std::sqrt(math::Sqr(v.x()) + math::Sqr(v.y()));
+    return std::sqrt(geometry::sqr(v.x()) + geometry::sqr(v.y()));
 }
 
 double dist(const interface::geometry::Point2D& x, const interface::geometry::Point2D& y){
-	return std::sqrt(math::Sqr(x.x() - y.x()) + math::Sqr(x.y() - y.y()));
+	return std::sqrt(geometry::sqr(x.x() - y.x()) + geometry::sqr(x.y() - y.y()));
 }
 
 double len(interface::route::Route &route){
