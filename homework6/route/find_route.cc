@@ -63,7 +63,7 @@ void add_route_point(interface::route::Route &route, const interface::map::Lane 
 double CalcDistance(const interface::geometry::Vector3d& position,
                       const interface::geometry::Point3D& destination) {
 double sqr_sum =
-	math::Sqr(position.x() - destination.x()) + math::Sqr(position.y() - destination.y());
+	geometry::sqr(position.x() - destination.x()) + geometry::sqr(position.y() - destination.y());
 return std::sqrt(sqr_sum);
 }
 

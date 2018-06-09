@@ -102,7 +102,7 @@ namespace geometry{
 const int inf=~0U>>1;
 const int MOD=1000000007;
 const long long linf=(long long)1e18;
-const double eps=1e-6,PI=atan(1.0)*4,E=2.71828182845904523;
+const double eps=1e-5,PI=atan(1.0)*4,E=2.71828182845904523;
 typedef long long ll;
 typedef long long LL;
 typedef unsigned long long ull;

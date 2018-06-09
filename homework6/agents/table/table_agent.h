@@ -28,14 +28,15 @@ class TableVehicleAgent : public simulation::VehicleAgent {
   virtual void Initialize(const interface::agent::AgentStatus& agent_status) {
     first_run = true;
 	acceleration = true;
-	control = delta_control = 0.1;
+	num_control = 10;
+	control = delta_control = 1./num_control;
   }
 
   //generate table
   virtual interface::control::ControlCommand RunOneIteration(
       const interface::agent::AgentStatus& agent_status) {
 	
-    const double max_velocity = 10, eps = 1e-5;
+    const double max_velocity = 10;
     interface::control::ControlCommand command;
     //double dist = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination());
 	
@@ -45,13 +46,13 @@ class TableVehicleAgent : public simulation::VehicleAgent {
 	}
 	else {
 		FILE *f = fopen((pony_root+"homework6/table.txt").c_str(), "a");
-		fprintf(f, "%.6lf %.6lf %.6lf\n",len(prev_status.vehicle_status().velocity()), prev_control, len(agent_status.vehicle_status().acceleration_vcs()));
+		fprintf(f, "%.8lf %.8lf %.8lf\n",len(prev_status.vehicle_status().velocity()), prev_control, len(agent_status.vehicle_status().acceleration_vcs()));
 		fclose(f);
 	}
 	prev_status = agent_status;
 	
 	first_run = false;
-	if (control > 1.0+eps)exit(0);
+	if (control > 1.0+geometry::eps)exit(0);
 	if (acceleration){
 		command.set_throttle_ratio(control);
 		prev_control = control;
@@ -73,6 +74,7 @@ class TableVehicleAgent : public simulation::VehicleAgent {
   bool first_run, acceleration;
   interface::agent::AgentStatus prev_status;
   double prev_control, control, delta_control;
+  int num_control;
   interface::route::Route route;
 };
 
