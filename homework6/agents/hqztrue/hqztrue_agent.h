@@ -69,7 +69,7 @@ void test_PID(double P, double I, double D, int L){
 
 struct Controller{
 	struct item{
-		item(double v_=0, double c_=0, double a_=0):v(v_),c:(c_),a:(a_){}
+		item(double v_=0, double c_=0, double a_=0):v(v_),c(c_),a(a_){}
 		double v,c,a;
 		bool operator <(const item &p)const{
 			return v<p.v;
@@ -118,7 +118,7 @@ struct Controller{
 			}
 		return ans_c;
 	}
-	double query_dist(double v, double a){
+	double query_d(double v, double a){
 		return v*v/2/fabs(a);
 	}
 };
@@ -160,7 +160,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
     interface::control::ControlCommand command;
 	double v = len2D(agent_status.vehicle_status().velocity());
 	
-	if (dist < pos_threshold)){
+	if (dist < pos_threshold){
 		
 	}
 	else if (dist <= controller.query_d(v, -a_threshold)){

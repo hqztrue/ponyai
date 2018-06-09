@@ -46,7 +46,7 @@ class TableVehicleAgent : public simulation::VehicleAgent {
 	}
 	else {
 		FILE *f = fopen((pony_root+"homework6/table.txt").c_str(), "a");
-		fprintf(f, "%.8lf %.8lf %.8lf\n",len(prev_status.vehicle_status().velocity()), prev_control, len(agent_status.vehicle_status().acceleration_vcs()));
+		fprintf(f, "%.8lf %.8lf %.8lf\n",len2D(prev_status.vehicle_status().velocity()), prev_control, len2D(agent_status.vehicle_status().acceleration_vcs()));
 		fclose(f);
 	}
 	prev_status = agent_status;

@@ -9,6 +9,7 @@
 #include "common/proto/vehicle_status.pb.h"
 #include "common/utils/math/math_utils.h"
 #include "homework6/simulation/vehicle_agent_factory.h"
+#include "homework6/route/find_route.h"
 
 namespace sample {
 
