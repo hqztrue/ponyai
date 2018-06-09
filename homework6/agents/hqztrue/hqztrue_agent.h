@@ -132,27 +132,17 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	if (dist<0){
 		
 	}
-	else if (len(agent_status.vehicle_status().velocity())<velocity_threshold){
+	else if (len2D(agent_status.vehicle_status().velocity())<velocity_threshold){
 		command.set_throttle_ratio(0.3);
 	}
-	else if (len(agent_status.vehicle_status().velocity())>velocity_threshold){
+	else if (len2D(agent_status.vehicle_status().velocity())>velocity_threshold){
 		command.set_brake_ratio(0.3);
 	}
     return command;
   }
 
  private:
-  double CalcDistance(const interface::geometry::Vector3d& position,
-                      const interface::geometry::Point3D& destination) {
-    double sqr_sum =
-        math::Sqr(position.x() - destination.x()) + math::Sqr(position.y() - destination.y());
-    ;
-    return std::sqrt(sqr_sum);
-  }
 
-  double len(const interface::geometry::Vector3d& v) {  //x, y
-    return std::sqrt(math::Sqr(v.x()) + math::Sqr(v.y()));
-  }
   interface::route::Route route;
   Controller controller;
 };

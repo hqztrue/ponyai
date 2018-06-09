@@ -60,10 +60,25 @@ void add_route_point(interface::route::Route &route, const interface::map::Lane 
 	}
 }
 
+double CalcDistance(const interface::geometry::Vector3d& position,
+                      const interface::geometry::Point3D& destination) {
+double sqr_sum =
+	math::Sqr(position.x() - destination.x()) + math::Sqr(position.y() - destination.y());
+return std::sqrt(sqr_sum);
+}
+
+double len2D(const interface::geometry::Vector3d& v) {  //x, y
+    return std::sqrt(math::Sqr(v.x()) + math::Sqr(v.y()));
+}
+
+double dist(const interface::geometry::Point2D& x, const interface::geometry::Point2D& y){
+	return std::sqrt(math::Sqr(x.x() - y.x()) + math::Sqr(x.y() - y.y()));
+}
+
 double len(interface::route::Route &route){
 	double d = 0;
 	for (int i=0;i<route.route_point_size()-1;++i)
-		d += route.route_point(i).dist(route.route_point(i+1));
+		d += dist(route.route_point(i),route.route_point(i+1));
 	return d;
 }
 
@@ -84,8 +99,7 @@ struct pNode{
 void find_route(interface::route::Route &route){
 	route.clear_route_point();
 	interface::map::Map map;
-	const char map_path[305] = (pony_root+"homework6/processed_map_proto.txt").c_str();
-	CHECK(file::ReadFileToProto(map_path, &map));
+	CHECK(file::ReadFileToProto((pony_root+"homework6/processed_map_proto.txt").c_str(), &map));
 	int n = map.lane_size();
 	vector<int> start, end;
 	//find lanes that contain start_point

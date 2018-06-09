@@ -70,17 +70,6 @@ class TableVehicleAgent : public simulation::VehicleAgent {
   }
 
  private:
-  double CalcDistance(const interface::geometry::Vector3d& position,
-                      const interface::geometry::Point3D& destination) {
-    double sqr_sum =
-        math::Sqr(position.x() - destination.x()) + math::Sqr(position.y() - destination.y());
-    ;
-    return std::sqrt(sqr_sum);
-  }
-
-  double len(const interface::geometry::Vector3d& v) {  //x, y
-    return std::sqrt(math::Sqr(v.x()) + math::Sqr(v.y()));
-  }
   bool first_run, acceleration;
   interface::agent::AgentStatus prev_status;
   double prev_control, control, delta_control;

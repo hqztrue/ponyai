@@ -50,13 +50,13 @@ class SampleVehicleAgent : public simulation::VehicleAgent {
   }
 
  private:
-  double CalcDistance(const interface::geometry::Vector3d& position,
+  /*double CalcDistance(const interface::geometry::Vector3d& position,
                       const interface::geometry::Point3D& destination) {
     double sqr_sum =
         math::Sqr(position.x() - destination.x()) + math::Sqr(position.y() - destination.y());
     ;
     return std::sqrt(sqr_sum);
-  }
+  }*/
 
   double CalcVelocity(const interface::geometry::Vector3d& velocity) {
     double sqr_sum = math::Sqr(velocity.x()) + math::Sqr(velocity.y());
