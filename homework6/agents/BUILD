@@ -1,11 +1,12 @@
 package(default_visibility = ["//visibility:public"])
 
-cc_binary(
-    name = "simulation_main",
-    srcs = ["simulation_main.cc"],
+cc_library(
+    name = "agents",
+    hdrs = ["agents.h"],
+    srcs = ["agents.cc"],
     deps = [
-        "//homework6/display:simulation_main_window",
-        "@gflags//:gflags",
-        "@glog",
+        "//homework6/agents/sample:sample_agent",
+        "//homework6/simulation:vehicle_agent_factory",
     ],
+    alwayslink = 1,
 )
