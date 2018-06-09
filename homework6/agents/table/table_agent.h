@@ -56,12 +56,12 @@ class TableVehicleAgent : public simulation::VehicleAgent {
 	if (acceleration){
 		command.set_throttle_ratio(control);
 		prev_control = control;
-		if (len(agent_status.vehicle_status().velocity())>=max_velocity)acceleration = false;
+		if (len2D(agent_status.vehicle_status().velocity())>=max_velocity)acceleration = false;
 	}
 	else {
 		command.set_brake_ratio(control);
 		prev_control = -control;
-		if (len(agent_status.vehicle_status().velocity())<=0.1){
+		if (len2D(agent_status.vehicle_status().velocity())<=0.1){
 			control += delta_control;
 			acceleration = true;
 		}
