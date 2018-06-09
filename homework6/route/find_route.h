@@ -3,9 +3,10 @@
 #include "glog/logging.h"
 #include "common/utils/file/file.h"
 #include "gflags/gflags.h"
-#include "homework6/display/main_window.h"
+//#include "homework6/display/main_window.h"
 #include "homework6/map/map_lib.h"
 #include "homework5/geometry/geometry.h"
+#include "common/proto/route.pb.h"
 //#include<string>
 //using namespace std;
 
