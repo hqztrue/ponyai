@@ -75,8 +75,9 @@ struct pNode{
 };
 
 void find_route(interface::route::Route &route){
+	route.clear_route_point();
 	interface::map::Map map;
-	const char map_path[305] = "/home/hqz/ponyai/homework5/processed_map_proto.txt";  //
+	const char map_path[305] = "/home/hqz/ponyai/homework6/processed_map_proto.txt";
 	CHECK(file::ReadFileToProto(map_path, &map));
 	int n = map.lane_size();
 	vector<int> start, end;

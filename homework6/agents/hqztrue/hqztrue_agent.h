@@ -77,12 +77,13 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	acceleration = true;
 	control = delta_control = 0.1;
 	
-	interface::geometry::Point2D p;
-	//route.start_point().set_x(agent_status.vehicle_status().position().x());
-	//route.start_point().set_y(agent_status.vehicle_status().position().y());
 	route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
-	p.set_x(agent_status.route_status().destination().x());
-	p.set_y(agent_status.route_status().destination().y());
+	route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
+	route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
+	route.mutable_end_point()->set_y(agent_status.route_status().destination().y());
+	//interface::geometry::Point2D p;
+	//p.set_x(agent_status.route_status().destination().x());
+	//p.set_y(agent_status.route_status().destination().y());
 	//route.set_end_point(p);
 	find_route(route);
   }
