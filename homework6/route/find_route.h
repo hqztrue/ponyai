@@ -17,6 +17,7 @@ const std::string pony_root = "/unsullied/sharefs/hqz/shared/hw/ponyai/";
 
 void find_pred_succ();
 double len2D(const interface::geometry::Vector3d& v);
+double dot2D(const interface::geometry::Vector3d& v1, const interface::geometry::Vector3d& v2);
 double dist(const interface::geometry::Point2D& x, const interface::geometry::Point2D& y);
 double CalcDistance(const interface::geometry::Vector3d& position, const interface::geometry::Point3D& destination);
 double len(interface::route::Route &route);

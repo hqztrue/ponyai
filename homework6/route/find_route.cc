@@ -71,6 +71,10 @@ double len2D(const interface::geometry::Vector3d& v) {  //x, y
     return std::sqrt(geometry::sqr(v.x()) + geometry::sqr(v.y()));
 }
 
+double dot2D(const interface::geometry::Vector3d& v1, const interface::geometry::Vector3d& v2){
+	return v1.x()*v2.x()+v1.y()*v2.y()+v1.z()*v2.z();
+}
+
 double dist(const interface::geometry::Point2D& x, const interface::geometry::Point2D& y){
 	return std::sqrt(geometry::sqr(x.x() - y.x()) + geometry::sqr(x.y() - y.y()));
 }

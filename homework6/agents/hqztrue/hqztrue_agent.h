@@ -161,10 +161,11 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	double v = len2D(agent_status.vehicle_status().velocity());
 	
 	if (dist < pos_threshold){
-		
+		printf("finish\n");
 	}
 	else if (dist <= controller.query_d(v, -a_threshold)){
-		double c = controller.query_c(v, -a_threshold);
+		double a = v*v/2/dist;
+		double c = controller.query_c(v, -a);
 		if (c>=0)command.set_throttle_ratio(c);
 		else command.set_brake_ratio(c);
 	}

@@ -28,52 +28,73 @@ class TableVehicleAgent : public simulation::VehicleAgent {
   virtual void Initialize(const interface::agent::AgentStatus& agent_status) {
     first_run = true;
 	acceleration = true;
+	output_flag = true;
 	num_control = 10;
 	control = delta_control = 1./num_control;
+	delta_v = 0.05;
+	prev_v = 0;
   }
 
   //generate table
   virtual interface::control::ControlCommand RunOneIteration(
       const interface::agent::AgentStatus& agent_status) {
 	
-    const double max_velocity = 10;
+    const double max_velocity = 10, min_velocity = 0.1;
     interface::control::ControlCommand command;
     //double dist = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination());
 	
+	double v = len2D(agent_status.vehicle_status().velocity()), a = len2D(agent_status.vehicle_status().acceleration_vcs());
 	if (first_run){
 		FILE *f = fopen((pony_root+"homework6/table.txt").c_str(), "w");
 		fclose(f);
 	}
-	else {
+	else if (output_flag){
 		FILE *f = fopen((pony_root+"homework6/table.txt").c_str(), "a");
-		fprintf(f, "%.8lf %.8lf %.8lf\n",len2D(prev_status.vehicle_status().velocity()), prev_control, len2D(agent_status.vehicle_status().acceleration_vcs()));
+		double dot = dot2D(prev_status.vehicle_status().velocity(), agent_status.vehicle_status().acceleration_vcs());
+		fprintf(f, "%.8lf %.8lf %.8lf\n",len2D(prev_status.vehicle_status().velocity()), prev_control, a*(dot>0?1:-1));
 		fclose(f);
 	}
-	prev_status = agent_status;
 	
 	first_run = false;
 	if (control > 1.0+geometry::eps)exit(0);
+	printf("control %.5lf\n",control);
 	if (acceleration){
-		command.set_throttle_ratio(control);
-		prev_control = control;
-		if (len2D(agent_status.vehicle_status().velocity())>=max_velocity)acceleration = false;
+		if (fabs(v-prev_v)<delta_v){
+			command.set_throttle_ratio(1);
+			output_flag = false;
+		}
+		else {
+			command.set_throttle_ratio(control);
+			prev_control = control;
+			output_flag = true;
+			prev_v = v;
+		}
+		if (v>=max_velocity)acceleration = false;
 	}
 	else {
-		command.set_brake_ratio(control);
-		prev_control = -control;
-		if (len2D(agent_status.vehicle_status().velocity())<=0.1){
+		if (fabs(v-prev_v)<delta_v){
+			command.set_brake_ratio(1);
+			output_flag = false;
+		}
+		else {
+			command.set_brake_ratio(control);
+			prev_control = -control;
+			output_flag = true;
+			prev_v = v;
+		}
+		if (v<=min_velocity){
 			control += delta_control;
 			acceleration = true;
 		}
 	}
-	
+	prev_status = agent_status;
     return command;
   }
 
  private:
-  bool first_run, acceleration;
+  bool first_run, acceleration, output_flag;
   interface::agent::AgentStatus prev_status;
-  double prev_control, control, delta_control;
+  double prev_control, control, delta_control, delta_v, prev_v;
   int num_control;
   interface::route::Route route;
 };
