@@ -8,7 +8,7 @@ cc_library(
         "//common/proto:cc_map_proto",
         "//common/utils/file",
         "//homework6/map:map_lib",
-		"//homework6/geometry:geometry",
+		"//homework5/geometry:geometry",
         "@gflags",
         "@glog",
     ],
