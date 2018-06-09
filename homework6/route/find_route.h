@@ -12,8 +12,8 @@
 //using namespace std;
 
 //const std::string pony_root = "/home/hqz/ponyai/";
-//const std::string pony_root = "/home/hqz/ponyai/";
-const std::string pony_root = "/unsullied/sharefs/hqz/shared/hw/ponyai/";
+const std::string pony_root = "/home/hqztrue/Desktop/ponyai/";
+//const std::string pony_root = "/unsullied/sharefs/hqz/shared/hw/ponyai/";
 
 void find_pred_succ();
 double len2D(const interface::geometry::Vector3d& v);
