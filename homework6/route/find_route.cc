@@ -6,7 +6,7 @@ bool point_equal(const interface::geometry::Point3D &p1, const interface::geomet
 }
 
 void find_pred_succ(){
-	homework5::map::MapLib map_lib;
+	homework6::map::MapLib map_lib;
 	interface::map::Map map = map_lib.map_proto();
 	int n = map.lane_size();
 	for (int i=0;i<n;++i){
@@ -23,7 +23,7 @@ void find_pred_succ(){
 					}
 			}
 	}
-	CHECK(file::WriteProtoToTextFile(map, "/home/hqz/ponyai/homework5/processed_map_proto.txt"));
+	CHECK(file::WriteProtoToTextFile(map, "/home/hqz/ponyai/homework6/processed_map_proto.txt"));
 }
 
 int location(const interface::map::Lane &lane, const interface::geometry::Point2D &pt){  //project a point to a lane's central_line, by finding nearest neighbor
