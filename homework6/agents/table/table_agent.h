@@ -31,7 +31,8 @@ class TableVehicleAgent : public simulation::VehicleAgent {
 	output_flag = true;
 	num_control = 10;
 	control = delta_control = 1./num_control;
-	delta_v = 0.05;
+	//delta_v = 1e-10;
+        delta_v = 0.05;
 	prev_v = 0;
   }
 
@@ -48,16 +49,17 @@ class TableVehicleAgent : public simulation::VehicleAgent {
 		FILE *f = fopen((pony_root+"homework6/table.txt").c_str(), "w");
 		fclose(f);
 	}
-	else if (output_flag){
+	else if (1||output_flag){
 		FILE *f = fopen((pony_root+"homework6/table.txt").c_str(), "a");
 		double dot = dot2D(prev_status.vehicle_status().velocity(), agent_status.vehicle_status().acceleration_vcs());
-		fprintf(f, "%.8lf %.8lf %.8lf\n",len2D(prev_status.vehicle_status().velocity()), prev_control, a*(dot>0?1:-1));
-		fclose(f);
+		//fprintf(f, "%.8lf %.8lf %.8lf\n",len2D(prev_status.vehicle_status().velocity()), prev_control, a*(dot>0?1:-1));
+		fprintf(f, "%.5lf %.5lf %.5lf %d\n",len2D(prev_status.vehicle_status().velocity()), prev_control, a*(dot>0?1:-1), output_flag);
+                fclose(f);
 	}
 	
 	first_run = false;
 	if (control > 1.0+geometry::eps)exit(0);
-	printf("control %.5lf\n",control);
+	//printf("control %.5lf %.5lf %.5lf\n",control, v, a);
 	if (acceleration){
 		if (fabs(v-prev_v)<delta_v){
 			command.set_throttle_ratio(1);

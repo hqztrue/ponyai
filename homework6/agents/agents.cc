@@ -8,7 +8,7 @@
 
 // Register sample vehicle agent to a factory with its type name "sample_agent"
 //static simulation::Registrar<::sample::SampleVehicleAgent> registrar("sample_agent");
-//static simulation::Registrar<::hqztrue::FrogVehicleAgent> registrar("hqztrue_agent");
+//static simulation::Registrar<::hqztrue::FrogVehicleAgent> registrar("sample_agent");
 static simulation::Registrar<::table::TableVehicleAgent> registrar("table_agent");
 
 

@@ -23,7 +23,7 @@ void find_pred_succ(){
 					}
 			}
 	}
-	CHECK(file::WriteProtoToTextFile(map, "/home/hqz/ponyai/homework5/processed_map_proto.txt"));
+	CHECK(file::WriteProtoToTextFile(map, "/home/hqztrue/Desktop/ponyai/homework5/processed_map_proto.txt"));
 }
 
 int location(const interface::map::Lane &lane, const interface::geometry::Point2D &pt){  //project a point to a lane's central_line, by finding nearest neighbor
@@ -76,7 +76,7 @@ struct pNode{
 
 void find_route(interface::route::Route &route){
 	interface::map::Map map;
-	const char map_path[305] = "/home/hqz/ponyai/homework5/processed_map_proto.txt";  //
+	const char map_path[305] = "/home/hqztrue/Desktop/ponyai/homework5/processed_map_proto.txt";  //
 	CHECK(file::ReadFileToProto(map_path, &map));
 	int n = map.lane_size();
 	vector<int> start, end;
