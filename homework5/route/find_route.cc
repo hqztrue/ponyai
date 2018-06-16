@@ -98,14 +98,15 @@ double dist(const interface::map::Lane &lane, const geometry::point &p){
 
 void load_map(interface::map::Map *&pmap){
 	if (pmap==NULL){
+                pmap = new interface::map::Map();
 		const char map_path[305] = "/home/hqztrue/Desktop/ponyai/homework5/processed_map_proto.txt";  //
-		CHECK(file::ReadFileToProto(map_path, &(*pmap)));
+		CHECK(file::ReadFileToProto(map_path, pmap));
 	}
 }
 
 void find_route(interface::route::Route &route){
 	Timer timer;
-	static interface::map::Map *pmap=NULL;
+	static interface::map::Map *pmap = NULL;
 	load_map(pmap);
 	interface::map::Map &map = *pmap;
 	printf("read\n");timer.print();timer.init();

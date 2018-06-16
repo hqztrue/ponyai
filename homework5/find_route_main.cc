@@ -1,10 +1,17 @@
 #include "glog/logging.h"
 #include "common/utils/file/file.h"
+#include "homework5/display/main_window.h"
 #include "gflags/gflags.h"
 #include "homework5/map/map_lib.h"
 #include "homework5/route/find_route.h"
 
+DEFINE_string(route_file_path, "", "Path of displayed route");
+DEFINE_string(map_dir, "", "Directory path of map file");
+
 int main(int argc, char* argv[]) {
+  google::ParseCommandLineFlags(&argc, &argv, true);
+  google::InitGoogleLogging(argv[0]);
+  
   
   //find_pred_succ(); puts("pred_succ"); return 0;
   
