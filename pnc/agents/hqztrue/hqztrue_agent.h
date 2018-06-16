@@ -126,7 +126,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
  public:
   explicit FrogVehicleAgent(const std::string& name) : VehicleAgent(name) {}
 
-  virtual void Initialize(const interface::agent::AgentStatus& agent_status) {
+  virtual void Initialize(const interface::agent::AgentStatus& agent_status) override {
 	iter_num = 0;
 	iter_time = 0.01;
 	//controller.init();
@@ -146,12 +146,13 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
   }
   
   virtual interface::control::ControlCommand RunOneIteration(
-      const interface::agent::AgentStatus& agent_status) {
+      const interface::agent::AgentStatus& agent_status) override {
 	Timer timer;
-	++iter_num;
 	if (agent_status.route_status().is_new_request()){
-		
+		Initialize(agent_status);
 	}
+	++iter_num;
+	PublishVariable("elimination_reason", std::string(agent_status.simulation_status().elimination_reason()), utils::display::Color::Red());
 	/*route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
 	route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
 	route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
@@ -186,6 +187,22 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	}
 	
 	//printf("find_route\n");timer.print();timer.init();
+	
+	
+	
+	/*for (int i=0;i<agent_status.perception_status().obstacle();++i){
+		
+		interface::perception::PerceptionObstacles
+	}*/
+	
+	
+	/*interface::perception::PerceptionTrafficLightStatus lights = agent_status.perception_status().traffic_light();
+	for (int i=0;i<lights.single_traffic_light_status_size();++i){
+		interface::perception::SingleTrafficLightStatus light = lights.single_traffic_light_status(i);
+		light.id();
+		light.color();
+	}*/
+	
 	
 	//double dist = len(route);
 	double dist = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination());
