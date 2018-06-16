@@ -1,5 +1,18 @@
 #include "homework5/route/find_route.h"
 
+struct Timer{
+	struct timeval start;
+	Timer(){init();}
+	void init(){gettimeofday(&start,NULL);}
+	double time(){
+		struct timeval end;
+		gettimeofday(&end,NULL);
+		long timeuse=1000000*(end.tv_sec-start.tv_sec)+end.tv_usec-start.tv_usec;
+		return timeuse*1e-6;
+	}
+	void print(){printf("time=%.8lf\n",time());}
+};
+
 bool point_equal(const interface::geometry::Point3D &p1, const interface::geometry::Point3D &p2){
 	const double eps = 1e-3;
 	return fabs(p1.x()-p2.x())<eps && fabs(p1.y()-p2.y())<eps && fabs(p1.z()-p2.z())<eps;
@@ -60,6 +73,15 @@ void add_route_point(interface::route::Route &route, const interface::map::Lane 
 	}
 }
 
+double dist(const interface::map::Lane &lane, const geometry::point &p){
+	double ans = 1e10;
+	for (int i=0;i<lane.central_line().point_size();++i){
+		double d = geometry::dist(geometry::point(lane.central_line().point(i).x(), lane.central_line().point(i).y()), p);
+		if (d<ans)ans=d;
+	}
+	return ans;
+}
+
 struct Node{
 	double d;
 	int x;
@@ -75,9 +97,12 @@ struct pNode{
 };
 
 void find_route(interface::route::Route &route){
+	Timer timer;
 	interface::map::Map map;
 	const char map_path[305] = "/home/hqztrue/Desktop/ponyai/homework5/processed_map_proto.txt";  //
 	CHECK(file::ReadFileToProto(map_path, &map));
+	printf("read\n");timer.print();timer.init();
+	
 	int n = map.lane_size();
 	vector<int> start, end;
 	//find lanes that contain start_point
@@ -101,6 +126,23 @@ void find_route(interface::route::Route &route){
 			printf("end %d\n",i);
 		}
 	}
+	
+	double mind = 1e10;
+	geometry::point p = geometry::point(route.start_point().x(),route.start_point().y());
+	for (int i=0;i<start.size();++i){
+		double d = dist(map.lane(start[i]), p);
+		if (d<mind)mind=d, start[0]=start[i];
+	}
+	mind = 1e10;
+	p = geometry::point(route.end_point().x(),route.end_point().y());
+	for (int i=0;i<end.size();++i){
+		double d = dist(map.lane(end[i]), p);
+		if (d<mind)mind=d, end[0]=end[i];
+	}
+	assert(start.size()>0);
+	assert(end.size()>0);
+	start.resize(1);
+	end.resize(1);
 	
 	//in the same lane
 	for (int i=0;i<start.size();++i)
@@ -126,6 +168,7 @@ void find_route(interface::route::Route &route){
 	for (int i=0;i<n;++i)
 		length[i] = cal_len(map.lane(i));
 	
+	timer.print();timer.init();
 	//dijkstra
 	priority_queue<pNode> Q;
 	vector<int> cnt(n+1, 0);
@@ -165,6 +208,7 @@ void find_route(interface::route::Route &route){
 				int id = location(map.lane(x), route.end_point());
 				add_route_point(route, map.lane(x), 0, id+1);
 				//CHECK(file::WriteProtoToTextFile(route, path_dst));
+				timer.print();
 				return;
 			}
 		
@@ -176,6 +220,7 @@ void find_route(interface::route::Route &route){
 		
 		while (!Q.empty()&&cnt[Q.top().p->x])Q.pop();
 	}
+	timer.print();
 	return;
 }
 
