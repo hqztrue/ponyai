@@ -124,7 +124,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	//p.set_y(agent_status.route_status().destination().y());
 	//route.set_end_point(p);
 	find_route(route);
-	pid = PID(0.1, 1, 0.001);
+	pid = PID(100, 10, 1);
   }
   
   virtual interface::control::ControlCommand RunOneIteration(
@@ -137,7 +137,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
 	route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
 	route.mutable_end_point()->set_y(agent_status.route_status().destination().y());
-	find_route(route);
+	//find_route(route);
 	
 	//double dist = len(route);
 	double dist = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination());
@@ -177,6 +177,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	double u = pid.output;
 	if (u>=0)command.set_throttle_ratio(u);
 	else command.set_brake_ratio(-u);
+    printf("%d %.5lf %.5lf\n",iter_num, v, u);
     return command;
   }
 
