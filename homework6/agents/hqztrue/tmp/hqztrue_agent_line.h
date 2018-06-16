@@ -18,23 +18,8 @@
 #include<math.h>
 #include<algorithm>
 #include<vector>
-#include<sys/time.h>
-#include<unistd.h>
 
 namespace hqztrue {
-
-struct Timer{
-	struct timeval start;
-	Timer(){init();}
-	void init(){gettimeofday(&start,NULL);}
-	double time(){
-		struct timeval end;
-		gettimeofday(&end,NULL);
-		long timeuse=1000000*(end.tv_sec-start.tv_sec)+end.tv_usec-start.tv_usec;
-		return timeuse*1e-6;
-	}
-	void print(){printf("time=%.8lf\n",time());}
-};
 
 struct PID{
     double Kp, Ki, Kd, Pv, Iv, Dv, last_t, last_e, setpoint, windup_guard, output;
@@ -144,7 +129,6 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
   
   virtual interface::control::ControlCommand RunOneIteration(
       const interface::agent::AgentStatus& agent_status) {
-	Timer timer;
 	++iter_num;
 	if (agent_status.route_status().is_new_request()){
 		
@@ -153,8 +137,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
 	route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
 	route.mutable_end_point()->set_y(agent_status.route_status().destination().y());
-	find_route(route);
-	printf("find_route\n");timer.print();timer.init();
+	//find_route(route);
 	
 	//double dist = len(route);
 	double dist = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination());
@@ -195,7 +178,6 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	if (u>=0)command.set_throttle_ratio(u);
 	else command.set_brake_ratio(-u);
     printf("%d %.5lf %.5lf\n",iter_num, v, u);
-	timer.print();
     return command;
   }
 
