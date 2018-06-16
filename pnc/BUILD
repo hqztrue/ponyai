@@ -28,7 +28,7 @@ cc_binary(
     deps = [
         "//common/utils/file",
         "//pnc/map:map_lib",
-		"//pnc/route:find_route",
+        "//pnc/route:find_route",
         "@gflags//:gflags",
         "@glog",
     ],

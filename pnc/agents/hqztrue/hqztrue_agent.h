@@ -130,28 +130,30 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	init(agent_status, true);
 }
 void init(const interface::agent::AgentStatus& agent_status, bool real_init=false){
-	printf("init%15.lf %15.lf %15.lf %15.lf\n",agent_status.vehicle_status().position().x(),agent_status.vehicle_status().position().y(),agent_status.route_status().destination().x(),agent_status.route_status().destination().y());
+	//printf("init%15.lf %15.lf %15.lf %15.lf\n",agent_status.vehicle_status().position().x(),agent_status.vehicle_status().position().y(),agent_status.route_status().destination().x(),agent_status.route_status().destination().y());
 	iter_num = 0;
 	iter_time = 0.01;
 	//controller.init();
 	
-	route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
-	route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
-	route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
-	route.mutable_end_point()->set_y(agent_status.route_status().destination().y());
 	//interface::geometry::Point2D p;
 	//p.set_x(agent_status.route_status().destination().x());
 	//p.set_y(agent_status.route_status().destination().y());
 	//route.set_end_point(p);
-	if (!real_init)find_route(route);
-	route_point_id = 0;
+	if (!real_init){
+		route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
+		route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
+		route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
+		route.mutable_end_point()->set_y(agent_status.route_status().destination().y());
+		find_route(route);
+		route_point_id = 0;
+	}
 	pid = PID(100, 10, 1);
 	pid_steer = PID(2, 0.5, 0.5);
   }
   
   virtual interface::control::ControlCommand RunOneIteration(
       const interface::agent::AgentStatus& agent_status) override {
-	printf("iter%15.lf %15.lf %15.lf %15.lf\n",agent_status.vehicle_status().position().x(),agent_status.vehicle_status().position().y(),agent_status.route_status().destination().x(),agent_status.route_status().destination().y());
+	//printf("iter%15.lf %15.lf %15.lf %15.lf\n",agent_status.vehicle_status().position().x(),agent_status.vehicle_status().position().y(),agent_status.route_status().destination().x(),agent_status.route_status().destination().y());
 	Timer timer;
 	if (agent_status.route_status().is_new_request()){
 		init(agent_status, false);

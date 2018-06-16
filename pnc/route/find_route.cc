@@ -133,10 +133,12 @@ void distinct_point(interface::route::Route &route){
 }
 
 void find_route(interface::route::Route &route){
+	Timer timer;
 	route.clear_route_point();
 	static interface::map::Map *pmap = NULL;
 	load_map(pmap);
 	interface::map::Map &map = *pmap;
+	printf("read\n");timer.print();timer.init();
 	
 	int n = map.lane_size();
 	//printf("n=%d\n",n);
@@ -193,7 +195,7 @@ void find_route(interface::route::Route &route){
 				if (id1<=id2){
 					add_route_point(route, map.lane(start[i]), id1, id2+1);
 					//CHECK(file::WriteProtoToTextFile(route, path_dst));
-					distinct_point(route);return;
+					distinct_point(route);timer.print();return;
 				}
 			}
 	
@@ -207,6 +209,7 @@ void find_route(interface::route::Route &route){
 	for (int i=0;i<n;++i)
 		length[i] = cal_len(map.lane(i));
 	
+	timer.print();timer.init();
 	//dijkstra
 	priority_queue<pNode> Q;
 	vector<int> cnt(n+1, 0);
@@ -246,7 +249,7 @@ void find_route(interface::route::Route &route){
 				int id = location(map.lane(x), route.end_point());
 				add_route_point(route, map.lane(x), 0, id+1);
 				//CHECK(file::WriteProtoToTextFile(route, path_dst));
-				distinct_point(route);return;
+				distinct_point(route);timer.print();return;
 			}
 		
 		int m=map.lane(x).successor_size();
@@ -257,7 +260,7 @@ void find_route(interface::route::Route &route){
 		
 		while (!Q.empty()&&cnt[Q.top().p->x])Q.pop();
 	}
-	distinct_point(route);return;
+	distinct_point(route);timer.print();return;
 }
 
 void find_route(char path_src[], char path_dst[]){

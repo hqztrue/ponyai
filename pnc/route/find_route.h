@@ -15,6 +15,19 @@
 const std::string pony_root = "/home/hqztrue/Desktop/ponyai/";
 //const std::string pony_root = "/unsullied/sharefs/hqz/shared/hw/ponyai/";
 
+struct Timer{
+	struct timeval start;
+	Timer(){init();}
+	void init(){gettimeofday(&start,NULL);}
+	double time(){
+		struct timeval end;
+		gettimeofday(&end,NULL);
+		long timeuse=1000000*(end.tv_sec-start.tv_sec)+end.tv_usec-start.tv_usec;
+		return timeuse*1e-6;
+	}
+	void print(){printf("time=%.8lf\n",time());}
+};
+
 void find_pred_succ();
 double len2D(const interface::geometry::Vector3d& v);
 double dot2D(const interface::geometry::Vector3d& v1, const interface::geometry::Vector3d& v2);
