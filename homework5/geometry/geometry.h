@@ -53,7 +53,7 @@ namespace geometry{
 #define CLEAR(x) memset(x,0,sizeof(x))
 #define FILL(x,c) memset(x,c,sizeof(x))
 #define CPY(A,B) memcpy(A,B,sizeof(B))
-#define all(x) x.begin(),x.end()
+//#define all(x) x.begin(),x.end()
 #define SZ(x) ((int)(x.size()))
 #define DREP(x) sort(all(x));x.erase(unique(x.begin(),x.end()),x.end())
 #define INDEX(arr,index) (lower_bound(arr.begin(),arr.end(),index)-arr.begin())

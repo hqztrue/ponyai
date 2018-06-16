@@ -10,6 +10,8 @@ cc_library(
         "//common/proto:cc_agent_status_proto",
         "//common/proto:cc_control_proto",
         "//common/proto:cc_simulation_proto",
+        "//common/utils/math",
+        "//common/utils/math/transform",
         "@glog",
     ],
 )
