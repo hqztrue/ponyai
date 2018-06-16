@@ -142,6 +142,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	find_route(route);
 	route_point_id = 0;
 	pid = PID(100, 10, 1);
+	pid_steer = PID(100, 10, 1);
   }
   
   virtual interface::control::ControlCommand RunOneIteration(
@@ -156,18 +157,18 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
 	route.mutable_end_point()->set_y(agent_status.route_status().destination().y());
 	find_route(route);*/
-		interface::geometry::Vector3d rear_to_front_;
-                rear_to_front_.set_x(vehicle_params().wheelbase());
-		rear_to_front_.set_y(0);
-		rear_to_front_.set_z(0);
-		Eigen::Vector3d rear_to_front = math::transform::ToEigen(rear_to_front_);
-		Eigen::Quaterniond trans = math::transform::ToEigen(agent_status.vehicle_status().orientation());
-		Eigen::Vector3d rear_to_front_world_ = trans * rear_to_front;
-		interface::geometry::Vector3d position = agent_status.vehicle_status().position(), rear_to_front_world = math::transform::ToProto(rear_to_front_world_);
-		interface::geometry::Vector3d front_position;
-		front_position.set_x(position.x() + rear_to_front_world.x());
-		front_position.set_y(position.y() + rear_to_front_world.y());
-		front_position.set_z(position.z() + rear_to_front_world.z());
+	interface::geometry::Vector3d rear_to_front_;
+	rear_to_front_.set_x(vehicle_params().wheelbase());
+	rear_to_front_.set_y(0);
+	rear_to_front_.set_z(0);
+	Eigen::Vector3d rear_to_front = math::transform::ToEigen(rear_to_front_);
+	Eigen::Quaterniond trans = math::transform::ToEigen(agent_status.vehicle_status().orientation());
+	Eigen::Vector3d rear_to_front_world_ = trans * rear_to_front;
+	interface::geometry::Vector3d position = agent_status.vehicle_status().position(), rear_to_front_world = math::transform::ToProto(rear_to_front_world_);
+	interface::geometry::Vector3d front_position;
+	front_position.set_x(position.x() + rear_to_front_world.x());
+	front_position.set_y(position.y() + rear_to_front_world.y());
+	front_position.set_z(position.z() + rear_to_front_world.z());
 
 	geometry::point p(front_position.x(), front_position.y()); //p(agent_status.vehicle_status().position().x(), agent_status.vehicle_status().position().y());
 	double d_line = 1e10;
@@ -224,12 +225,19 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	double u = pid.output;
 	if (u>=0)command.set_throttle_ratio(u);
 	else command.set_brake_ratio(-u);
-	if (d_line>0){
+	
+	command.set_steering_rate(0);
+	/*if (d_line>0){
 		command.set_steering_angle(-5);
 	}
 	else {
 		command.set_steering_angle(5);
-	}
+	}*/
+	
+	pid_steer.set_setpoint(0);
+	pid_steer.update(d_line, iter_num * iter_time);
+	command.set_steering_angle(pid_steer.output);
+	
     printf("%d %.5lf %.5lf %d/%d %.5lf\n",iter_num, v, u, route_point_id, route.route_point_size(), d_line);
 	timer.print();
     return command;
@@ -239,7 +247,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 
   interface::route::Route route;
   Controller controller;
-  PID pid;
+  PID pid, pid_steer;
   int iter_num, route_point_id;
   double iter_time;
 };
