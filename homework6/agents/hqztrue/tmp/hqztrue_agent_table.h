@@ -23,7 +23,7 @@ namespace hqztrue {
 
 struct PID{
     double Kp, Ki, Kd, Pv, Iv, Dv, last_t, last_e, setpoint, windup_guard, output;
-    PID(double _Kp=0, double _Ki=0, double _Kd=0):Kp(_Kp),Ki(_Ki),Kd(_Kd){init();}
+    PID(double _Kp, double _Ki, double _Kd):Kp(_Kp),Ki(_Ki),Kd(_Kd){init();}
     void init(){
         Pv = Iv = Dv = 0;
         last_t = 0;
@@ -49,6 +49,23 @@ struct PID{
         windup_guard = v;
     }
 };
+double update(double &y, double u, double t){
+    //y+=(u-1./t);
+    y=std::sin(u)+std::cos(u);
+    //y=u*u*u;
+    //y=u*u*u+sin(u)+cos(u)+u*u+1./u+0.1*y;
+}
+void test_PID(double P, double I, double D, int L){
+    PID pid(P, I, D);
+    double u = 0, y = 0;
+    for (int i=1;i<=L;++i){
+        pid.update(y, i);
+        u = pid.output;
+        if (pid.setpoint>0)update(y, u, i);
+        printf("%.5lf %.5lf %d\n", y, u, i);
+        if (i>=10)pid.set_setpoint(1);
+    }
+}
 
 struct Controller{
 	struct item{
@@ -111,10 +128,8 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
   explicit FrogVehicleAgent(const std::string& name) : VehicleAgent(name) {}
 
   virtual void Initialize(const interface::agent::AgentStatus& agent_status) {
-	iter_num = 0;
-	iter_time = 0.01;
-	//controller.init();
-	
+	controller.init();
+	  
 	route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
 	route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
 	route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
@@ -124,12 +139,10 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	//p.set_y(agent_status.route_status().destination().y());
 	//route.set_end_point(p);
 	find_route(route);
-	pid = PID(0.1, 1, 0.001);
   }
   
   virtual interface::control::ControlCommand RunOneIteration(
       const interface::agent::AgentStatus& agent_status) {
-	++iter_num;
 	if (agent_status.route_status().is_new_request()){
 		
 	}
@@ -149,34 +162,23 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	
 	if (dist < pos_threshold){
 		printf("finish\n");
-		command.set_brake_ratio(1);
-		return command;
 	}
-	else if (dist <= v*v/2/fabs(a_threshold)){
+	else if (dist <= controller.query_d(v, -a_threshold)){
 		double a = v*v/2/dist;
-		/*double c = controller.query_c(v, -a);
+		double c = controller.query_c(v, -a);
 		if (c>=0)command.set_throttle_ratio(c);
-		else command.set_brake_ratio(-c);*/
-		pid.set_setpoint(v-a*iter_time);
-		pid.update(v, iter_num * iter_time);
+		else command.set_brake_ratio(c);
 	}
 	else if (v<v_threshold){
-		/*double c = controller.query_c(v, a_threshold);
+		double c = controller.query_c(v, a_threshold);
 		if (c>=0)command.set_throttle_ratio(c);
-		else command.set_brake_ratio(-c);*/
-		pid.set_setpoint(v+a_threshold*iter_time);
-		pid.update(v, iter_num * iter_time);
+		else command.set_brake_ratio(c);
 	}
 	else if (v>v_threshold){
-		/*double c = controller.query_c(v, -a_threshold);
+		double c = controller.query_c(v, -a_threshold);
 		if (c>=0)command.set_throttle_ratio(c);
-		else command.set_brake_ratio(-c);*/
-		pid.set_setpoint(v-a_threshold*iter_time);
-		pid.update(v, iter_num * iter_time);
+		else command.set_brake_ratio(c);
 	}
-	double u = pid.output;
-	if (u>=0)command.set_throttle_ratio(u);
-	else command.set_brake_ratio(-u);
     return command;
   }
 
@@ -184,9 +186,6 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 
   interface::route::Route route;
   Controller controller;
-  PID pid;
-  int iter_num;
-  double iter_time;
 };
 
 }
