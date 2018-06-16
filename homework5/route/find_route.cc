@@ -73,15 +73,6 @@ void add_route_point(interface::route::Route &route, const interface::map::Lane 
 	}
 }
 
-double dist(const interface::map::Lane &lane, const geometry::point &p){
-	double ans = 1e10;
-	for (int i=0;i<lane.central_line().point_size();++i){
-		double d = geometry::dist(geometry::point(lane.central_line().point(i).x(), lane.central_line().point(i).y()), p);
-		if (d<ans)ans=d;
-	}
-	return ans;
-}
-
 struct Node{
 	double d;
 	int x;
@@ -95,6 +86,15 @@ struct pNode{
 	pNode(Node *_p):p(_p){}
 	friend bool operator <(const pNode &x,const pNode &y){return *(x.p)<*(y.p);}
 };
+
+double dist(const interface::map::Lane &lane, const geometry::point &p){
+	double ans = 1e10;
+	for (int i=0;i<lane.central_line().point_size();++i){
+		double d = p.dist(geometry::point(lane.central_line().point(i).x(), lane.central_line().point(i).y()));
+		if (d<ans)ans=d;
+	}
+	return ans;
+}
 
 void find_route(interface::route::Route &route){
 	Timer timer;
@@ -127,6 +127,7 @@ void find_route(interface::route::Route &route){
 		}
 	}
 	
+	//assume point on central line: find nearest point
 	double mind = 1e10;
 	geometry::point p = geometry::point(route.start_point().x(),route.start_point().y());
 	for (int i=0;i<start.size();++i){
