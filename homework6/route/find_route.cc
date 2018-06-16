@@ -109,10 +109,20 @@ double dist(const interface::map::Lane &lane, const geometry::point &p){
 	return ans;
 }
 
+void load_map(interface::map::Map *&pmap){
+	if (pmap==NULL){
+        pmap = new interface::map::Map();
+		const char map_path[305] = "/home/hqztrue/Desktop/ponyai/homework5/processed_map_proto.txt";  //
+		CHECK(file::ReadFileToProto(map_path, pmap));
+	}
+}
+
 void find_route(interface::route::Route &route){
 	route.clear_route_point();
-	interface::map::Map map;
-	CHECK(file::ReadFileToProto((pony_root+"homework6/processed_map_proto.txt").c_str(), &map));
+	static interface::map::Map *pmap = NULL;
+	load_map(pmap);
+	interface::map::Map &map = *pmap;
+	
 	int n = map.lane_size();
 	vector<int> start, end;
 	//find lanes that contain start_point
