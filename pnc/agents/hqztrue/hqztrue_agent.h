@@ -142,7 +142,7 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=fals
 		route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
 		route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
 		route.mutable_end_point()->set_y(agent_status.route_status().destination().y());
-		find_route(route);
+		find_route(route, map_lib());
 		route_point_id = 0;
 	}
 	pid = PID(100, 10, 1);
@@ -162,7 +162,7 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=fals
 	route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
 	route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
 	route.mutable_end_point()->set_y(agent_status.route_status().destination().y());
-	find_route(route);*/
+	find_route(route, map_lib());*/
 	interface::geometry::Vector3d rear_to_front_;
 	rear_to_front_.set_x(vehicle_params().wheelbase());
 	rear_to_front_.set_y(0);

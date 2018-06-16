@@ -11,8 +11,10 @@ int main(int argc, char* argv[]) {
   google::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
   
-  
-  find_pred_succ(); puts("pred_succ"); return 0;
+  pnc::map::MapLib map_lib;
+  interface::map::Map map = find_pred_succ(map_lib);
+  CHECK(file::WriteProtoToTextFile(map, (pony_root+"pnc/processed_map_proto.txt").c_str()));
+  puts("pred_succ"); return 0;
   
   /*for (int i=1;i<=5;++i){
 	  char path_src[305], path_dst[305];

@@ -5,9 +5,10 @@ bool point_equal(const interface::geometry::Point3D &p1, const interface::geomet
 	return fabs(p1.x()-p2.x())<eps && fabs(p1.y()-p2.y())<eps && fabs(p1.z()-p2.z())<eps;
 }
 
-void find_pred_succ(){
-	pnc::map::MapLib map_lib;
+interface::map::Map find_pred_succ(const pnc::map::MapLib& map_lib){
+	Timer timer;
 	interface::map::Map map = map_lib.map_proto();
+	timer.print();timer.init();
 	int n = map.lane_size();
 	for (int i=0;i<n;++i){
 		//interface::map::Lane &lane1 = map.lane(i);
@@ -23,7 +24,8 @@ void find_pred_succ(){
 					}
 			}
 	}
-	CHECK(file::WriteProtoToTextFile(map, (pony_root+"pnc/processed_map_proto.txt").c_str()));
+	timer.print();
+	return map;
 }
 
 int location(const interface::map::Lane &lane, const interface::geometry::Point2D &pt){  //project a point to a lane's central_line, by finding nearest neighbor
@@ -132,12 +134,12 @@ void distinct_point(interface::route::Route &route){
 	}
 }
 
-void find_route(interface::route::Route &route){
+void find_route(interface::route::Route &route, const pnc::map::MapLib& map_lib){
 	Timer timer;
 	route.clear_route_point();
-	static interface::map::Map *pmap = NULL;
-	load_map(pmap);
-	interface::map::Map &map = *pmap;
+	//static interface::map::Map *pmap = NULL;
+ 	//load_map(pmap); 
+	interface::map::Map map = find_pred_succ(map_lib);
 	printf("read\n");timer.print();timer.init();
 	
 	int n = map.lane_size();
@@ -266,7 +268,8 @@ void find_route(interface::route::Route &route){
 void find_route(char path_src[], char path_dst[]){
 	interface::route::Route route;
 	CHECK(file::ReadFileToProto(path_src, &route));
-	find_route(route);
+	pnc::map::MapLib map_lib;
+	find_route(route, map_lib);
 	//print
 	CHECK(file::WriteProtoToTextFile(route, path_dst));
 	return;
