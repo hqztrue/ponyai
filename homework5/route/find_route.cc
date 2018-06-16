@@ -96,11 +96,18 @@ double dist(const interface::map::Lane &lane, const geometry::point &p){
 	return ans;
 }
 
+void load_map(interface::map::Map *&pmap){
+	if (pmap==NULL){
+		const char map_path[305] = "/home/hqztrue/Desktop/ponyai/homework5/processed_map_proto.txt";  //
+		CHECK(file::ReadFileToProto(map_path, *pmap));
+	}
+}
+
 void find_route(interface::route::Route &route){
 	Timer timer;
-	interface::map::Map map;
-	const char map_path[305] = "/home/hqztrue/Desktop/ponyai/homework5/processed_map_proto.txt";  //
-	CHECK(file::ReadFileToProto(map_path, &map));
+	static interface::map::Map *pmap=NULL;
+	load_map(pmap);
+	interface::map::Map &map = *pmap;
 	printf("read\n");timer.print();timer.init();
 	
 	int n = map.lane_size();
