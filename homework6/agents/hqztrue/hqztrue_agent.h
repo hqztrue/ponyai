@@ -139,6 +139,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	//p.set_y(agent_status.route_status().destination().y());
 	//route.set_end_point(p);
 	find_route(route);
+	route_point_id = 0;
 	pid = PID(100, 10, 1);
   }
   
@@ -149,12 +150,27 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	if (agent_status.route_status().is_new_request()){
 		
 	}
-	route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
+	/*route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
 	route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
 	route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
 	route.mutable_end_point()->set_y(agent_status.route_status().destination().y());
-	find_route(route);
-	printf("find_route\n");timer.print();timer.init();
+	find_route(route);*/
+	geometry::point p(agent_status.vehicle_status().position().x(), agent_status.vehicle_status().position().y());
+	double d_line = 1e10;
+	while (1){
+		geometry::point p1 = geometry::point(route.route_point(route_point_id).x(), route.route_point(route_point_id).y()),
+		                p2 = geometry::point(route.route_point(route_point_id+1).x(), route.route_point(route_point_id+1).y()),
+						p3 = (p2-p1).rotate(geometry::PI/2);
+		geometry::line l(p2, p2+p3);
+		if (route_point_id >= route.route_point_size()-2 || geometry::in_line(p, l)){
+			point v1=p2-p1,v2=p-p1;
+			d_line = (v1^v2)/v1.len();  //>0: left
+			break;
+		}
+		++route_point_id;
+	}
+	
+	//printf("find_route\n");timer.print();timer.init();
 	
 	//double dist = len(route);
 	double dist = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination());
@@ -194,7 +210,13 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	double u = pid.output;
 	if (u>=0)command.set_throttle_ratio(u);
 	else command.set_brake_ratio(-u);
-    printf("%d %.5lf %.5lf\n",iter_num, v, u);
+	if (d_line>0){
+		command.set_steering_angle(-0.1);
+	}
+	else {
+		command.set_steering_angle(0.1);
+	}
+    printf("%d %.5lf %.5lf %d/%d %.5lf\n",iter_num, v, u, route_point_id, route.route_point_size(), d_line);
 	timer.print();
     return command;
   }
@@ -204,7 +226,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
   interface::route::Route route;
   Controller controller;
   PID pid;
-  int iter_num;
+  int iter_num, route_point_id;
   double iter_time;
 };
 
