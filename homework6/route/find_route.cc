@@ -56,7 +56,7 @@ void add_route_point(interface::route::Route &route, const interface::map::Lane 
 	for (int i=sta;i<end;++i){
 		interface::geometry::Point2D *p = route.add_route_point();
 		p->set_x(lane.central_line().point(i).x());
-                p->set_y(lane.central_line().point(i).y());
+        p->set_y(lane.central_line().point(i).y());
 	}
 }
 
@@ -114,6 +114,21 @@ void load_map(interface::map::Map *&pmap){
         pmap = new interface::map::Map();
 		const char map_path[305] = "/home/hqztrue/Desktop/ponyai/homework5/processed_map_proto.txt";  //
 		CHECK(file::ReadFileToProto(map_path, pmap));
+	}
+}
+
+void distinct_point(interface::route::Route &route){
+	vector<interface::geometry::Point2D> v;
+	double eps = 1e-5;
+	for (int i=0;i<route.route_point_size();++i)
+		if (v.size()==0 || dist(v[v.size()-1], route.route_point(i))>eps){
+			v.push_back(route.route_point(i));
+		}
+	route.clear_route_point();
+	for (int i=0;i<v.size();++i){
+		interface::geometry::Point2D *p = route.add_route_point();
+		p->set_x(v[i].x());
+        p->set_y(v[i].y());
 	}
 }
 
@@ -175,7 +190,7 @@ void find_route(interface::route::Route &route){
 				if (id1<=id2){
 					add_route_point(route, map.lane(start[i]), id1, id2+1);
 					//CHECK(file::WriteProtoToTextFile(route, path_dst));
-					return;
+					distinct_point(route);return;
 				}
 			}
 	
@@ -228,7 +243,7 @@ void find_route(interface::route::Route &route){
 				int id = location(map.lane(x), route.end_point());
 				add_route_point(route, map.lane(x), 0, id+1);
 				//CHECK(file::WriteProtoToTextFile(route, path_dst));
-				return;
+				distinct_point(route);return;
 			}
 		
 		int m=map.lane(x).successor_size();
@@ -239,7 +254,7 @@ void find_route(interface::route::Route &route){
 		
 		while (!Q.empty()&&cnt[Q.top().p->x])Q.pop();
 	}
-	return;
+	distinct_point(route);return;
 }
 
 void find_route(char path_src[], char path_dst[]){
