@@ -163,7 +163,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 						p3 = (p2-p1).rotate(geometry::PI/2);
 		geometry::line l(p2, p2+p3);
 		if (route_point_id >= route.route_point_size()-2 || geometry::in_line(p, l)){
-			point v1=p2-p1,v2=p-p1;
+			geometry::point v1=p2-p1,v2=p-p1;
 			d_line = (v1^v2)/v1.len();  //>0: left
 			break;
 		}

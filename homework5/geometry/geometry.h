@@ -215,10 +215,10 @@ struct line{
 		if (fabs(s1-s2)<eps)return point(1e100,1e100);
 		return point((a.x.x*s2-a.y.x*s1)/(s2-s1),(a.x.y*s2-a.y.y*s1)/(s2-s1));
 	}
-	inline friend bool in_line(const point &p,const line &l){  //in left plane
-		return cha(l.y.x-l.x.x,l.y.y-l.x.y,p.x-l.x.x,p.y-l.x.y)>-eps;
-	}
 };
+inline bool in_line(const point &p,const line &l){  //in left plane
+	return cha(l.y.x-l.x.x,l.y.y-l.x.y,p.x-l.x.x,p.y-l.x.y)>-eps;
+}
 struct line_v{
 	point x,v;
 	line_v(){}
