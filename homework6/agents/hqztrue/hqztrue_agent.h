@@ -142,7 +142,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	find_route(route);
 	route_point_id = 0;
 	pid = PID(100, 10, 1);
-	pid_steer = PID(100, 10, 1);
+	pid_steer = PID(2, 0.5, 0.5);
   }
   
   virtual interface::control::ControlCommand RunOneIteration(
