@@ -13,6 +13,7 @@ int main(int argc, char* argv[]) {
 	  sprintf(path_src, "/home/hqztrue/Desktop/ponyai/homework5/data/routes/route_request_%d.txt", i);
 	  sprintf(path_dst, "/home/hqztrue/Desktop/ponyai/homework5/data/routes/route_result_%d.txt", i);
 	  find_route(path_src, path_dst);
+	  puts("-------------");
   }
   //puts("find_route");
   return 0;

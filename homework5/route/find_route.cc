@@ -99,7 +99,7 @@ double dist(const interface::map::Lane &lane, const geometry::point &p){
 void load_map(interface::map::Map *&pmap){
 	if (pmap==NULL){
 		const char map_path[305] = "/home/hqztrue/Desktop/ponyai/homework5/processed_map_proto.txt";  //
-		CHECK(file::ReadFileToProto(map_path, *pmap));
+		CHECK(file::ReadFileToProto(map_path, &(*pmap)));
 	}
 }
 
