@@ -21,3 +21,16 @@ cc_binary(
         "@glog",
     ],
 )
+
+cc_binary(
+    name = "find_route_main",
+    srcs = ["find_route_main.cc"],
+    deps = [
+        "//common/utils/file",
+        "//pnc/map:map_lib",
+		"//pnc/route:find_route",
+        "@gflags//:gflags",
+        "@glog",
+    ],
+)
+

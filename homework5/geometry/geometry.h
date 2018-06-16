@@ -591,7 +591,7 @@ struct polygon{
 		bool in=0;
 		for (vit i=a.begin(),next;i!=a.end();++i){
 			next=i;++next; if (next==a.end())next=a.begin();
-			if (iscross(line(*i,*next),line(p,point(123456,1e10))))in^=1;
+			if (iscross(line(*i,*next),line(p,point(12345.6789,87654.321))))in^=1;
 		}
 		return in;
 	}

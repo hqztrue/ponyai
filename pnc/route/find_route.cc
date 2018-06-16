@@ -112,7 +112,7 @@ double dist(const interface::map::Lane &lane, const geometry::point &p){
 void load_map(interface::map::Map *&pmap){
 	if (pmap==NULL){
         pmap = new interface::map::Map();
-		const char map_path[305] = "/home/hqztrue/Desktop/ponyai/homework5/processed_map_proto.txt";  //
+		const char map_path[305] = "/home/hqztrue/Desktop/ponyai/pnc/processed_map_proto.txt";  //
 		CHECK(file::ReadFileToProto(map_path, pmap));
 	}
 }
@@ -139,6 +139,8 @@ void find_route(interface::route::Route &route){
 	interface::map::Map &map = *pmap;
 	
 	int n = map.lane_size();
+	//printf("n=%d\n",n);
+	//printf("%15.lf %15.lf %15.lf %15.lf\n",route.start_point().x(),route.start_point().y(),route.end_point().x(),route.end_point().y());
 	vector<int> start, end;
 	//find lanes that contain start_point
 	for (int i=0;i<n;++i){
@@ -175,6 +177,7 @@ void find_route(interface::route::Route &route){
 		double d = dist(map.lane(end[i]), p);
 		if (d<mind)mind=d, end[0]=end[i];
 	}
+	//puts("err");for (;;);
 	assert(start.size()>0);
 	assert(end.size()>0);
 	start.resize(1);
