@@ -19,8 +19,6 @@
 #include<math.h>
 #include<algorithm>
 #include<vector>
-#include<sys/time.h>
-#include<unistd.h>
 
 namespace hqztrue {
 
