@@ -211,10 +211,10 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	if (u>=0)command.set_throttle_ratio(u);
 	else command.set_brake_ratio(-u);
 	if (d_line>0){
-		command.set_steering_angle(-0.1);
+		command.set_steering_angle(-1);
 	}
 	else {
-		command.set_steering_angle(0.1);
+		command.set_steering_angle(1);
 	}
     printf("%d %.5lf %.5lf %d/%d %.5lf\n",iter_num, v, u, route_point_id, route.route_point_size(), d_line);
 	timer.print();
