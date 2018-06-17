@@ -30,13 +30,13 @@ struct Timer{
 	void print(){printf("time=%.8lf\n",time());}
 };
 
-interface::map::Map find_pred_succ(const pnc::map::MapLib& map_lib);
+void find_pred_succ(interface::map::Map &map);
 double len2D(const interface::geometry::Vector3d& v);
 double dot2D(const interface::geometry::Vector3d& v1, const interface::geometry::Vector3d& v2);
 double dist(const interface::geometry::Point2D& x, const interface::geometry::Point2D& y);
 double CalcDistance(const interface::geometry::Vector3d& position, const interface::geometry::Point3D& destination);
 double len(interface::route::Route &route);
-void find_route(interface::route::Route &route, const pnc::map::MapLib& map_lib);
+void find_route(interface::route::Route &route, const interface::map::Map &map);
 void find_route(char path_src[], char path_dst[]);
 
 

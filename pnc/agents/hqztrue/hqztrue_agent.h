@@ -24,7 +24,7 @@ namespace hqztrue {
 
 constexpr int kNumIntervals = 4;
 constexpr double kTimeInterval[4] = {20, 3, 20, 3};  //RYGY
-constexpr double safe_time = 0.5;
+constexpr double safe_time = 0.5, safe_dist = 1.0;
   
 struct Timer{
 	struct timeval start;
@@ -133,7 +133,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
   }
   int light_status(int id, double t, double cur_t){  //0:red 1:ok
 	  double eps = 1e-6;
-	  if (cur_t+eps<kTimeInterval[1])return t+eps<kTimeInterval[1]?1:0;
+	  if (cur_t+eps<kTimeInterval[1]+iter_time)return t+eps<kTimeInterval[1]+iter_time?1:0;
 	  else {
 		  double total = kTimeInterval[0]+kTimeInterval[1]+kTimeInterval[2]+kTimeInterval[3];
 		  double t1 = (t-kTimeInterval[1]) - floor((t-kTimeInterval[1])/total+eps)*total;
@@ -162,8 +162,6 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
   }
   void init(const interface::agent::AgentStatus& agent_status, bool real_init=true){
 	//printf("init%15.lf %15.lf %15.lf %15.lf\n",agent_status.vehicle_status().position().x(),agent_status.vehicle_status().position().y(),agent_status.route_status().destination().x(),agent_status.route_status().destination().y());
-	iter_num = 0;
-	iter_time = 0.01;
 	//controller.init();
 	
 	//interface::geometry::Point2D p;
@@ -171,37 +169,19 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	//p.set_y(agent_status.route_status().destination().y());
 	//route.set_end_point(p);
 	
-	interface::map::Map map = map_lib().map_proto();
-	double t = agent_status.simulation_status().simulation_time();
-	//printf("init time: %.5lf %d\n",t, int(real_init));
-	if (!real_init && fabs(t-kTimeInterval[1])<1e-5){
-		colors = vector<int>(map.lane_size(), -1);
-		for (int i=0;i<agent_status.perception_status().traffic_light_size();++i){
-			interface::perception::PerceptionTrafficLightStatus lights = agent_status.perception_status().traffic_light(i);
-			for (int j=0;j<lights.single_traffic_light_status_size();++j){
-				interface::perception::SingleTrafficLightStatus light = lights.single_traffic_light_status(j);
-				for (int k=0;k<map.lane_size();++k)
-					if (to_lane_id(light.id().id())==map.lane(k).id().id()){
-						switch(light.color()){
-							case interface::map::Bulb::RED: colors[k] = 0;
-							break;
-							case interface::map::Bulb::GREEN: colors[k] = 2;
-							break;
-							case interface::map::Bulb::YELLOW: puts("err");
-							break;
-							default:;
-						}
-					}
-			}
-		}
+	if (real_init){
+		map = map_lib().map_proto();
+		find_pred_succ(map);
 	}
-	
-	if (!real_init){
+	else {
+		iter_num = 0;
+		iter_time = 0.01;
+		
 		route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
 		route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
 		route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
 		route.mutable_end_point()->set_y(agent_status.route_status().destination().y());
-		find_route(route, map_lib());
+		find_route(route, map);
 		route_point_id = 0;
 		
 		//traffic light
@@ -227,26 +207,47 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 				d_light[i] = d_light[i+1]+(p3-p2).len();
 			}
 		}
+		pid = PID(100, 10, 1);
+		pid_steer = PID(2, 0.5, 0.5);
 	}
-	pid = PID(100, 10, 1);
-	pid_steer = PID(2, 0.5, 0.5);
   }
   
   virtual interface::control::ControlCommand RunOneIteration(
       const interface::agent::AgentStatus& agent_status) override {
 	//printf("iter%15.lf %15.lf %15.lf %15.lf\n",agent_status.vehicle_status().position().x(),agent_status.vehicle_status().position().y(),agent_status.route_status().destination().x(),agent_status.route_status().destination().y());
+	puts("--------");
 	Timer timer;
 	if (agent_status.route_status().is_new_request()){
 		init(agent_status, false);
 	}
 	++iter_num;
-	interface::map::Map map = map_lib().map_proto();
 	PublishVariable("elimination_reason", std::string(agent_status.simulation_status().elimination_reason()), utils::display::Color::Red());
-	/*route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
-	route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
-	route.mutable_end_point()->set_x(agent_status.route_status().destination().x());
-	route.mutable_end_point()->set_y(agent_status.route_status().destination().y());
-	find_route(route, map_lib());*/
+	
+	double t = agent_status.simulation_status().simulation_time();
+	//printf("init time: %.5lf %d\n",t, int(real_init));
+	if (fabs(t-kTimeInterval[1]-iter_time)<1e-5){
+		colors = vector<int>(map.lane_size(), -1);
+		for (int i=0;i<agent_status.perception_status().traffic_light_size();++i){
+			interface::perception::PerceptionTrafficLightStatus lights = agent_status.perception_status().traffic_light(i);
+			for (int j=0;j<lights.single_traffic_light_status_size();++j){
+				interface::perception::SingleTrafficLightStatus light = lights.single_traffic_light_status(j);
+				for (int k=0;k<map.lane_size();++k)
+					if (to_lane_id(light.id().id())==map.lane(k).id().id()){
+						switch(light.color()){
+							case interface::map::Bulb::RED: colors[k] = 0;
+							break;
+							case interface::map::Bulb::GREEN: colors[k] = 2;
+							break;
+							case interface::map::Bulb::YELLOW: puts("err");
+							break;
+							default:;
+						}
+					}
+			}
+		}
+		//for (;;);
+	}
+	
 	interface::geometry::Vector3d rear_to_front_;
 	rear_to_front_.set_x(vehicle_params().wheelbase());
 	rear_to_front_.set_y(0);
@@ -275,7 +276,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		++route_point_id;
 	}
 	
-	//printf("find_route\n");timer.print();timer.init();
+	printf("light, ");timer.print();timer.init();
 	
 	
 	
@@ -284,7 +285,6 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		interface::perception::PerceptionObstacles
 	}*/
 	
-	double t = agent_status.simulation_status().simulation_time();
 	/*if (id_light[route_point_id]!=-1){
 		for (int i=0;i<agent_status.perception_status().traffic_light_size();++i){
 			interface::perception::PerceptionTrafficLightStatus lights = agent_status.perception_status().traffic_light(i);
@@ -319,7 +319,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	pid_steer.update(d_line, iter_num * iter_time);
 	command.set_steering_angle(pid_steer.output);
 	
-	
+	printf("test light\n");
 	if (id_light[route_point_id]!=-1){
 		double d = d_light[route_point_id];
 		double t1 = 0;
@@ -327,14 +327,18 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		double x = t1*(v_threshold+v)/2;
 		if (x<=d)t1+=(d-x)/v_threshold;
 		else {
-			if (v>=v_threshold)t1 = (sqrt(max(v*v+2*a*d,0))-v)/a_threshold;
-			else t1 = (v-sqrt(max(v*v-2*a*d,0)))/a_threshold;
+			if (v>=v_threshold)t1 = (sqrt(std::max(v*v+2*a_threshold*d,0.0))-v)/a_threshold;
+			else t1 = (v-sqrt(std::max(v*v-2*a_threshold*d,0.0)))/a_threshold;
 		}
+		printf("t=%.5lf t1=%.5lf\n",t, t1);
 		if (light_status(id_light[route_point_id], t+t1, t)==0){
-			dist = min(dist, d);
+			//dist = std::min(dist, max(0, d - safe_dist - vehicle_params().vehicle_ra_to_front()));
+			dist = std::min(dist, d);
+			printf("d=%.5lf\n",d);
 		}
 	}
 	
+	printf("control\n");
 	//velocity
 	if (dist_end < pos_threshold){
 		printf("finish\n");
@@ -342,7 +346,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		return command;
 	}
 	else if (dist <= v*v/2/fabs(a_threshold)){
-		double a = v*v/2/dist;
+		double a = v*v/2/(std::max(dist,0.01));
 		/*double c = controller.query_c(v, -a);
 		if (c>=0)command.set_throttle_ratio(c);
 		else command.set_brake_ratio(-c);*/
@@ -367,13 +371,14 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	if (u>=0)command.set_throttle_ratio(u);
 	else command.set_brake_ratio(-u);
 	
-    printf("%d %.5lf %.5lf %d/%d %.5lf\n",iter_num, v, u, route_point_id, route.route_point_size(), d_line);
-	timer.print();
+    printf("%d %.5lf %.5lf %.5lf %d/%d %.5lf\n",iter_num, v, u, pid.setpoint, route_point_id, route.route_point_size(), d_line);
+	printf("total, ");timer.print();
     return command;
   }
 
  private:
 
+  interface::map::Map map;
   interface::route::Route route;
   Controller controller;
   PID pid, pid_steer;

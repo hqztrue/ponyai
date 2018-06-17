@@ -5,9 +5,8 @@ bool point_equal(const interface::geometry::Point3D &p1, const interface::geomet
 	return fabs(p1.x()-p2.x())<eps && fabs(p1.y()-p2.y())<eps && fabs(p1.z()-p2.z())<eps;
 }
 
-interface::map::Map find_pred_succ(const pnc::map::MapLib& map_lib){
+void find_pred_succ(interface::map::Map &map){
 	Timer timer;
-	interface::map::Map map = map_lib.map_proto();
 	timer.print();timer.init();
 	int n = map.lane_size();
 	for (int i=0;i<n;++i){
@@ -25,7 +24,6 @@ interface::map::Map find_pred_succ(const pnc::map::MapLib& map_lib){
 			}
 	}
 	timer.print();
-	return map;
 }
 
 int location(const interface::map::Lane &lane, const interface::geometry::Point2D &pt){  //project a point to a lane's central_line, by finding nearest neighbor
@@ -111,13 +109,13 @@ double dist(const interface::map::Lane &lane, const geometry::point &p){
 	return ans;
 }
 
-void load_map(interface::map::Map *&pmap){
+/*void load_map(interface::map::Map *&pmap){
 	if (pmap==NULL){
         pmap = new interface::map::Map();
 		const char map_path[305] = "/home/hqztrue/Desktop/ponyai/pnc/processed_map_proto.txt";  //
 		CHECK(file::ReadFileToProto(map_path, pmap));
 	}
-}
+}*/
 
 void distinct_point(interface::route::Route &route){
 	vector<interface::geometry::Point2D> v;
@@ -134,13 +132,13 @@ void distinct_point(interface::route::Route &route){
 	}
 }
 
-void find_route(interface::route::Route &route, const pnc::map::MapLib& map_lib){
+void find_route(interface::route::Route &route, const interface::map::Map &map){
 	Timer timer;
 	route.clear_route_point();
 	//static interface::map::Map *pmap = NULL;
  	//load_map(pmap); 
-	interface::map::Map map = find_pred_succ(map_lib);
-	printf("read\n");timer.print();timer.init();
+	//find_pred_succ(map);
+	//printf("read\n");timer.print();timer.init();
 	
 	int n = map.lane_size();
 	//printf("n=%d\n",n);
@@ -269,7 +267,9 @@ void find_route(char path_src[], char path_dst[]){
 	interface::route::Route route;
 	CHECK(file::ReadFileToProto(path_src, &route));
 	pnc::map::MapLib map_lib;
-	find_route(route, map_lib);
+	interface::map::Map map = map_lib.map_proto();
+	find_pred_succ(map);
+	find_route(route, map);
 	//print
 	CHECK(file::WriteProtoToTextFile(route, path_dst));
 	return;

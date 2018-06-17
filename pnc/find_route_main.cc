@@ -12,7 +12,8 @@ int main(int argc, char* argv[]) {
   google::InitGoogleLogging(argv[0]);
   
   pnc::map::MapLib map_lib;
-  interface::map::Map map = find_pred_succ(map_lib);
+  interface::map::Map map = map_lib.map_proto();
+  find_pred_succ(map);
   CHECK(file::WriteProtoToTextFile(map, (pony_root+"pnc/processed_map_proto.txt").c_str()));
   puts("pred_succ"); return 0;
   
