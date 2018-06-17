@@ -222,7 +222,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
   virtual interface::control::ControlCommand RunOneIteration(
       const interface::agent::AgentStatus& agent_status) override {
 	//printf("iter%15.lf %15.lf %15.lf %15.lf\n",agent_status.vehicle_status().position().x(),agent_status.vehicle_status().position().y(),agent_status.route_status().destination().x(),agent_status.route_status().destination().y());
-	puts("--------");
+	//puts("--------");
 	Timer timer;
 	if (agent_status.route_status().is_new_request()){
 		init(agent_status, false);
