@@ -143,10 +143,17 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	route_point_id = 0;
 	pid = PID(100, 10, 1);
 	pid_steer = PID(2, 0.5, 0.5);
+	
+	FILE *fout = fopen("/home/hqztrue/Desktop/v.txt", "w");
+	fclose(fout);
   }
   
   virtual interface::control::ControlCommand RunOneIteration(
       const interface::agent::AgentStatus& agent_status) {
+	FILE *fout = fopen("/home/hqztrue/Desktop/v.txt", "a");
+	fprintf(fout, "%.5lf %.5lf\n", iter_num * iter_time, len2D(agent_status.vehicle_status().velocity()));
+	fclose(fout);
+	
 	Timer timer;
 	++iter_num;
 	if (agent_status.route_status().is_new_request()){

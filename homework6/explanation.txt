@@ -1,11 +1,11 @@
-table generation:
-|velocity|
-
-
-
+table:
+I generated a table that views |acceleration|_{i+1} as a function of the form f(|velocity|_i,throttle(break)-ratio_i), but in fact the function should be more complicated and is at least related to |acceleration|_i. So I didn't use the generated table.
 
 
 algorithm:
+For velocity control, I use the PID controller. The whole trip should be consist of three parts: uniform acceleration (linear) motion, uniform (linear) motion and uniform retarded (linear) motion, using the distance from current location to destination we can determine which part we are currently in. It is easy to use PID, by setting the desired v as the setpoint, and automatically generate the control variable u_i, which can be used as the throttle(break)-ratio.
+
+For making turns, I consider it separately and also use the PID controller. I first generate a route from start point to end point (in hw5), connecting them by points on central lines of lanes. Then let p be the vehicle front axle's midpoint, let d be the min distance from p to the route, use the PID controller to make d near to zero.
 
 
 
