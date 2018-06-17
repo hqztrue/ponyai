@@ -139,7 +139,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		  double t1 = (t-kTimeInterval[1]) - floor((t-kTimeInterval[1])/total+eps)*total;
 		  if (colors[id]==-1)return 1;
 		  for (int i=0;i<4;++i){
-			  int j = (color[id]+i)%4;
+			  int j = (colors[id]+i)%4;
 			  double t2 = kTimeInterval[j];
 			  if (t1<t2){
 				  if (j==0)return 0;
@@ -323,14 +323,12 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	if (id_light[route_point_id]!=-1){
 		double d = d_light[route_point_id];
 		double t1 = 0;
-		if (v<v_threshold){
-			t1 = (v_threshold-v)/a_threshold;
-			double x = t1*(v_threshold+v)/2;
-			if (x<d)t1+=(d-x)/v_threshold;
-			else t1 = (sqrt(v*v+2*d)-v)/a_threshold;
-		}
+		t1 = fabs(v_threshold-v)/a_threshold;
+		double x = t1*(v_threshold+v)/2;
+		if (x<=d)t1+=(d-x)/v_threshold;
 		else {
-			
+			if (v>=v_threshold)t1 = (sqrt(max(v*v+2*a*d,0))-v)/a_threshold;
+			else t1 = (v-sqrt(max(v*v-2*a*d,0)))/a_threshold;
 		}
 		if (light_status(id_light[route_point_id], t+t1, t)==0){
 			dist = min(dist, d);
