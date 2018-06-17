@@ -23,7 +23,8 @@
 namespace hqztrue {
 
 constexpr int kNumIntervals = 4;
-constexpr int kTimeInterval[4] = {20, 3, 20, 3};
+constexpr double kTimeInterval[4] = {20, 3, 20, 3};  //RYGY
+constexpr double safe_time = 0.5;
   
 struct Timer{
 	struct timeval start;
@@ -129,8 +130,37 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 
   virtual void Initialize(const interface::agent::AgentStatus& agent_status) override {
 	init(agent_status, true);
-}
-void init(const interface::agent::AgentStatus& agent_status, bool real_init=true){
+  }
+  int light_status(int id, double t, double cur_t){  //0:red 1:ok
+	  double eps = 1e-6;
+	  if (cur_t+eps<kTimeInterval[1])return t+eps<kTimeInterval[1]?1:0;
+	  else {
+		  double total = kTimeInterval[0]+kTimeInterval[1]+kTimeInterval[2]+kTimeInterval[3];
+		  double t1 = (t-kTimeInterval[1]) - floor((t-kTimeInterval[1])/total+eps)*total;
+		  if (colors[id]==-1)return 1;
+		  for (int i=0;i<4;++i){
+			  int j = (color[id]+i)%4;
+			  double t2 = kTimeInterval[j];
+			  if (t1<t2){
+				  if (j==0)return 0;
+				  if (j==1){
+					  if (t1<safe_time)return 0;
+					  else return 1;
+				  }
+				  if (j==2)return 1;
+				  if (j==3){
+					  if (t2-t1<safe_time)return 0;
+					  else return 1;
+				  }
+			  }
+			  t1 -= t2;
+		  }
+	  }
+  }
+  std::string to_lane_id(std::string s){
+	  return s.substr(2, s.length()-5);
+  }
+  void init(const interface::agent::AgentStatus& agent_status, bool real_init=true){
 	//printf("init%15.lf %15.lf %15.lf %15.lf\n",agent_status.vehicle_status().position().x(),agent_status.vehicle_status().position().y(),agent_status.route_status().destination().x(),agent_status.route_status().destination().y());
 	iter_num = 0;
 	iter_time = 0.01;
@@ -141,11 +171,29 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=true
 	//p.set_y(agent_status.route_status().destination().y());
 	//route.set_end_point(p);
 	
+	interface::map::Map map = map_lib().map_proto();
 	double t = agent_status.simulation_status().simulation_time();
 	//printf("init time: %.5lf %d\n",t, int(real_init));
-	if (!real_init && t<iter_time+1e-5){
-		
-		colors = vector<interface::map::Bulb::Color>();
+	if (!real_init && fabs(t-kTimeInterval[1])<1e-5){
+		colors = vector<int>(map.lane_size(), -1);
+		for (int i=0;i<agent_status.perception_status().traffic_light_size();++i){
+			interface::perception::PerceptionTrafficLightStatus lights = agent_status.perception_status().traffic_light(i);
+			for (int j=0;j<lights.single_traffic_light_status_size();++j){
+				interface::perception::SingleTrafficLightStatus light = lights.single_traffic_light_status(j);
+				for (int k=0;k<map.lane_size();++k)
+					if (to_lane_id(light.id().id())==map.lane(k).id().id()){
+						switch(light.color()){
+							case interface::map::Bulb::RED: colors[k] = 0;
+							break;
+							case interface::map::Bulb::GREEN: colors[k] = 2;
+							break;
+							case interface::map::Bulb::YELLOW: puts("err");
+							break;
+							default:;
+						}
+					}
+			}
+		}
 	}
 	
 	if (!real_init){
@@ -157,7 +205,6 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=true
 		route_point_id = 0;
 		
 		//traffic light
-		interface::map::Map map = map_lib().map_proto();
 		d_light = vector<double>(route.route_point_size()-1, 0);
 		id_light = vector<int>(route.route_point_size()-1, -1);
 		for (int i=route.route_point_size()-2;i>=0;--i){
@@ -238,31 +285,60 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=true
 	}*/
 	
 	double t = agent_status.simulation_status().simulation_time();
-	if (id_light[route_point_id]!=-1){
+	/*if (id_light[route_point_id]!=-1){
 		for (int i=0;i<agent_status.perception_status().traffic_light_size();++i){
 			interface::perception::PerceptionTrafficLightStatus lights = agent_status.perception_status().traffic_light(i);
-			puts("---");
 			for (int j=0;j<lights.single_traffic_light_status_size();++j){
 				interface::perception::SingleTrafficLightStatus light = lights.single_traffic_light_status(j);
 				printf("%s\n",light.id().id().c_str());
 				if (light.id().id()==map.lane(id_light[route_point_id]).id().id()){
-					//light.color();
+					
 				}
 			}
 		}
-	}
-	
+	}*/
 	
 	
 	//double dist = len(route);
-	double dist = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination());
+	double dist_end = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination()), dist = dist_end;
 	double v_threshold = 5;
 	double a_threshold = 0.5;
 	double pos_threshold = 3.0;
     interface::control::ControlCommand command;
 	double v = len2D(agent_status.vehicle_status().velocity());
 	
-	if (dist < pos_threshold){
+	//steer
+	command.set_steering_rate(0);
+	/*if (d_line>0){
+		command.set_steering_angle(-5);
+	}
+	else {
+		command.set_steering_angle(5);
+	}*/
+	pid_steer.set_setpoint(0);
+	pid_steer.update(d_line, iter_num * iter_time);
+	command.set_steering_angle(pid_steer.output);
+	
+	
+	if (id_light[route_point_id]!=-1){
+		double d = d_light[route_point_id];
+		double t1 = 0;
+		if (v<v_threshold){
+			t1 = (v_threshold-v)/a_threshold;
+			double x = t1*(v_threshold+v)/2;
+			if (x<d)t1+=(d-x)/v_threshold;
+			else t1 = (sqrt(v*v+2*d)-v)/a_threshold;
+		}
+		else {
+			
+		}
+		if (light_status(id_light[route_point_id], t+t1, t)==0){
+			dist = min(dist, d);
+		}
+	}
+	
+	//velocity
+	if (dist_end < pos_threshold){
 		printf("finish\n");
 		command.set_brake_ratio(1);
 		return command;
@@ -293,18 +369,6 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=true
 	if (u>=0)command.set_throttle_ratio(u);
 	else command.set_brake_ratio(-u);
 	
-	command.set_steering_rate(0);
-	/*if (d_line>0){
-		command.set_steering_angle(-5);
-	}
-	else {
-		command.set_steering_angle(5);
-	}*/
-	
-	pid_steer.set_setpoint(0);
-	pid_steer.update(d_line, iter_num * iter_time);
-	command.set_steering_angle(pid_steer.output);
-	
     printf("%d %.5lf %.5lf %d/%d %.5lf\n",iter_num, v, u, route_point_id, route.route_point_size(), d_line);
 	timer.print();
     return command;
@@ -319,7 +383,7 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=true
   double iter_time;
   vector<double> d_light;
   vector<int> id_light;
-  vector<interface::map::Bulb::Color> colors;
+  vector<int> colors;  //interface::map::Bulb::Color
 };
 
 }
