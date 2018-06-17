@@ -66,6 +66,9 @@ struct PID{
     void set_windup_guard(double v){
         windup_guard = v;
     }
+	void print(){
+		printf("%.5lf %.5lf %.5lf\n", Pv, Iv, Dv);
+	}
 };
 
 struct Controller{
@@ -176,6 +179,9 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	else {
 		iter_num = 0;
 		iter_time = 0.01;
+		v_setpoint_id = -1;
+		v_setpoint_type = 0;
+		v_setpoint = 0;
 		
 		route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
 		route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
@@ -207,7 +213,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 				d_light[i] = d_light[i+1]+(p3-p2).len();
 			}
 		}
-		pid = PID(100, 10, 1);
+		pid = PID(0.5, 0.2, 0.002);
 		pid_steer = PID(2, 0.5, 0.5);
 	}
   }
@@ -350,28 +356,43 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		/*double c = controller.query_c(v, -a);
 		if (c>=0)command.set_throttle_ratio(c);
 		else command.set_brake_ratio(-c);*/
-		pid.set_setpoint(v-a*iter_time);
+		printf("a=%.5lf\n",a);
+		if (v_setpoint_id!=iter_num-1 || v_setpoint_type!=0)v_setpoint = v;
+		v_setpoint_id = iter_num;
+		v_setpoint_type = 0;
+		v_setpoint = std::max(0.0, v_setpoint-a_threshold*iter_time);
+		pid.set_setpoint(v_setpoint);
 		pid.update(v, iter_num * iter_time);
+		pid.output = -0.5;
 	}
 	else if (v<v_threshold){
 		/*double c = controller.query_c(v, a_threshold);
 		if (c>=0)command.set_throttle_ratio(c);
 		else command.set_brake_ratio(-c);*/
-		pid.set_setpoint(v+a_threshold*iter_time);
+		if (v_setpoint_id!=iter_num-1 || v_setpoint_type!=1)v_setpoint = v;
+		v_setpoint_id = iter_num;
+		v_setpoint_type = 1;
+		v_setpoint = std::min(v_threshold, v_setpoint+a_threshold*iter_time);
+		pid.set_setpoint(v_setpoint);
 		pid.update(v, iter_num * iter_time);
 	}
 	else if (v>v_threshold){
 		/*double c = controller.query_c(v, -a_threshold);
 		if (c>=0)command.set_throttle_ratio(c);
 		else command.set_brake_ratio(-c);*/
-		pid.set_setpoint(v-a_threshold*iter_time);
+		if (v_setpoint_id!=iter_num-1 || v_setpoint_type!=2)v_setpoint = v;
+		v_setpoint_id = iter_num;
+		v_setpoint_type = 2;
+		v_setpoint = std::max(0.0, v_setpoint-a_threshold*iter_time);
+		pid.set_setpoint(v_setpoint);
 		pid.update(v, iter_num * iter_time);
 	}
 	double u = pid.output;
-	if (u>=0)command.set_throttle_ratio(u);
-	else command.set_brake_ratio(-u);
+	if (u>=0)command.set_throttle_ratio(std::min(u, 1.0));
+	else command.set_brake_ratio(std::max(-1.0, -u));
 	
-    printf("%d %.5lf %.5lf %.5lf %d/%d %.5lf\n",iter_num, v, u, pid.setpoint, route_point_id, route.route_point_size(), d_line);
+	pid.print();
+    printf("%d v=%.5lf u=%.5lf sp=%.5lf %d/%d %.5lf\n",iter_num, v, u, pid.setpoint, route_point_id, route.route_point_size(), d_line);
 	printf("total, ");timer.print();
     return command;
   }
@@ -382,8 +403,8 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
   interface::route::Route route;
   Controller controller;
   PID pid, pid_steer;
-  int iter_num, route_point_id;
-  double iter_time;
+  int iter_num, route_point_id, v_setpoint_id, v_setpoint_type;
+  double iter_time, v_setpoint;
   vector<double> d_light;
   vector<int> id_light;
   vector<int> colors;  //interface::map::Bulb::Color
