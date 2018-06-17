@@ -22,6 +22,9 @@
 
 namespace hqztrue {
 
+constexpr int kNumIntervals = 4;
+constexpr int kTimeInterval[4] = {20, 3, 20, 3};
+  
 struct Timer{
 	struct timeval start;
 	Timer(){init();}
@@ -315,8 +318,6 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=true
   double iter_time;
   vector<double> d_light;
   vector<int> id_light;
-  constexpr int kNumIntervals = 4;
-  constexpr int kTimeInterval[4] = {20, 3, 20, 3};
   vector<interface::map::Bulb::Color> colors;
 };
 
