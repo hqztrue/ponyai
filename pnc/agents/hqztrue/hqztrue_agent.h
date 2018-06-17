@@ -144,6 +144,31 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=fals
 		route.mutable_end_point()->set_y(agent_status.route_status().destination().y());
 		find_route(route, map_lib());
 		route_point_id = 0;
+		
+		//traffic light
+		interface::map::Map map = map_lib().map_proto();
+		d_light = vector<double>(route.route_point_size()-1, 0);
+		id_light = vector<int>(route.route_point_size()-1, -1);
+		for (int i=route.route_point_size()-2;i>=0;--i){
+			geometry::point p1 = geometry::point(route.route_point(i).x(), route.route_point(i).y()),
+		                    p2 = geometry::point(route.route_point(i+1).x(), route.route_point(i+1).y());
+			geometry::line l(p1, p2);
+			for (int j=0;j<map.lane_size();++j){
+				interface::geometry::Point3D q1 = map.lane(j).left_bound().boundary().point(map.lane(j).left_bound().boundary().point_size()-1),
+											 q2 = map.lane(j).right_bound().boundary().point(map.lane(j).right_bound().boundary().point_size()-1);
+				geometry::line l1(geometry::point(q1.x(),q1.y()), geometry::point(q2.x(),q2.y()));
+				if (geometry::on_segment(p2, l1)){
+					d_light[i] = 0;
+					id_light[i] = j;
+				}
+			}
+			
+			if (i<route.route_point_size()-2 && id_light[i]==-1){
+				geometry::point p3 = geometry::point(route.route_point(i+2).x(), route.route_point(i+2).y());
+				id_light[i] = id_light[i+1];
+				d_light[i] = d_light[i+1]+(p3-p2).len();
+			}
+		}
 	}
 	pid = PID(100, 10, 1);
 	pid_steer = PID(2, 0.5, 0.5);
@@ -157,6 +182,7 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=fals
 		init(agent_status, false);
 	}
 	++iter_num;
+	interface::map::Map map = map_lib().map_proto();
 	PublishVariable("elimination_reason", std::string(agent_status.simulation_status().elimination_reason()), utils::display::Color::Red());
 	/*route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
 	route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
@@ -200,13 +226,16 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=fals
 		interface::perception::PerceptionObstacles
 	}*/
 	
-	
-	/*interface::perception::PerceptionTrafficLightStatus lights = agent_status.perception_status().traffic_light();
-	for (int i=0;i<lights.single_traffic_light_status_size();++i){
-		interface::perception::SingleTrafficLightStatus light = lights.single_traffic_light_status(i);
-		light.id();
-		light.color();
-	}*/
+	if (id_light[route_point_id]!=-1){
+		interface::perception::PerceptionTrafficLightStatus lights = agent_status.perception_status().traffic_light();
+		for (int i=0;i<lights.single_traffic_light_status_size();++i){
+			interface::perception::SingleTrafficLightStatus light = lights.single_traffic_light_status(i);
+			printf("%s\n",light.id.id().c_str());
+			if (light.id()==map.lane(id_light[route_point_id]).id().id()){
+				//light.color();
+			}
+		}
+	}
 	
 	
 	//double dist = len(route);
@@ -272,6 +301,8 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=fals
   PID pid, pid_steer;
   int iter_num, route_point_id;
   double iter_time;
+  vector<double> d_light;
+  vector<int> id_light;
 };
 
 }
