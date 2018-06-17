@@ -204,11 +204,6 @@ struct line{
 		return sgn((y-x)^(a-x))*sgn((y-x)^(b-x))==-1;
 	}
 	inline friend int on_line(const point &p,const line &l){return sgn(((p-l.x)^(l.y-l.x))/(p-l.x).len()/(l.y-l.x).len())==0;}  //return sgn((p-l.x)^(l.y-l.x))==0;
-	inline friend int on_segment(const point &p,const line &l){
-		if (on_line(p,l)&&min(l.x.x,l.y.x)-eps<=p.x&&max(l.x.x,l.y.x)+eps>=p.x&&
-		min(l.x.y,l.y.y)-eps<=p.y&&max(l.x.y,l.y.y)+eps>=p.y)return 1;
-		return 0;
-	}
 	inline friend point cross(const line &a,const line &b){
 		double s1=cha(b.y.x-b.x.x,b.y.y-b.x.y,a.x.x-b.x.x,a.x.y-b.x.y),
 		s2=cha(b.y.x-b.x.x,b.y.y-b.x.y,a.y.x-b.x.x,a.y.y-b.x.y);
@@ -216,6 +211,11 @@ struct line{
 		return point((a.x.x*s2-a.y.x*s1)/(s2-s1),(a.x.y*s2-a.y.y*s1)/(s2-s1));
 	}
 };
+inline int on_segment(const point &p,const line &l){
+	if (on_line(p,l)&&min(l.x.x,l.y.x)-eps<=p.x&&max(l.x.x,l.y.x)+eps>=p.x&&
+	min(l.x.y,l.y.y)-eps<=p.y&&max(l.x.y,l.y.y)+eps>=p.y)return 1;
+	return 0;
+}
 inline bool in_line(const point &p,const line &l){  //in left plane
 	return cha(l.y.x-l.x.x,l.y.y-l.x.y,p.x-l.x.x,p.y-l.x.y)>-eps;
 }

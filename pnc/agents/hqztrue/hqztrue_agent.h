@@ -127,7 +127,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
   virtual void Initialize(const interface::agent::AgentStatus& agent_status) override {
 	init(agent_status, true);
 }
-void init(const interface::agent::AgentStatus& agent_status, bool real_init=false){
+void init(const interface::agent::AgentStatus& agent_status, bool real_init=true){
 	//printf("init%15.lf %15.lf %15.lf %15.lf\n",agent_status.vehicle_status().position().x(),agent_status.vehicle_status().position().y(),agent_status.route_status().destination().x(),agent_status.route_status().destination().y());
 	iter_num = 0;
 	iter_time = 0.01;
@@ -137,6 +137,14 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=fals
 	//p.set_x(agent_status.route_status().destination().x());
 	//p.set_y(agent_status.route_status().destination().y());
 	//route.set_end_point(p);
+	
+	double t = agent_status.simulation_status().simulation_time();
+	printf("init time: %.5lf %d\n",t, int(real_init));
+	/*if (t<iter_time+1e-5){
+		
+		colors = vector<interface::map::Bulb::Color>();
+	}*/
+	
 	if (!real_init){
 		route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
 		route.mutable_start_point()->set_y(agent_status.vehicle_status().position().y());
@@ -241,6 +249,7 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=fals
 	}
 	
 	
+	
 	//double dist = len(route);
 	double dist = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination());
 	double v_threshold = 5;
@@ -306,6 +315,9 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=fals
   double iter_time;
   vector<double> d_light;
   vector<int> id_light;
+  constexpr int kNumIntervals = 4;
+  constexpr int kTimeInterval[4] = {20, 3, 20, 3};
+  vector<interface::map::Bulb::Color> colors;
 };
 
 }
