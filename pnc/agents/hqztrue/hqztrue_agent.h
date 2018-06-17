@@ -267,12 +267,12 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	front_position.set_y(position.y() + rear_to_front_world.y());
 	front_position.set_z(position.z() + rear_to_front_world.z());
 
-	geometry::point p(front_position.x(), front_position.y()); //p(agent_status.vehicle_status().position().x(), agent_status.vehicle_status().position().y());
+	geometry::point p(front_position.x(), front_position.y()), p1, p2, p3; //p(agent_status.vehicle_status().position().x(), agent_status.vehicle_status().position().y());
 	double d_line = 1e10;
 	while (1){
-		geometry::point p1 = geometry::point(route.route_point(route_point_id).x(), route.route_point(route_point_id).y()),
-		                p2 = geometry::point(route.route_point(route_point_id+1).x(), route.route_point(route_point_id+1).y()),
-						p3 = (p2-p1).rotate(geometry::PI/2);
+		p1 = geometry::point(route.route_point(route_point_id).x(), route.route_point(route_point_id).y());
+		p2 = geometry::point(route.route_point(route_point_id+1).x(), route.route_point(route_point_id+1).y());
+		p3 = (p2-p1).rotate(geometry::PI/2);
 		geometry::line l(p2, p2+p3);
 		if (route_point_id >= route.route_point_size()-2 || geometry::in_line(p, l)){
 			geometry::point v1=p2-p1,v2=p-p1;
@@ -307,9 +307,9 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	
 	//double dist = len(route);
 	double dist_end = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination()), dist = dist_end;
-	double v_threshold = 5;
-	double a_threshold = 0.5;
-	double pos_threshold = 3.0;
+	double v_threshold = 10, v_hard_threshold = 50.0/3.6;
+	double a_threshold = 1;
+	double pos_threshold = 2.0;
     interface::control::ControlCommand command;
 	double v = len2D(agent_status.vehicle_status().velocity());
 	
@@ -328,6 +328,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	printf("test light\n");
 	if (id_light[route_point_id]!=-1){
 		double d = d_light[route_point_id];
+		d += (p2-p).len() - vehicle_params().vehicle_fa_to_front();
 		double t1 = 0;
 		t1 = fabs(v_threshold-v)/a_threshold;
 		double x = t1*(v_threshold+v)/2;
@@ -338,8 +339,8 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		}
 		printf("t=%.5lf t1=%.5lf\n",t, t1);
 		if (light_status(id_light[route_point_id], t+t1, t)==0){
-			//dist = std::min(dist, max(0, d - safe_dist - vehicle_params().vehicle_ra_to_front()));
-			dist = std::min(dist, d);
+			dist = std::min(dist, std::max(0.0, d - safe_dist));
+			//dist = std::min(dist, d);
 			printf("d=%.5lf\n",d);
 		}
 	}
@@ -386,6 +387,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		v_setpoint = std::max(0.0, v_setpoint-a_threshold*iter_time);
 		pid.set_setpoint(v_setpoint);
 		pid.update(v, iter_num * iter_time);
+		if (v > v_hard_threshold)pid.output = -0.5;
 	}
 	double u = pid.output;
 	if (u>=0)command.set_throttle_ratio(std::min(u, 1.0));
