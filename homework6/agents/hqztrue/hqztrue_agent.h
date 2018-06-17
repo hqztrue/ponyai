@@ -141,7 +141,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	//route.set_end_point(p);
 	find_route(route);
 	route_point_id = 0;
-	pid = PID(100, 10, 1);
+	pid = PID(40, 2, 0.2);  //PID(100, 10, 1);
 	pid_steer = PID(2, 0.5, 0.5);
 	
 	FILE *fout = fopen("/home/hqztrue/Desktop/v.txt", "w");
@@ -198,7 +198,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	double dist = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination());
 	double v_threshold = 5;
 	double a_threshold = 0.5;
-	double pos_threshold = 3.0;
+	double pos_threshold = 2.0;
     interface::control::ControlCommand command;
 	double v = len2D(agent_status.vehicle_status().velocity());
 	
