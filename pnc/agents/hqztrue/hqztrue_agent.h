@@ -227,12 +227,15 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=fals
 	}*/
 	
 	if (id_light[route_point_id]!=-1){
-		interface::perception::PerceptionTrafficLightStatus lights = agent_status.perception_status().traffic_light();
-		for (int i=0;i<lights.single_traffic_light_status_size();++i){
-			interface::perception::SingleTrafficLightStatus light = lights.single_traffic_light_status(i);
-			printf("%s\n",light.id.id().c_str());
-			if (light.id()==map.lane(id_light[route_point_id]).id().id()){
-				//light.color();
+		for (int i=0;i<agent_status.perception_status().traffic_light_size();++i){
+			interface::perception::PerceptionTrafficLightStatus lights = agent_status.perception_status().traffic_light(i);
+			puts("---");
+			for (int j=0;j<lights.single_traffic_light_status_size();++j){
+				interface::perception::SingleTrafficLightStatus light = lights.single_traffic_light_status(i);
+				printf("%s\n",light.id().id().c_str());
+				if (light.id().id()==map.lane(id_light[route_point_id]).id().id()){
+					//light.color();
+				}
 			}
 		}
 	}
