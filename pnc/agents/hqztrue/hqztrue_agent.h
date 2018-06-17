@@ -24,7 +24,7 @@ namespace hqztrue {
 
 constexpr int kNumIntervals = 4;
 constexpr double kTimeInterval[4] = {20, 3, 20, 3};  //RYGY
-constexpr double safe_time = 0.5, safe_dist = 1.0;
+constexpr double safe_time = 2.5, safe_dist = 5.0, safe_dist_low = 2.0, safe_radius = 5.0, safe_radius_car = 1.5;
   
 struct Timer{
 	struct timeval start;
@@ -285,33 +285,47 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	printf("light, ");timer.print();timer.init();
 	
 	
-	
-	for (int i=0;i<agent_status.perception_status().obstacle_size();++i){
-		interface::perception::PerceptionObstacle obstacle = agent_status.perception_status().obstacle(i);
-		if (obstacle.type()!=interface::perception::ObjectType::CAR && obstacle.type()!=interface::perception::ObjectType::PEDESTRIAN)continue;
-		vector<geometry::point> v;
-		for (int j=0;j<obstacle.polygon_point_size();++j)
-			v.push_back(geometry::point(obstacle.polygon_point(j).x(), obstacle.polygon_point(j).y()));
-		if (obstacle.type()==interface::perception::ObjectType::CAR){
-			
-		}
-		else if (obstacle.type()==interface::perception::ObjectType::PEDESTRIAN){
-			for (int j=0;j<1;++j){
-				for (int k=0;k<v.size();++k){
-					
-				}
-			}
-		}
-	}
-	
-	
 	//double dist = len(route);
 	double dist_end = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination()), dist = dist_end;
-	double v_threshold = 10, v_hard_threshold = 50.0/3.6;
+	double v_threshold = 10, v_low_threshold = 1, v_hard_threshold = 50.0/3.6;
 	double a_threshold = 2.5;
 	double pos_threshold = 2.0;
     interface::control::ControlCommand command;
 	double v = len2D(agent_status.vehicle_status().velocity());
+	bool stop_flag = false;
+	if (v > v_hard_threshold)stop_flag = true;
+	
+	//obstacles
+	double stop_dist = v*v/2/fabs(a_threshold);
+	for (int i=0;i<agent_status.perception_status().obstacle_size();++i){
+		interface::perception::PerceptionObstacle obstacle = agent_status.perception_status().obstacle(i);
+		if (obstacle.type()!=interface::perception::ObjectType::CAR && obstacle.type()!=interface::perception::ObjectType::PEDESTRIAN)continue;
+		vector<geometry::point> pts;
+		for (int j=0;j<obstacle.polygon_point_size();++j)
+			pts.push_back(geometry::point(obstacle.polygon_point(j).x(), obstacle.polygon_point(j).y()));
+		double max_velocity, safe_r;
+		if (obstacle.type()==interface::perception::ObjectType::CAR){
+			max_velocity = 55.0/3.6;
+			safe_r = safe_radius_car;
+		}
+		else if (obstacle.type()==interface::perception::ObjectType::PEDESTRIAN){
+			max_velocity = 6.0/3.6;
+			safe_r = safe_radius;
+		}
+		double d = (p2-p).len() - vehicle_params().vehicle_fa_to_front();
+		for (int j=route_point_id+1;j<route.route_point_size();++j){
+			geometry::point q = geometry::point(route.route_point(j).x(), route.route_point(j).y()),
+			                q_ = geometry::point(route.route_point(j-1).x(), route.route_point(j-1).y());
+			if (j>route_point_id+1)d += (q-q_).len();
+			if (d>stop_dist + safe_dist)break;
+			double t_ = std::min((d+vehicle_params().vehicle_length())/std::max(0.01, v), v/a_threshold), dmin = 1e10;
+			for (int k=0;k<pts.size();++k)
+				dmin = std::min(dmin, (pts[k]-q).len());
+			if (dmin<max_velocity*t_+safe_r){
+				stop_flag = true;
+			}
+		}
+	}
 	
 	//steer
 	command.set_steering_rate(0);
@@ -329,6 +343,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	if (id_light[route_point_id]!=-1){
 		double d = d_light[route_point_id];
 		d += (p2-p).len() - vehicle_params().vehicle_fa_to_front();
+		d = std::max(d, 0.0);
 		double t1 = 0;
 		t1 = fabs(v_threshold-v)/a_threshold;
 		double x = t1*(v_threshold+v)/2;
@@ -339,7 +354,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		}
 		printf("t=%.5lf t1=%.5lf\n",t, t1);
 		if (light_status(id_light[route_point_id], t+t1, t)==0){
-			dist = std::min(dist, std::max(0.0, d - safe_dist));
+			dist = std::min(dist, d);
 			//dist = std::min(dist, d);
 			printf("d=%.5lf\n",d);
 		}
@@ -352,7 +367,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		command.set_brake_ratio(1);
 		return command;
 	}
-	else if (dist <= v*v/2/fabs(a_threshold)){
+	else if (v>v_low_threshold && dist <= v*v/2/fabs(a_threshold)+safe_dist || v<=v_low_threshold && dist <= safe_dist_low){
 		double a = v*v/2/(std::max(dist,0.01));
 		/*double c = controller.query_c(v, -a);
 		if (c>=0)command.set_throttle_ratio(c);
@@ -364,7 +379,19 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		v_setpoint = std::max(0.0, v_setpoint-a_threshold*iter_time);
 		pid.set_setpoint(v_setpoint);
 		pid.update(v, iter_num * iter_time);
-		pid.output = -0.5;
+		pid.output = -1;
+	}
+	else if (v>v_threshold || stop_flag){
+		/*double c = controller.query_c(v, -a_threshold);
+		if (c>=0)command.set_throttle_ratio(c);
+		else command.set_brake_ratio(-c);*/
+		if (v_setpoint_id!=iter_num-1 || v_setpoint_type!=2)v_setpoint = v;
+		v_setpoint_id = iter_num;
+		v_setpoint_type = 2;
+		v_setpoint = std::max(0.0, v_setpoint-a_threshold*iter_time);
+		pid.set_setpoint(v_setpoint);
+		pid.update(v, iter_num * iter_time);
+		if (stop_flag)pid.output = -1;
 	}
 	else if (v<v_threshold){
 		/*double c = controller.query_c(v, a_threshold);
@@ -376,18 +403,6 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		v_setpoint = std::min(v_threshold, v_setpoint+a_threshold*iter_time);
 		pid.set_setpoint(v_setpoint);
 		pid.update(v, iter_num * iter_time);
-	}
-	else if (v>v_threshold){
-		/*double c = controller.query_c(v, -a_threshold);
-		if (c>=0)command.set_throttle_ratio(c);
-		else command.set_brake_ratio(-c);*/
-		if (v_setpoint_id!=iter_num-1 || v_setpoint_type!=2)v_setpoint = v;
-		v_setpoint_id = iter_num;
-		v_setpoint_type = 2;
-		v_setpoint = std::max(0.0, v_setpoint-a_threshold*iter_time);
-		pid.set_setpoint(v_setpoint);
-		pid.update(v, iter_num * iter_time);
-		if (v > v_hard_threshold)pid.output = -0.5;
 	}
 	double u = pid.output;
 	if (u>=0)command.set_throttle_ratio(std::min(u, 1.0));
