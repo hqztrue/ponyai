@@ -297,7 +297,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		++route_point_id;
 	}
 	
-	//printf("light, ");timer.print();timer.init();
+	printf("light, ");timer.print();timer.init();
 	
 	
 	//double dist = len(route);
@@ -354,7 +354,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	pid_steer.update(d_line, iter_num * iter_time);
 	command.set_steering_angle(pid_steer.output);
 	
-	//printf("test light\n");
+	printf("test light\n");
 	if (id_light[route_point_id]!=-1){
 		double d = d_light[route_point_id];
 		d += (p_line_rear-p0).len();  //- vehicle_params().vehicle_fa_to_front();
@@ -367,18 +367,18 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 			if (v>=v_threshold)t1 = (sqrt(std::max(v*v+2*a_threshold*d,0.0))-v)/a_threshold;
 			else t1 = (v-sqrt(std::max(v*v-2*a_threshold*d,0.0)))/a_threshold;
 		}
-		//printf("t=%.5lf t1=%.5lf\n",t, t1);
+		printf("t=%.5lf t1=%.5lf\n",t, t1);
 		if (light_status(id_light[route_point_id], t+t1, t)==0){
 			dist = std::min(dist, d);
 			//dist = std::min(dist, d);
-			//printf("d=%.5lf\n",d);
+			printf("d=%.5lf\n",d);
 		}
 	}
 	
-	//printf("control\n");
+	printf("control\n");
 	//velocity
 	if (dist_end < pos_threshold){
-		//printf("finish\n");
+		printf("finish\n");
 		command.set_brake_ratio(1);
 		return command;
 	}
@@ -387,7 +387,7 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 		/*double c = controller.query_c(v, -a);
 		if (c>=0)command.set_throttle_ratio(c);
 		else command.set_brake_ratio(-c);*/
-		//printf("a=%.5lf\n",a);
+		printf("a=%.5lf\n",a);
 		if (v_setpoint_id!=iter_num-1 || v_setpoint_type!=0)v_setpoint = v;
 		v_setpoint_id = iter_num;
 		v_setpoint_type = 0;
@@ -423,9 +423,9 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	if (u>=0)command.set_throttle_ratio(std::min(u, 1.0));
 	else command.set_brake_ratio(std::max(-1.0, -u));
 	
-	//pid.print();
-    //printf("%d v=%.5lf u=%.5lf sp=%.5lf %d(%d)/%d dist=%.5lf d_line=%.5lf stop_flag=%d\n",iter_num, v, u, pid.setpoint, route_point_id, route_point_id_front, route.route_point_size(), dist, d_line, int(stop_flag));
-	//printf("total, ");timer.print();
+	pid.print();
+    printf("%d v=%.5lf u=%.5lf sp=%.5lf %d(%d)/%d dist=%.5lf d_line=%.5lf stop_flag=%d\n",iter_num, v, u, pid.setpoint, route_point_id, route_point_id_front, route.route_point_size(), dist, d_line, int(stop_flag));
+	printf("total, ");timer.print();
     return command;
   }
 
