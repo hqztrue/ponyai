@@ -142,11 +142,11 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=true
 	//route.set_end_point(p);
 	
 	double t = agent_status.simulation_status().simulation_time();
-	printf("init time: %.5lf %d\n",t, int(real_init));
-	/*if (t<iter_time+1e-5){
+	//printf("init time: %.5lf %d\n",t, int(real_init));
+	if (!real_init && t<iter_time+1e-5){
 		
 		colors = vector<interface::map::Bulb::Color>();
-	}*/
+	}
 	
 	if (!real_init){
 		route.mutable_start_point()->set_x(agent_status.vehicle_status().position().x());
@@ -237,12 +237,13 @@ void init(const interface::agent::AgentStatus& agent_status, bool real_init=true
 		interface::perception::PerceptionObstacles
 	}*/
 	
+	double t = agent_status.simulation_status().simulation_time();
 	if (id_light[route_point_id]!=-1){
 		for (int i=0;i<agent_status.perception_status().traffic_light_size();++i){
 			interface::perception::PerceptionTrafficLightStatus lights = agent_status.perception_status().traffic_light(i);
 			puts("---");
 			for (int j=0;j<lights.single_traffic_light_status_size();++j){
-				interface::perception::SingleTrafficLightStatus light = lights.single_traffic_light_status(i);
+				interface::perception::SingleTrafficLightStatus light = lights.single_traffic_light_status(j);
 				printf("%s\n",light.id().id().c_str());
 				if (light.id().id()==map.lane(id_light[route_point_id]).id().id()){
 					//light.color();
