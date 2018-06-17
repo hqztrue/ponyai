@@ -10,7 +10,7 @@ cc_library(
 		#"//pnc/display:main_window",
 		"//common/proto:cc_route_proto",
         "//pnc/map:map_lib",
-		"//homework5/geometry:geometry",
+		"//pnc/agents/hqztrue/geometry:geometry",
         "@gflags",
         "@glog",
     ],

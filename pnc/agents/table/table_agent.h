@@ -9,7 +9,7 @@
 #include "common/proto/vehicle_status.pb.h"
 #include "common/utils/math/math_utils.h"
 #include "pnc/simulation/vehicle_agent_factory.h"
-#include "pnc/route/find_route.h"
+#include "pnc/agents/hqztrue/route/find_route.h"
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>

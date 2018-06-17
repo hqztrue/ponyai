@@ -2,7 +2,7 @@
 #include "common/utils/file/file.h"
 #include "gflags/gflags.h"
 #include "pnc/map/map_lib.h"
-#include "pnc/route/find_route.h"
+#include "pnc/agents/hqztrue/route/find_route.h"
 
 DEFINE_string(route_file_path, "", "Path of displayed route");
 DEFINE_string(map_dir, "", "Directory path of map file");

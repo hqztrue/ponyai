@@ -6,7 +6,7 @@ cc_library(
     deps = [
         "//pnc/simulation:vehicle_agent",
         "//pnc/simulation:vehicle_agent_factory",
-		"//pnc/route:find_route",
+        "//pnc/agents/hqztrue/route:find_route",
         "//common/proto:cc_agent_status_proto",
         "//common/proto:cc_control_proto",
         "//common/proto:cc_simulation_proto",

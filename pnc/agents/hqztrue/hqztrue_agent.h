@@ -9,7 +9,7 @@
 #include "common/proto/vehicle_status.pb.h"
 #include "common/utils/math/math_utils.h"
 #include "pnc/simulation/vehicle_agent_factory.h"
-#include "pnc/route/find_route.h"
+#include "pnc/agents/hqztrue/route/find_route.h"
 #include "common/utils/math/transform/transform.h"
 #include<stdio.h>
 #include<stdlib.h>
@@ -286,29 +286,29 @@ class FrogVehicleAgent : public simulation::VehicleAgent {
 	
 	
 	
-	/*for (int i=0;i<agent_status.perception_status().obstacle();++i){
-		
-		interface::perception::PerceptionObstacles
-	}*/
-	
-	/*if (id_light[route_point_id]!=-1){
-		for (int i=0;i<agent_status.perception_status().traffic_light_size();++i){
-			interface::perception::PerceptionTrafficLightStatus lights = agent_status.perception_status().traffic_light(i);
-			for (int j=0;j<lights.single_traffic_light_status_size();++j){
-				interface::perception::SingleTrafficLightStatus light = lights.single_traffic_light_status(j);
-				printf("%s\n",light.id().id().c_str());
-				if (light.id().id()==map.lane(id_light[route_point_id]).id().id()){
+	for (int i=0;i<agent_status.perception_status().obstacle_size();++i){
+		interface::perception::PerceptionObstacle obstacle = agent_status.perception_status().obstacle(i);
+		if (obstacle.type()!=interface::perception::ObjectType::CAR && obstacle.type()!=interface::perception::ObjectType::PEDESTRIAN)continue;
+		vector<geometry::point> v;
+		for (int j=0;j<obstacle.polygon_point_size();++j)
+			v.push_back(geometry::point(obstacle.polygon_point(j).x(), obstacle.polygon_point(j).y()));
+		if (obstacle.type()==interface::perception::ObjectType::CAR){
+			
+		}
+		else if (obstacle.type()==interface::perception::ObjectType::PEDESTRIAN){
+			for (int j=0;j<1;++j){
+				for (int k=0;k<v.size();++k){
 					
 				}
 			}
 		}
-	}*/
+	}
 	
 	
 	//double dist = len(route);
 	double dist_end = CalcDistance(agent_status.vehicle_status().position(), agent_status.route_status().destination()), dist = dist_end;
 	double v_threshold = 10, v_hard_threshold = 50.0/3.6;
-	double a_threshold = 1;
+	double a_threshold = 2.5;
 	double pos_threshold = 2.0;
     interface::control::ControlCommand command;
 	double v = len2D(agent_status.vehicle_status().velocity());
